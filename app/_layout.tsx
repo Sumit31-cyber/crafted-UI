@@ -19,6 +19,11 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    FiraCodeBold: require("../assets/fonts/FiraCode-Bold.ttf"),
+    FiraCodeRegular: require("../assets/fonts/FiraCode-Regular.ttf"),
+    FiraCodeMedium: require("../assets/fonts/FiraCode-Medium.ttf"),
+    FiraCodeSemiBold: require("../assets/fonts/FiraCode-SemiBold.ttf"),
+    FiraCodeSemiLight: require("../assets/fonts/FiraCode-Light.ttf"),
   });
 
   useEffect(() => {
@@ -33,7 +38,28 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Crafts",
+            headerSearchBarOptions: {
+              placeholder: "Search",
+              onChangeText: (change) => {
+                const { nativeEvent } = change;
+                const { text } = nativeEvent;
+                console.log(text);
+              },
+            },
+            headerLargeTitle: true,
+            headerTitleStyle: {
+              fontFamily: "FiraCodeBold",
+            },
+            headerLargeTitleStyle: {
+              fontFamily: "FiraCodeBold",
+            },
+          }}
+        />
         <Stack.Screen name="homeScreen/index" />
         <Stack.Screen name="animatedCarousel/index" />
         <Stack.Screen name="+not-found" />
