@@ -52,6 +52,8 @@ export default function RootLayout() {
               },
             },
             headerLargeTitle: true,
+            headerBlurEffect: "regular",
+            headerTransparent: true,
             headerTitleStyle: {
               fontFamily: "FiraCodeBold",
             },
