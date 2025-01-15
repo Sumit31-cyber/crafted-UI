@@ -21,6 +21,7 @@ import { BlurView } from "expo-blur";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { _movieInfo } from "../utils";
 import { Image } from "expo-image";
+import { AnimatedScrollView } from "react-native-reanimated/lib/typescript/component/ScrollView";
 
 interface renderItemProps {
   item: {
@@ -45,7 +46,7 @@ const _indicatorSize = 5;
 const _blurContainerHeight = 80;
 const ImageCarousel = () => {
   const scrollX = useSharedValue(0);
-  const ref = useRef<ScrollView>(null);
+  const ref = useRef<AnimatedScrollView>(null);
 
   useEffect(() => {
     scrollToCenter();
@@ -54,8 +55,6 @@ const ImageCarousel = () => {
   const scrollToCenter = async () => {
     await new Promise((resolve) => setTimeout(resolve, 1));
     if (ref.current) {
-      console.log("Scrolling");
-      console.log(_imageWidth * Math.round((_movieInfo.length - 1) / 2));
       ref.current.scrollTo({
         x: _imageWidth * Math.round((_movieInfo.length - 1) / 2),
         y: 0,
