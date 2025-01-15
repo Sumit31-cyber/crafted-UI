@@ -3,16 +3,27 @@ import React from "react";
 import { router } from "expo-router";
 import AnimationListItem from "@/components/ui/AnimationListItem";
 import { _animationLists } from "@/utils/constant";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 const HomeScreen = () => {
+  const COLOR = useThemeColor();
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}
-      style={{ backgroundColor: "white" }}
+      style={{ backgroundColor: COLOR.background }}
     >
       {_animationLists.map((item, index) => {
-        return <AnimationListItem key={item.id} item={item} index={index} />;
+        return (
+          <AnimationListItem
+            key={item.id}
+            item={item}
+            index={index}
+            onPress={() => {
+              router.navigate("/animatedTiltedCarousel");
+            }}
+          />
+        );
       })}
     </ScrollView>
   );

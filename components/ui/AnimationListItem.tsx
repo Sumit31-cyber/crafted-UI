@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -8,6 +9,7 @@ import {
 import React from "react";
 import { Image } from "expo-image";
 import { FONTS } from "@/utils/constant";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface listItemProps {
   item: {
@@ -17,14 +19,19 @@ interface listItemProps {
     topics: String[];
   };
   index: number;
+  onPress: () => void;
 }
 
 const { height: _windowHeight, width: _windowWidth } = Dimensions.get("window");
 const _imageHeight = _windowHeight * 0.32;
 const _imageWidth = _windowWidth * 0.36;
-const AnimationListItem = ({ item, index }: listItemProps) => {
+const AnimationListItem = ({ item, index, onPress }: listItemProps) => {
+  const COLOR = useThemeColor();
   return (
-    <View style={styles.mainContainer}>
+    <Pressable
+      onPress={onPress}
+      style={[styles.mainContainer, { backgroundColor: COLOR.gray }]}
+    >
       <Image
         style={styles.thumbnail}
         source={item.thumbnail_url}
@@ -32,13 +39,22 @@ const AnimationListItem = ({ item, index }: listItemProps) => {
         transition={300}
       />
       <View style={styles.infoContainer}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={[styles.title, { color: COLOR.text }]}>{item.title}</Text>
 
-        <View style={styles.topicsMainContainer}>
+        <View style={[styles.topicsMainContainer]}>
           {item.topics.map((item, index) => {
             return (
-              <View style={styles.topicsContainerStyle} key={index}>
-                <Text numberOfLines={1} style={styles.topic}>
+              <View
+                style={[
+                  styles.topicsContainerStyle,
+                  { backgroundColor: COLOR.background },
+                ]}
+                key={index}
+              >
+                <Text
+                  numberOfLines={1}
+                  style={[styles.topic, { color: COLOR.text }]}
+                >
                   {item}
                 </Text>
               </View>
@@ -62,7 +78,7 @@ const AnimationListItem = ({ item, index }: listItemProps) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

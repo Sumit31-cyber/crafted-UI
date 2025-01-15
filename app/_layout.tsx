@@ -63,7 +63,18 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen name="homeScreen/index" />
-        <Stack.Screen name="animatedCarousel/index" />
+        <Stack.Screen
+          name="animatedTiltedCarousel/index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="animatedCarousel/index"
+          options={{
+            title: "Animated Carousel",
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
