@@ -19,9 +19,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { _movieInfo } from "../utils";
 import { Image } from "expo-image";
 import { AnimatedScrollView } from "react-native-reanimated/lib/typescript/component/ScrollView";
+import { _movieInfo, _windowWidth } from "@/utils/constant";
 
 interface renderItemProps {
   item: {
@@ -39,8 +39,8 @@ interface renderIndicatorProps {
 }
 
 const _imageBorderRadius = 14;
-const { height, width } = Dimensions.get("window");
-const _imageWidth = width / 2;
+
+const _imageWidth = _windowWidth / 2;
 const _imageHeight = _imageWidth * 1.5;
 const _indicatorSize = 5;
 const _blurContainerHeight = 80;
@@ -93,7 +93,7 @@ const ImageCarousel = () => {
         showsHorizontalScrollIndicator={false}
         style={{ flexGrow: 0 }}
         contentContainerStyle={{
-          paddingHorizontal: (width - _imageWidth) / 2,
+          paddingHorizontal: (_windowWidth - _imageWidth) / 2,
         }}
       >
         <View style={{ width: "100%", flexDirection: "row" }}>
@@ -264,7 +264,7 @@ const RenderItem = ({ item, index, scrollX }: renderItemProps) => {
           >
             <Text
               style={{
-                fontSize: width * 0.045,
+                fontSize: _windowWidth * 0.045,
                 color: "white",
                 fontWeight: "700",
                 letterSpacing: 0.6,
@@ -282,7 +282,7 @@ const RenderItem = ({ item, index, scrollX }: renderItemProps) => {
             >
               <Text
                 style={{
-                  fontSize: width * 0.03,
+                  fontSize: _windowWidth * 0.03,
                   color: "white",
                   fontWeight: "500",
                   letterSpacing: 0.6,
@@ -307,7 +307,7 @@ const RenderItem = ({ item, index, scrollX }: renderItemProps) => {
                 >
                   <Text
                     style={{
-                      fontSize: width * 0.03,
+                      fontSize: _windowWidth * 0.03,
                       color: "white",
                       fontWeight: "500",
                       letterSpacing: 0.6,

@@ -10,6 +10,7 @@ import React from "react";
 import { Image } from "expo-image";
 import { FONTS } from "@/utils/constant";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { Href } from "expo-router";
 
 interface listItemProps {
   item: {
@@ -17,6 +18,7 @@ interface listItemProps {
     title: string;
     thumbnail_url: string;
     topics: String[];
+    path: Href;
   };
   index: number;
   onPress: () => void;

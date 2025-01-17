@@ -11,8 +11,8 @@ import { BlurView } from "expo-blur";
 import Animated, { SharedValue } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { _movieInfo } from "../utils";
 import { Image } from "expo-image";
+import { _movieInfo } from "@/utils/constant";
 
 interface cardItemProps {
   item: {

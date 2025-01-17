@@ -11,12 +11,15 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const COLOR = useThemeColor();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     FiraCodeBold: require("../assets/fonts/FiraCode-Bold.ttf"),
@@ -70,9 +73,9 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
-          name="animatedCarousel/index"
+          name="animatedScaledCarousel/index"
           options={{
-            title: "Animated Carousel",
+            headerShown: false,
           }}
         />
         <Stack.Screen name="+not-found" />
