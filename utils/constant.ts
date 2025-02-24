@@ -52,7 +52,7 @@ export const _animationLists : AnimationListItemType[] = [
 
 
 export const  _windowWidth = Dimensions.get('window').width;
-export  const _windowHeight = Dimensions.get('window').height;
+export  const _windowHeight = Dimensions.get('window').height
 
 
 export type WallpaperType =  {
