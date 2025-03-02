@@ -6,11 +6,13 @@ import GetPremiumCard from "./components/GetPremiumCard";
 import ImageCarousel from "./components/ImageCarousel";
 import NewMoviesSection from "./components/NewMoviesSection";
 import { _windowHeight } from "@/utils/constant";
+import { StatusBar } from "expo-status-bar";
 
 const Page = () => {
   const { top } = useSafeAreaInsets();
   return (
     <View style={{ flex: 1, backgroundColor: "#0b1118" }}>
+      <StatusBar style="light" />
       <Header />
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView
