@@ -13,6 +13,6 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "assets/svgs/luxuryECommSvgs/svgs.js"
+    "assets/svgs/luxuryECommSvgs/svgs.ts"
   ]
 }

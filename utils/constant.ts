@@ -67,6 +67,20 @@ export const _animationLists : AnimationListItemType[] = [
 export const  _windowWidth = Dimensions.get('window').width;
 export  const _windowHeight = Dimensions.get('window').height
 
+// Define a base font size based on the screen width or height
+const baseFontSize = _windowWidth * 0.04; // 4% of the screen width
+
+// Define a list of font sizes
+export const FontSizes = {
+  tiny: baseFontSize * 0.75,       // 75% of the base font size
+  small: baseFontSize * 0.875,     // 87.5% of the base font size
+  medium: baseFontSize,            // Base font size
+  large: baseFontSize * 1.25,      // 125% of the base font size
+  xLarge: baseFontSize * 1.5,      // 150% of the base font size
+  xxLarge: baseFontSize * 2,       // 200% of the base font size
+  xxxLarge: baseFontSize * 2.5,    // 250% of the base font size
+};
+
 
 export type WallpaperType =  {
   id: number;
