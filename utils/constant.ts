@@ -22,8 +22,21 @@ export type AnimationListItemType =  {
 
 
 export const _animationLists : AnimationListItemType[] = [
+  {
+    id: 1,
+    title: "Luxury E-Commerce App",
+    thumbnail_url:require('@/assets/images/eCommerce.png'),
+    path:"/luxuryECommerce/(tabs)/home",
+    topics: [
+      "reanimated",
+      "interpolate",
+      "useAnimatedScrollHandler",
+      'linear gradient',
+      "react native carousel",
+    ],
+  },
     {
-      id: 1,
+      id: 2,
       title: "Tilted Animated Image Carousel With React Native Reanimated",
       thumbnail_url:require('@/assets/images/animatedTiltedCarousel.png'),
       path:"/animatedTiltedCarousel",
@@ -36,7 +49,7 @@ export const _animationLists : AnimationListItemType[] = [
       ],
     },
     {
-      id: 2,
+      id: 3,
       title: "Tilted Scaled Image Carousel With React Native Reanimated",
       thumbnail_url:require('@/assets/images/animatedScaledCarousel.png'),
       path:"/animatedScaledCarousel",
