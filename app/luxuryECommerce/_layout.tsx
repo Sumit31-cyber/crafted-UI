@@ -1,9 +1,16 @@
-import { Stack } from "expo-router/stack";
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Stack } from "expo-router";
 
-export default function Layout() {
+const Layout = () => {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(auth)" />
+      <Stack.Screen name="(protected)" />
     </Stack>
   );
-}
+};
+
+export default Layout;
+
+const styles = StyleSheet.create({});

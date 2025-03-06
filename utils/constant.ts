@@ -26,7 +26,7 @@ export const _animationLists : AnimationListItemType[] = [
     id: 1,
     title: "Luxury E-Commerce App",
     thumbnail_url:require('@/assets/images/eCommerce.png'),
-    path:"/luxuryECommerce/(tabs)/home",
+    path:"/luxuryECommerce",
     topics: [
       "reanimated",
       "interpolate",

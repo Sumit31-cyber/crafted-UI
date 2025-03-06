@@ -12,7 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MenuIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 
 const _viewList = new Array(3).fill(0).map((_, index) => ({ id: index }));
-const _viewListItemSpacing = _windowHeight * 0.02;
+const _viewListItemSpacing = _windowHeight * 0.015;
 
 const Home = () => {
   const { background, gray } = useThemeColor();
@@ -21,7 +21,7 @@ const Home = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: gray,
+        backgroundColor: "#f0f1f1",
       }}
     >
       <View
@@ -34,12 +34,14 @@ const Home = () => {
         <LinearGradient
           start={{ x: 0.5, y: 0.5 }}
           colors={["#fee4e9", "#fff"]}
-          style={StyleSheet.absoluteFill}
+          style={[
+            StyleSheet.absoluteFill,
+            { borderBottomLeftRadius: 30, borderBottomRightRadius: 30 },
+          ]}
         />
 
         <View
           style={{
-            // backgroundColor: "rgba(3,3,3,0.1)",
             paddingTop: top + 10,
             paddingHorizontal: _windowWidth * 0.03,
             flexDirection: "row",
@@ -81,15 +83,20 @@ const Home = () => {
         >
           {_viewList.map((item, index) => {
             const scale = 1 - (_viewList.length - 1 - index) * 0.07; // Reverse scaling
-            const opacity = scale;
-
             return (
               <View
                 key={item.id}
                 style={{
                   height: _windowHeight * 0.16,
                   borderRadius: 10,
-                  backgroundColor: "#e9dbda",
+                  backgroundColor:
+                    index === 2
+                      ? "#ebdddd"
+                      : index == 1
+                      ? "#f2ecec"
+                      : index === 0
+                      ? "#f5f1f0"
+                      : null,
 
                   position: "absolute",
                   width: "100%",
@@ -104,7 +111,7 @@ const Home = () => {
           })}
         </View>
       </View>
-      <View style={{ flex: 1, backgroundColor: "#fff" }}></View>
+      <View style={{ flex: 1, backgroundColor: "#f0f1f1" }}></View>
     </View>
   );
 };
