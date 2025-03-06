@@ -1,11 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { Marquee } from "@animatereactnative/marquee";
-import { _windowHeight, _windowWidth } from "@/utils/constant";
+import {
+  _windowHeight,
+  _windowWidth,
+  FONTS,
+  FontSizes,
+} from "@/utils/constant";
 import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const _firstRowImages = [
   "https://images.pexels.com/photos/20451006/pexels-photo-20451006/free-photo-of-a-lady-was-walking-on-the-beach-in-the-evening.jpeg?auto=compress&cs=tinysrgb&w=1200",
@@ -24,15 +30,17 @@ const _secondRowImages = [
 const _rotationDegree = _windowWidth * 0.03;
 const _sliderGap = _windowWidth * 0.04;
 const _imageHeight = _windowHeight * 0.4;
+const _marqueeHeight = _windowHeight * 0.8;
 
 const LandingScreen = () => {
+  const { top, bottom } = useSafeAreaInsets();
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="light" />
 
       <View
         style={{
-          height: _windowHeight * 0.8,
+          height: _marqueeHeight,
           flexDirection: "row",
           gap: _sliderGap,
           transform: [
@@ -46,6 +54,7 @@ const LandingScreen = () => {
             height: "80%",
             width: _windowWidth * 0.6,
             overflow: "hidden",
+            borderRadius: _sliderGap,
           }}
           speed={0.4}
           direction="vertical"
@@ -60,6 +69,7 @@ const LandingScreen = () => {
             height: "100%",
             width: _windowWidth * 0.6,
             overflow: "hidden",
+            borderRadius: _sliderGap,
           }}
           speed={0.4}
           direction="vertical"
@@ -76,6 +86,65 @@ const LandingScreen = () => {
         colors={["#febcbd", "#fff1f1"]}
         style={[StyleSheet.absoluteFill, { opacity: 0.5 }]}
       />
+
+      <View
+        style={{
+          position: "absolute",
+          width: "100%",
+          // backgroundColor: "rgba(1,1,1,0.2)",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          // justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: FONTS.TNR,
+            fontSize: FontSizes.xLarge,
+            width: "70%",
+            textAlign: "center",
+            lineHeight: _windowWidth * 0.08,
+            color: "#292420",
+          }}
+        >
+          Luxury is not just a Choice; it's a statement.
+        </Text>
+
+        <Text
+          style={{
+            fontFamily: FONTS.firaCodeRegular,
+            fontSize: FontSizes.tiny,
+            textAlign: "center",
+            marginTop: 10,
+            width: "80%",
+            marginBottom: _windowHeight * 0.07,
+            color: "#a79e9f",
+          }}
+        >
+          Timeless beauty,exquisite design, and effortless sophistication define
+          luxury
+        </Text>
+
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            height: 60,
+            width: "90%",
+            backgroundColor: "black",
+            marginTop: "auto",
+            marginBottom: bottom,
+            borderRadius: 100,
+          }}
+        >
+          <Text style={{ fontFamily: FONTS.firaCodeSemiBold, color: "white" }}>
+            Get Started
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

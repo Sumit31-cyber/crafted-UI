@@ -8,7 +8,10 @@ export const FONTS = {
     firaCodeMedium:'FiraCodeMedium',
     firaCodeSemiBold:'FiraCodeSemiBold',
     firaCodeSemiLight:'FiraCodeSemiLight',
-    
+    TNRBoldItalics:"TNRBoldItalics",
+    TNRItalics:"TNRItalics",
+    TNR:'TNR',
+    TNRBold:'TNRBold',
 }
 
 

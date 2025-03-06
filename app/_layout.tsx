@@ -27,6 +27,10 @@ export default function RootLayout() {
     FiraCodeMedium: require("../assets/fonts/FiraCode-Medium.ttf"),
     FiraCodeSemiBold: require("../assets/fonts/FiraCode-SemiBold.ttf"),
     FiraCodeSemiLight: require("../assets/fonts/FiraCode-Light.ttf"),
+    TNRBoldItalics: require("../assets/fonts/TNRBoldItalics.ttf"),
+    TNRItalics: require("../assets/fonts/TNRItalics.ttf"),
+    TNR: require("../assets/fonts/TNR.ttf"),
+    TNRBold: require("../assets/fonts/TNRBold.ttf"),
   });
 
   useEffect(() => {
