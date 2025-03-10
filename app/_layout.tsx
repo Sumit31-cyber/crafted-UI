@@ -31,6 +31,10 @@ export default function RootLayout() {
     TNRItalics: require("../assets/fonts/TNRItalics.ttf"),
     TNR: require("../assets/fonts/TNR.ttf"),
     TNRBold: require("../assets/fonts/TNRBold.ttf"),
+    poppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
+    poppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
+    poppinsSemibold: require("../assets/fonts/Poppins-SemiBold.ttf"),
+    poppinsMedium: require("../assets/fonts/Poppins-Medium.ttf"),
   });
 
   useEffect(() => {

@@ -1,21 +1,168 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
 import { router } from "expo-router";
+import { Logo } from "@/assets/svgs/luxuryECommSvgs/svgs";
+import Backdrop from "@/components/ui/Backdrop";
+import { _windowWidth, FONTS, FontSizes } from "@/utils/constant";
+import AuthenticationTextInputArea from "@/components/ui/AuthenticationTextInputArea";
+import Feather from "@expo/vector-icons/Feather";
+import BigButton from "@/components/ui/BigButton";
+import SocialMediaButton, {
+  ButtonTypes,
+} from "@/components/ui/SocialMediaButton";
+import { StatusBar } from "expo-status-bar";
 
 const signIn = () => {
+  const [rememberMe, setRememberMe] = useState(false);
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar style="dark" />
+      <Backdrop />
+      <View style={{ padding: _windowWidth * 0.03 }}>
+        <View style={{ alignItems: "center" }}>
+          <Logo size={_windowWidth * 0.15} />
+        </View>
+        <View style={{ paddingBottom: 10, paddingTop: 22 }}>
+          <Text style={styles.headerTextStyle}>Sign in to your</Text>
+          <Text style={styles.headerTextStyle}>account</Text>
+        </View>
+
+        <Text
+          style={{
+            fontFamily: FONTS.poppinsRegular,
+            letterSpacing: 0.8,
+            fontSize: FontSizes.tiny,
+            color: "#8d8b8c",
+          }}
+        >
+          Enter your email and password to log in
+        </Text>
+        <View style={{ marginVertical: 30, gap: 30 }}>
+          <AuthenticationTextInputArea
+            header="Email"
+            onChangeText={(val) => console.log(val)}
+            secured={false}
+          />
+          <AuthenticationTextInputArea
+            header="Password"
+            onChangeText={(val) => console.log(val)}
+            secured={true}
+          />
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => setRememberMe(!rememberMe)}
+            style={{
+              height: 20,
+              aspectRatio: 1,
+              borderWidth: 1.2,
+              borderColor: "#292420",
+              borderRadius: 4,
+              marginRight: 5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {rememberMe && <Feather name="check" size={16} color="black" />}
+          </TouchableOpacity>
+          <Text
+            style={{
+              color: "#292420",
+              fontFamily: FONTS.poppinsRegular,
+              letterSpacing: 0.8,
+              fontSize: FontSizes.xTiny,
+            }}
+          >
+            Remember me
+          </Text>
+          <Text
+            style={{
+              marginLeft: "auto",
+              color: "#fa9a67",
+              fontFamily: FONTS.poppinsRegular,
+              letterSpacing: 0.8,
+              fontSize: FontSizes.xTiny,
+            }}
+          >
+            Forgot Password?
+          </Text>
+        </View>
+        <BigButton
+          title="Log in"
+          onPress={() => {}}
+          style={{ marginTop: 30 }}
+        />
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            width: "100%",
+            marginVertical: 20,
+          }}
+        >
+          <View
+            style={{
+              height: StyleSheet.hairlineWidth,
+              flex: 1,
+              backgroundColor: "#8d8b8c",
+            }}
+          />
+          <Text style={{ marginHorizontal: 10 }}>Or</Text>
+          <View
+            style={{
+              height: StyleSheet.hairlineWidth,
+              flex: 1,
+              backgroundColor: "#8d8b8c",
+            }}
+          />
+        </View>
+        <SocialMediaButton
+          buttonType={ButtonTypes.Google}
+          onPress={() => {
+            console.log("Logging in with google");
+          }}
+        />
+        <SocialMediaButton
+          buttonType={ButtonTypes.Facebook}
+          onPress={() => {
+            console.log("Logging in with facebook");
+          }}
+        />
+      </View>
       <Text
-        onPress={() => {
-          router.navigate("/luxuryECommerce/(protected)/(tabs)/home");
+        style={{
+          color: "#292420",
+          fontFamily: FONTS.poppinsRegular,
+          fontSize: FontSizes.tiny,
+          marginTop: "auto",
+          textAlign: "center",
         }}
       >
-        SignIn Screen
+        Don't have an account?
+        <Text style={{ color: "#fa9a67", fontFamily: FONTS.poppinsBold }}>
+          {" "}
+          Sign up
+        </Text>
       </Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default signIn;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  headerTextStyle: {
+    fontFamily: FONTS.TNRBold,
+    fontSize: FontSizes.xLarge,
+    letterSpacing: 1.2,
+    color: "#292420",
+  },
+});

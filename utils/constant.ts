@@ -12,6 +12,10 @@ export const FONTS = {
     TNRItalics:"TNRItalics",
     TNR:'TNR',
     TNRBold:'TNRBold',
+    poppinsRegular:"poppinsRegular",
+    poppinsBold:"poppinsBold",
+    poppinsSemibold:"poppinsSemibold",
+    poppinsMedium:"poppinsMedium"
 }
 
 
@@ -75,6 +79,7 @@ const baseFontSize = _windowWidth * 0.04; // 4% of the screen width
 
 // Define a list of font sizes
 export const FontSizes = {
+  xTiny: baseFontSize * 0.65,       // 75% of the base font size
   tiny: baseFontSize * 0.75,       // 75% of the base font size
   small: baseFontSize * 0.875,     // 87.5% of the base font size
   medium: baseFontSize,            // Base font size

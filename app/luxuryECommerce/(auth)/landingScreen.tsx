@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
@@ -12,6 +18,7 @@ import {
 import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import BigButton from "@/components/ui/BigButton";
 
 const _firstRowImages = [
   "https://images.pexels.com/photos/20451006/pexels-photo-20451006/free-photo-of-a-lady-was-walking-on-the-beach-in-the-evening.jpeg?auto=compress&cs=tinysrgb&w=1200",
@@ -60,7 +67,9 @@ const LandingScreen = () => {
           direction="vertical"
         >
           {_firstRowImages.map((item, index) => {
-            return <RenderImage item={item} index={index} />;
+            return (
+              <RenderImage key={`Image-${index}`} item={item} index={index} />
+            );
           })}
         </Marquee>
 
@@ -76,7 +85,9 @@ const LandingScreen = () => {
           reverse
         >
           {_secondRowImages.map((item, index) => {
-            return <RenderImage item={item} index={index} />;
+            return (
+              <RenderImage key={`Image-${index}`} item={item} index={index} />
+            );
           })}
         </Marquee>
       </View>
@@ -114,21 +125,31 @@ const LandingScreen = () => {
 
         <Text
           style={{
-            fontFamily: FONTS.firaCodeRegular,
+            fontFamily: FONTS.poppinsRegular,
             fontSize: FontSizes.tiny,
             textAlign: "center",
             marginTop: 10,
             width: "80%",
             marginBottom: _windowHeight * 0.07,
             color: "#a79e9f",
+            letterSpacing: 0.8,
           }}
         >
           Timeless beauty,exquisite design, and effortless sophistication define
           luxury
         </Text>
 
-        <TouchableOpacity
+        <SafeAreaView style={{ width: "100%", alignItems: "center" }}>
+          <BigButton
+            title="Get Started"
+            onPress={() => {
+              router.navigate("/luxuryECommerce/(auth)/signIn");
+            }}
+          />
+        </SafeAreaView>
+        {/* <TouchableOpacity
           activeOpacity={0.6}
+          onPress={() => {}}
           style={{
             justifyContent: "center",
             alignItems: "center",
@@ -143,7 +164,7 @@ const LandingScreen = () => {
           <Text style={{ fontFamily: FONTS.firaCodeSemiBold, color: "white" }}>
             Get Started
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
@@ -154,7 +175,7 @@ export default LandingScreen;
 const RenderImage = ({ item, index }: { item: string; index: number }) => {
   return (
     <Image
-      key={`Image-${index}`}
+      transition={500}
       source={{
         uri: item,
       }}

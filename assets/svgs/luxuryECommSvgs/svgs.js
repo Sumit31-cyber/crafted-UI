@@ -194,3 +194,27 @@ export const MenuIcon = ({ size, tint = "#111" }) => {
     </Svg>
   );
 };
+export const Logo = ({ size = 70, tint = "#111" }) => {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 113 105"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <Path
+        d="M39.1152 30C39.1152 13.4315 52.5467 0 69.1152 0H73.8845V75C73.8845 91.5685 60.453 105 43.8845 105H39.1152V30Z"
+        fill="#F99C69"
+      />
+      <Path
+        d="M0 0H4.76923C21.3378 0 34.7692 13.4315 34.7692 30V105H30C13.4315 105 0 91.5685 0 75V0Z"
+        fill="#F99C69"
+      />
+      <Path
+        d="M78.231 0H83.0002C99.5687 0 113 13.4315 113 30V105H108.231C91.6624 105 78.231 91.5685 78.231 75V0Z"
+        fill="#F99C69"
+      />
+    </Svg>
+  );
+};
