@@ -113,7 +113,9 @@ const signIn = () => {
           </View>
           <BigButton
             title="Log in"
-            onPress={() => {}}
+            onPress={() => {
+              router.replace("/luxuryECommerce/(protected)/(tabs)/home");
+            }}
             style={{ marginTop: 30 }}
           />
 
