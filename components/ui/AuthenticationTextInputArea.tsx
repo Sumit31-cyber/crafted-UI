@@ -20,7 +20,7 @@ const AuthenticationTextInputArea = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <View style={{ width: "100%", gap: 8 }}>
+    <View style={{ width: "100%", gap: 6 }}>
       <Text
         style={{
           fontFamily: FONTS.poppinsRegular,
