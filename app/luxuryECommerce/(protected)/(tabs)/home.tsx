@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { MenuIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import { Image } from "expo-image";
+import BlurBackdrop from "@/components/ui/BlurBackdrop";
 
 const _viewList = new Array(3).fill(0).map((_, index) => ({ id: index }));
 const _categories = [
@@ -36,6 +37,7 @@ const Home = () => {
         backgroundColor: "#f0f1f1",
       }}
     >
+      <BlurBackdrop />
       <View
         style={{
           // height: _windowHeight / 4,
@@ -89,7 +91,7 @@ const Home = () => {
         <OfferView />
       </View>
 
-      <View style={{ flex: 1, backgroundColor: "#f0f1f1" }}>
+      <View style={{ flex: 1 }}>
         <Categories
           selectedCategory={selectedCategory}
           onPress={(type) => {
@@ -112,6 +114,7 @@ const Categories = ({
   selectedCategory: string;
   onPress: (type: string) => void;
 }) => {
+  const _containerSize = _windowWidth / _categories.length - 25;
   return (
     <View style={{}}>
       <Text
@@ -145,8 +148,7 @@ const Categories = ({
             >
               <View
                 style={{
-                  width:
-                    _windowWidth / _categories.length - _windowWidth * 0.03,
+                  height: _containerSize,
                   aspectRatio: 1,
                   justifyContent: "center",
                   alignItems: "center",
@@ -159,10 +161,10 @@ const Categories = ({
                   style={{
                     width:
                       index === 0
-                        ? _windowWidth * 0.07
+                        ? _containerSize * 0.45
                         : index === 1
-                        ? _windowWidth * 0.08
-                        : _windowWidth * 0.1,
+                        ? _containerSize * 0.5
+                        : _containerSize * 0.6,
                     aspectRatio: 1,
                   }}
                 />

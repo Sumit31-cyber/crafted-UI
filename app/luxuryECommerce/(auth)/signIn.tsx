@@ -28,7 +28,7 @@ const signIn = () => {
       <Backdrop />
       <StatusBar style="dark" />
       <KeyboardAwareScrollView
-        keyboardShouldPersistTaps
+        keyboardShouldPersistTaps={"always"}
         keyboardDismissMode="interactive"
         showsVerticalScrollIndicator={false}
         bounces={false}
