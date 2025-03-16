@@ -1,8 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useRef, useState } from "react";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
+  _productList,
   _windowHeight,
   _windowWidth,
   FONTS,
@@ -12,6 +19,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MenuIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import { Image } from "expo-image";
 import BlurBackdrop from "@/components/ui/BlurBackdrop";
+import Feather from "@expo/vector-icons/Feather";
+import { productType } from "@/constants/types";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import ProductCard from "@/components/ui/ProductCard";
+import AddToCardModal from "@/components/ui/AddToCardModal";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 const _viewList = new Array(3).fill(0).map((_, index) => ({ id: index }));
 const _categories = [
@@ -25,80 +38,143 @@ const _categories = [
   { type: "Shoes", image: require("@/assets/images/icons8-shoes-90.png") },
 ];
 const _viewListItemSpacing = _windowHeight * 0.015;
-
+const _padding = _windowWidth * 0.04;
+const _itemGap = 10;
 const Home = () => {
   const { background, gray } = useThemeColor();
   const { top } = useSafeAreaInsets();
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const addToCardModalRef = useRef<BottomSheet>(null);
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#f0f1f1",
-      }}
-    >
+    <View style={{ flex: 1, backgroundColor: "#f0f1f1" }}>
       <BlurBackdrop />
-      <View
+      <ScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
         style={{
-          // height: _windowHeight / 4,
-          width: _windowWidth,
-          paddingHorizontal: _windowWidth * 0.03,
+          flex: 1,
         }}
       >
-        <LinearGradient
-          start={{ x: 0.5, y: 0.5 }}
-          colors={["#fee4e9", "#fff"]}
-          style={[
-            StyleSheet.absoluteFill,
-            { borderBottomLeftRadius: 30, borderBottomRightRadius: 30 },
-          ]}
-        />
-
         <View
           style={{
-            paddingTop: top + 10,
+            // height: _windowHeight / 4,
+            width: _windowWidth,
             paddingHorizontal: _windowWidth * 0.03,
-            flexDirection: "row",
-            justifyContent: "space-between",
           }}
         >
-          <View>
-            <Text
-              style={{
-                fontSize: FontSizes.medium,
-                fontFamily: FONTS.firaCodeMedium,
-              }}
-            >
-              LUXURY
-            </Text>
-            <Text
-              style={{ fontSize: FontSizes.small, color: "rgba(0,0,0,0.4)" }}
-            >
-              Cosmetics
-            </Text>
-          </View>
+          <LinearGradient
+            start={{ x: 0.5, y: 0.5 }}
+            colors={["#fee4e9", "#fff"]}
+            style={[
+              StyleSheet.absoluteFill,
+              { borderBottomLeftRadius: 30, borderBottomRightRadius: 30 },
+            ]}
+          />
+
           <View
             style={{
-              padding: (_windowWidth * 0.06) / 3.5,
-              borderWidth: 1,
-              borderColor: "rgba(0,0,0,0.4)",
-              borderRadius: 100,
+              paddingTop: top + 10,
+              paddingHorizontal: _windowWidth * 0.03,
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            <MenuIcon size={_windowWidth * 0.06} tint="rgba(0,0,0,0.4)" />
+            <View>
+              <Text
+                style={{
+                  fontSize: FontSizes.medium,
+                  fontFamily: FONTS.firaCodeMedium,
+                }}
+              >
+                LUXURY
+              </Text>
+              <Text
+                style={{ fontSize: FontSizes.small, color: "rgba(0,0,0,0.4)" }}
+              >
+                Cosmetics
+              </Text>
+            </View>
+            <View
+              style={{
+                padding: (_windowWidth * 0.06) / 3.5,
+                borderWidth: 1,
+                borderColor: "rgba(0,0,0,0.4)",
+                borderRadius: 100,
+              }}
+            >
+              <MenuIcon size={_windowWidth * 0.06} tint="rgba(0,0,0,0.4)" />
+            </View>
+          </View>
+          <OfferView />
+        </View>
+
+        <View style={{ flex: 1, paddingHorizontal: _padding }}>
+          <Categories
+            selectedCategory={selectedCategory}
+            onPress={(type) => {
+              setSelectedCategory(type);
+            }}
+          />
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONTS.TNRBold,
+                  fontSize: FontSizes.large,
+                  letterSpacing: 0.8,
+                }}
+              >
+                Curated For You
+              </Text>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderWidth: StyleSheet.hairlineWidth,
+                  paddingHorizontal: 10,
+                  paddingVertical: 4,
+                  borderRadius: 100,
+                  flexDirection: "row",
+                  borderColor: "#8d8b8c",
+                  gap: 4,
+                }}
+              >
+                <Text style={{ color: "#8d8b8c" }}>See All</Text>
+                <Feather name="arrow-up-right" size={15} color="#8d8b8c" />
+              </View>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              gap: _itemGap * 2,
+              marginBottom: 30,
+            }}
+          >
+            {_productList.map((item, index) => {
+              return (
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  onPress={() => {}}
+                />
+              );
+            })}
           </View>
         </View>
-        <OfferView />
-      </View>
-
-      <View style={{ flex: 1 }}>
-        <Categories
-          selectedCategory={selectedCategory}
-          onPress={(type) => {
-            setSelectedCategory(type);
-          }}
-        />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -119,7 +195,6 @@ const Categories = ({
     <View style={{}}>
       <Text
         style={{
-          paddingHorizontal: _windowWidth * 0.04,
           marginTop: 20,
           fontFamily: FONTS.TNRBold,
           fontSize: FontSizes.large,
@@ -131,7 +206,7 @@ const Categories = ({
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-evenly",
+          justifyContent: "space-between",
           marginVertical: _windowWidth * 0.05,
         }}
       >

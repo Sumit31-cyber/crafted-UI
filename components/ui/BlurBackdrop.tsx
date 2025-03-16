@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { _windowWidth } from "@/utils/constant";
+import { _windowWidth, LuxuryColors } from "@/utils/constant";
 import { BlurView } from "expo-blur";
 
 const BlurBackdrop = () => {
@@ -46,9 +46,9 @@ export default BlurBackdrop;
 const styles = StyleSheet.create({
   containerStyle: {
     aspectRatio: 1,
-    backgroundColor: "#fee4e9",
+    backgroundColor: LuxuryColors.pink,
     borderRadius: 1000,
     position: "absolute",
-    opacity: 0.3,
+    opacity: 0.35,
   },
 });

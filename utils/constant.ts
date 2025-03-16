@@ -27,6 +27,13 @@ export type AnimationListItemType =  {
     path: Href;
 }
 
+export const LuxuryColors = {
+    liteGray:"#adb5bd",
+    brandColor:"#fb9a65",
+    gray:"#8d8b8c",
+    pink:"#ffe0e5"
+}
+
 
 export const _animationLists : AnimationListItemType[] = [
   {
@@ -163,3 +170,99 @@ export const _movieInfo = [
       genres: ["Adventure", "Survival"],
     },
 ];
+
+
+export const _productList = [
+ 
+  {
+    "id": 1,
+    "name": "Floral Print Straight Kurta Set with Dupatta",
+    "price": "6,160",
+    "original_price": "15,400",
+    "discount": "60%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20230320/yFw7/641877e4aeb26924e3cf2539/-473Wx593H-410332823-beige-MODEL4.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 2,
+    "name": "Women Embroidered Kurta with Sharara & Dupatta",
+    "price": "5,849",
+    "original_price": "8,998",
+    "discount": "35%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20240904/UrAF/66d849921d763220fac13d5f/-1117Wx1400H-442415577-wine-MODEL3.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 3,
+    "name": "Embroidered Straight Kurta Suit Set",
+    "price": "14,412",
+    "original_price": "16,955",
+    "discount": "15%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20231102/XU47/6543bbecddf77915196a5864/-1117Wx1400H-410332943-teal-MODEL5.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 4,
+    "name": "Women Floral Angrakha Kurta Pants Set with Dupatta",
+    "price": "3,599",
+    "original_price": "8,998",
+    "discount": "60%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20240423/CE0J/66270e1116fd2c6e6ac69a3a/-1117Wx1400H-467270382-maroon-MODEL2.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 5,
+    "name": "Printed A-Line Kurta Set with Dupatta",
+    "price": "7,750",
+    "original_price": "15,500",
+    "discount": "50%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20230321/U6TP/6418cd32aeb26924e3d362ab/-1117Wx1400H-410332869-blue-MODEL3.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 6,
+    "name": "Niti Buthra",
+    "price": "15,000",
+    "original_price": "17,990",
+    "discount": "10%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20220907/yCS5/6317b6bff997dd1f8de8b238/-1117Wx1400H-464947428-pink-MODEL.jpg",
+    "is_hot": true
+  },
+  {
+    "id":7,
+    "name": "Mati",
+    "price": "7,425",
+    "original_price": "7,500",
+    "discount": "1%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20240709/4vNG/668d68c86f60443f31c12a1a/-1117Wx1400H-700180941-multi-MODEL.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 8,
+    "name": "Zimmermann",
+    "price": "33,500",
+    "original_price": "66,999",
+    "discount": "50%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20240719/xhzK/669a91c46f60443f3193a3de/-1117Wx1400H-469618676-sage-MODEL.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 9,
+    "name": "SHEESHAKARI",
+    "price": "14,412",
+    "original_price": "16,955",
+    "discount": "15%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20240212/CAgd/65ca1ce705ac7d77bb5063e8/-1117Wx1400H-467065226-blue-MODEL.jpg",
+    "is_hot": true
+  },
+  {
+    "id": 10,
+    "name": "Printed A-Line Kurta Set with Dupatta",
+    "price": "14,412",
+    "original_price": "16,955",
+    "discount": "15%",
+    "image": "https://assets.ajio.com/medias/sys_master/root/20231102/tmCU/6543ba2bddf77915196a3e17/-1117Wx1400H-410333078-blue-MODEL.jpg",
+    "is_hot": true
+  },
+]
+
