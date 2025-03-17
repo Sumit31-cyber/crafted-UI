@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import React, { forwardRef, useMemo } from "react";
+import React, { forwardRef, useCallback, useMemo, useState } from "react";
 import {
+  BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetView,
   useBottomSheet,
@@ -14,29 +15,51 @@ import {
   LuxuryColors,
 } from "@/utils/constant";
 import CustomBackdrop from "./CustomBackdrop";
+import AntDesign from "@expo/vector-icons/AntDesign";
 export type Ref = BottomSheetModal;
 
 const _padding = 12;
+const sizeList = ["S", "M", "L", "XL"];
 const AddToCardModal = forwardRef<Ref>((props, ref) => {
-  const sizeList = ["S", "M", "L", "XL"];
-
   const { dismiss } = useBottomSheetModal();
+  const [itemsCount, setItemsCount] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleItemsCount = useCallback(
+    (type: string) => {
+      if (type === "increase") {
+        setItemsCount((prev) => prev + 1);
+      } else if (type === "decrease") {
+        if (itemsCount > 1) {
+          setItemsCount((prev) => prev - 1);
+        }
+      }
+    },
+    [itemsCount]
+  );
+
+  const renderBackdrop = useCallback(
+    () => (
+      <CustomBackdrop
+        onBackdropPress={() => {
+          dismiss();
+        }}
+      />
+    ),
+    []
+  );
 
   return (
     <BottomSheetModal
-      backdropComponent={() => {
-        return (
-          <CustomBackdrop
-            onBackdropPress={() => {
-              dismiss();
-            }}
-          />
-        );
+      onChange={(change) => {
+        if (change === -1) {
+          setItemsCount(1);
+        }
       }}
+      backdropComponent={renderBackdrop}
       ref={ref}
     >
-      <BottomSheetView style={{ height: 500, width: _windowWidth }}>
-        <View style={{ flex: 1, padding: _padding }}>
+      <BottomSheetView>
+        <View style={{ height: "auto", padding: _padding }}>
           <View
             style={{
               flexDirection: "row",
@@ -47,17 +70,67 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
             <Text style={{ fontFamily: FONTS.TNR, fontSize: FontSizes.large }}>
               Choose your size
             </Text>
-            <Text style={{ fontFamily: FONTS.TNR, fontSize: FontSizes.small }}>
-              Time left{"  "}
-              <Text
+
+            <View
+              style={{
+                flexDirection: "row",
+                height: 40,
+                backgroundColor: LuxuryColors.brandColor,
+                padding: 10,
+                borderRadius: 100,
+              }}
+            >
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => {
+                  handleItemsCount("increase");
+                }}
                 style={{
-                  fontFamily: FONTS.poppinsMedium,
-                  fontSize: FontSizes.small,
+                  height: "100%",
+                  aspectRatio: 1,
+                  backgroundColor: "white",
+                  borderRadius: 100,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                2h:45m:32s
-              </Text>
-            </Text>
+                <AntDesign name="plus" size={13} color="black" />
+              </TouchableOpacity>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minWidth: 30,
+                  marginHorizontal: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: FontSizes.small,
+                    fontFamily: FONTS.poppinsBold,
+                    color: "white",
+                  }}
+                >
+                  {itemsCount}
+                </Text>
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => {
+                  handleItemsCount("decrease");
+                }}
+                style={{
+                  height: "100%",
+                  aspectRatio: 1,
+                  backgroundColor: "white",
+                  borderRadius: 100,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <AntDesign name="minus" size={13} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={{ flexDirection: "row", marginVertical: _padding }}>
             {sizeList.map((item, index) => {
@@ -174,6 +247,50 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                 backgroundColor: LuxuryColors.liteGray,
               }}
             ></View>
+            <View style={{ flexDirection: "row", gap: 20, marginVertical: 30 }}>
+              <View
+                style={{
+                  flex: 1,
+                  height: 50,
+                  borderRadius: 100,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderWidth: StyleSheet.hairlineWidth * 2,
+                  borderColor: LuxuryColors.brandColor,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: FONTS.poppinsRegular,
+                    fontSize: FontSizes.medium,
+                    color: LuxuryColors.brandColor,
+                  }}
+                >
+                  Buy now
+                </Text>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  height: 50,
+                  borderRadius: 100,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 10,
+                  backgroundColor: LuxuryColors.brandColor,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: FONTS.poppinsRegular,
+                    fontSize: FontSizes.medium,
+                    color: "white",
+                  }}
+                >
+                  Add to cart
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </BottomSheetView>
