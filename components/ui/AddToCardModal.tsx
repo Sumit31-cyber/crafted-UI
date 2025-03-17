@@ -8,6 +8,7 @@ import {
   useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import {
+  _fakeUsers,
   _windowHeight,
   _windowWidth,
   FONTS,
@@ -16,6 +17,8 @@ import {
 } from "@/utils/constant";
 import CustomBackdrop from "./CustomBackdrop";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated";
+import { Image } from "expo-image";
 export type Ref = BottomSheetModal;
 
 const _padding = 12;
@@ -23,7 +26,7 @@ const sizeList = ["S", "M", "L", "XL"];
 const AddToCardModal = forwardRef<Ref>((props, ref) => {
   const { dismiss } = useBottomSheetModal();
   const [itemsCount, setItemsCount] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedSize, setSelectedSize] = useState("M");
   const handleItemsCount = useCallback(
     (type: string) => {
       if (type === "increase") {
@@ -145,7 +148,7 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                   <TouchableOpacity
                     activeOpacity={0.6}
                     onPress={() => {
-                      console.log(item);
+                      setSelectedSize(item);
                     }}
                     style={{
                       height: "auto",
@@ -155,12 +158,17 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                       borderWidth: StyleSheet.hairlineWidth * 2,
                       borderColor: LuxuryColors.liteGray,
                       borderRadius: 100,
+                      backgroundColor:
+                        item === selectedSize
+                          ? LuxuryColors.brandColor
+                          : "transparent",
                     }}
                   >
                     <Text
                       style={{
                         fontSize: FontSizes.xLarge,
                         fontFamily: FONTS.poppinsRegular,
+                        color: item === selectedSize ? "white" : "black",
                       }}
                     >
                       {item}
@@ -211,25 +219,29 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                 marginVertical: 10,
               }}
             >
-              {new Array(6)
-                .fill(0)
-                .map((_, index) => ({ id: index }))
-                .map((item, index) => {
-                  return (
-                    <View
-                      key={item.id}
-                      style={{
-                        height: 40,
-                        aspectRatio: 1,
-                        borderRadius: 100,
-                        borderWidth: StyleSheet.hairlineWidth * 2,
-                        borderColor: LuxuryColors.liteGray,
-                        marginLeft: index != 0 ? -8 : 0,
-                        backgroundColor: "white",
-                      }}
+              {_fakeUsers.slice(0, 5).map((item, index) => {
+                return (
+                  <View
+                    key={item}
+                    style={{
+                      height: 40,
+                      aspectRatio: 1,
+                      borderRadius: 100,
+                      borderWidth: StyleSheet.hairlineWidth * 2,
+                      borderColor: LuxuryColors.liteGray,
+                      marginLeft: index != 0 ? -8 : 0,
+                      backgroundColor: "white",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      style={{ flex: 1 }}
+                      transition={300}
+                      source={{ uri: item }}
                     />
-                  );
-                })}
+                  </View>
+                );
+              })}
               <Text
                 style={{
                   marginLeft: 10,

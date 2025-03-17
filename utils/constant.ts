@@ -266,3 +266,12 @@ export const _productList = [
   },
 ]
 
+export const _fakeUsers = [
+  'https://images.unsplash.com/photo-1742038107091-9a7e1f01b42c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8dG93SlpGc2twR2d8fGVufDB8fHx8fA%3D%3D',
+  "https://images.unsplash.com/profile-1727095123599-eb42ef3309e2image?w=40&dpr=2&crop=faces&bg=%23fff&h=40&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+  "https://images.unsplash.com/profile-1702429423728-4fac88586f24image?w=40&dpr=2&crop=faces&bg=%23fff&h=40&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+  "https://images.unsplash.com/profile-1737711845044-70ae5a0ca17f?w=40&dpr=2&crop=faces&bg=%23fff&h=40&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+  "https://images.unsplash.com/profile-1495427732560-fe5248ad6638?w=40&dpr=2&crop=faces&bg=%23fff&h=40&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+  "https://plus.unsplash.com/premium_photo-1741902728626-e00aec0bf055?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8dG93SlpGc2twR2d8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1740979142180-c7aba7a038f4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI2fHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D",
+]
