@@ -39,7 +39,10 @@ const ProductCard = ({
   const dispatch = useDispatch();
 
   const isLiked = useMemo(() => {
-    return favoriteItems.includes(item);
+    const likedResponse = favoriteItems.some(
+      (someItem, index) => item.id === someItem.id
+    );
+    return likedResponse;
   }, [favoriteItems]);
 
   const toggleFavorite = () => {
