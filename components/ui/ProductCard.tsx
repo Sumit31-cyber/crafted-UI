@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { productType } from "@/constants/types";
 import { _windowWidth, FONTS, FontSizes, LuxuryColors } from "@/utils/constant";
 import { Image } from "expo-image";
@@ -27,6 +27,7 @@ const ProductCard = ({
 }) => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const { dismiss } = useBottomSheetModal();
+  const [isLiked, setIsLiked] = useState(false);
 
   return (
     <View
@@ -52,10 +53,12 @@ const ProductCard = ({
             padding: 3,
           }}
         >
-          <View
+          <TouchableOpacity
+            onPress={() => setIsLiked(!isLiked)}
+            activeOpacity={0.6}
             style={{
               position: "absolute",
-              height: _windowWidth * 0.07,
+              height: _windowWidth * 0.06,
               aspectRatio: 1,
               backgroundColor: "white",
               borderRadius: 100,
@@ -66,8 +69,16 @@ const ProductCard = ({
               alignItems: "center",
             }}
           >
-            <Fire size={_windowWidth * 0.05} tint={LuxuryColors.brandColor} />
-          </View>
+            {isLiked ? (
+              <Fire size={"70%"} tint={LuxuryColors.brandColor} />
+            ) : (
+              <Fire
+                size={"70%"}
+                tint={"transparent"}
+                strokeColor={LuxuryColors.brandColor}
+              />
+            )}
+          </TouchableOpacity>
           <Image
             contentFit="fill"
             source={{ uri: item.image }}

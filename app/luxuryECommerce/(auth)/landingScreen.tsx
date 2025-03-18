@@ -14,6 +14,7 @@ import {
   _windowWidth,
   FONTS,
   FontSizes,
+  LuxuryColors,
 } from "@/utils/constant";
 import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
@@ -175,7 +176,7 @@ export default LandingScreen;
 const RenderImage = ({ item, index }: { item: string; index: number }) => {
   return (
     <Image
-      transition={500}
+      transition={400}
       source={{
         uri: item,
       }}
@@ -189,5 +190,6 @@ const styles = StyleSheet.create({
     width: _windowWidth * 0.6,
     borderRadius: _sliderGap,
     marginBottom: _sliderGap,
+    backgroundColor: LuxuryColors.pink,
   },
 });
