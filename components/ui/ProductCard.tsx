@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useRef, useState } from "react";
-import { productType } from "@/constants/types";
+import React, { useMemo, useRef, useState } from "react";
+import { ProductType } from "@/constants/types";
 import { _windowWidth, FONTS, FontSizes, LuxuryColors } from "@/utils/constant";
 import { Image } from "expo-image";
 import { FontAwesome6 } from "@expo/vector-icons";
@@ -11,6 +11,12 @@ import BottomSheet, {
   useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import AddToCardModal from "./AddToCardModal";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItemToFavorite,
+  removeItemFromFavorite,
+} from "@/app/luxuryECommerce/redux/slice/favoriteItemSlice";
+import { RootState } from "@/app/luxuryECommerce/redux/store";
 
 const _padding = _windowWidth * 0.04;
 const _itemGap = 10;
@@ -21,13 +27,25 @@ const ProductCard = ({
   index,
   onPress,
 }: {
-  item: productType;
+  item: ProductType;
   index: number;
   onPress: () => void;
 }) => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const { dismiss } = useBottomSheetModal();
-  const [isLiked, setIsLiked] = useState(false);
+  const { favoriteItems } = useSelector((state: RootState) => state.favorite);
+  // const [isLiked, setIsLiked] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const isLiked = useMemo(() => {
+    return favoriteItems.includes(item);
+  }, [favoriteItems]);
+
+  const toggleFavorite = () => {
+    if (!isLiked) dispatch(addItemToFavorite(item));
+    else dispatch(removeItemFromFavorite({ id: item.id }));
+  };
 
   return (
     <View
@@ -54,7 +72,7 @@ const ProductCard = ({
           }}
         >
           <TouchableOpacity
-            onPress={() => setIsLiked(!isLiked)}
+            onPress={() => toggleFavorite()}
             activeOpacity={0.6}
             style={{
               position: "absolute",

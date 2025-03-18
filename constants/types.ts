@@ -1,4 +1,4 @@
-export type productType =  {
+export type ProductType =  {
     id : number
     name:string,
     price : string,
@@ -6,9 +6,12 @@ export type productType =  {
     discount:string,
     image:string,
     is_hot:boolean,
-
 }
 
+
+export type FavoriteState = {
+    favoriteItems: ProductType[];
+  };
 
     // "name":,
     // "price": 15000,

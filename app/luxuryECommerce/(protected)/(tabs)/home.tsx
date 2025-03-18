@@ -20,7 +20,7 @@ import { MenuIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import { Image } from "expo-image";
 import BlurBackdrop from "@/components/ui/BlurBackdrop";
 import Feather from "@expo/vector-icons/Feather";
-import { productType } from "@/constants/types";
+import { ProductType } from "@/constants/types";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import ProductCard from "@/components/ui/ProductCard";
 import AddToCardModal from "@/components/ui/AddToCardModal";
