@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useMemo, useRef, useState } from "react";
 import { ProductType } from "@/constants/types";
 import { _windowWidth, FONTS, FontSizes, LuxuryColors } from "@/utils/constant";
@@ -17,6 +23,7 @@ import {
   removeItemFromFavorite,
 } from "@/app/luxuryECommerce/redux/slice/favoriteItemSlice";
 import { RootState } from "@/app/luxuryECommerce/redux/store";
+import { addItemToCart } from "@/app/luxuryECommerce/redux/slice/cartSlice";
 
 const _padding = _windowWidth * 0.04;
 const _itemGap = 10;
@@ -51,7 +58,10 @@ const ProductCard = ({
   };
 
   return (
-    <View
+    <Pressable
+      onPress={() => {
+        dispatch(addItemToCart(item));
+      }}
       style={{
         width: _containerSize,
         alignItems: "center",
@@ -184,7 +194,7 @@ const ProductCard = ({
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

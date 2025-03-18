@@ -8,9 +8,17 @@ export type ProductType =  {
     is_hot:boolean,
 }
 
+export type CartType = ProductType & {
+    cartItemCount: number; // Additional property for cart items
+  };
+
 
 export type FavoriteState = {
     favoriteItems: ProductType[];
+  };
+
+export type CartState = {
+    cartItems: CartType[];
   };
 
     // "name":,

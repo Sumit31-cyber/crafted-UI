@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Image } from "expo-image";
 import { removeItemFromFavorite } from "../../redux/slice/favoriteItemSlice";
 import { RootState } from "../../redux/store";
+import { router } from "expo-router";
 
 const Favorite = () => {
   const { favoriteItems } = useSelector((state: RootState) => state.favorite);
@@ -11,6 +12,13 @@ const Favorite = () => {
   const dispatch = useDispatch();
   return (
     <SafeAreaView style={{ flex: 1, padding: 20 }}>
+      <Text
+        onPress={() => {
+          router.navigate("/luxuryECommerce/(protected)/cart");
+        }}
+      >
+        Go To Cart
+      </Text>
       {favoriteItems.map((item, index) => {
         return (
           <Image
