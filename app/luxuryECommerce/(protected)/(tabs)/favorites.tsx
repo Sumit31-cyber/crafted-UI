@@ -58,6 +58,7 @@ const Favorite = () => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              marginVertical: 10,
             }}
           >
             <Text
@@ -73,7 +74,6 @@ const Favorite = () => {
               style={{
                 height: _windowWidth * 0.09,
                 backgroundColor: LuxuryColors.brandColor,
-                marginVertical: 20,
                 borderRadius: 100,
                 flexDirection: "row",
                 alignItems: "center",
@@ -98,25 +98,30 @@ const Favorite = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              gap: _itemGap * 2,
-              marginBottom: 30,
-              padding: _horizontalPadding,
               paddingTop: headerHeight - top,
+              paddingHorizontal: _horizontalPadding,
             }}
           >
-            {favoriteItems.map((item, index) => {
-              return (
-                <ProductCard
-                  key={item.id}
-                  item={item}
-                  index={index}
-                  onPress={() => {}}
-                />
-              );
-            })}
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                gap: _itemGap * 2,
+                marginBottom: 30,
+              }}
+            >
+              {favoriteItems.map((item, index) => {
+                return (
+                  <ProductCard
+                    key={item.id}
+                    item={item}
+                    index={index}
+                    onPress={() => {}}
+                  />
+                );
+              })}
+            </View>
           </View>
           <View
             style={{
