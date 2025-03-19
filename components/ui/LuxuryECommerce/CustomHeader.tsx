@@ -10,10 +10,12 @@ import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
 const CustomHeader = ({
+  title,
   isBackButtonVisible = false,
   icon,
   onPress,
 }: {
+  title: string;
   isBackButtonVisible?: boolean;
   icon: React.ReactNode;
   onPress: () => void;
@@ -45,7 +47,7 @@ const CustomHeader = ({
         </TouchableOpacity>
       )}
       <Text style={{ fontFamily: FONTS.TNRBold, fontSize: FontSizes.xLarge }}>
-        Favorites
+        {title}
       </Text>
       <TouchableOpacity
         activeOpacity={0.6}

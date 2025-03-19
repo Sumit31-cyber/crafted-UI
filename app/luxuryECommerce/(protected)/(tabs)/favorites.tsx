@@ -2,8 +2,8 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "expo-image";
-import { removeItemFromFavorite } from "../../redux/slice/favoriteItemSlice";
-import { RootState } from "../../redux/store";
+import { removeItemFromFavorite } from "../../../../redux/LuxuryECommerceRedux/slice/favoriteItemSlice";
+import { RootState } from "../../../../redux/LuxuryECommerceRedux/store";
 import { router } from "expo-router";
 import BlurBackdrop from "@/components/ui/BlurBackdrop";
 import {
@@ -48,6 +48,7 @@ const Favorite = () => {
           }}
         >
           <CustomHeader
+            title="Favorites"
             icon={<SimpleLineIcons name="handbag" size={18} color="black" />}
             onPress={() => {
               router.navigate("/luxuryECommerce/(protected)/cart");

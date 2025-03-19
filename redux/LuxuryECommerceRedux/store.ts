@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import favoriteItemReducer from "@/app/luxuryECommerce/redux/slice/favoriteItemSlice";
-import cartReducer from "@/app/luxuryECommerce/redux/slice/cartSlice";
+import favoriteItemReducer from "@/redux/LuxuryECommerceRedux/slice/favoriteItemSlice";
+import cartReducer from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist";
 

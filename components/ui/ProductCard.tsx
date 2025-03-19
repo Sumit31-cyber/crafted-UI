@@ -27,9 +27,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addItemToFavorite,
   removeItemFromFavorite,
-} from "@/app/luxuryECommerce/redux/slice/favoriteItemSlice";
-import { RootState } from "@/app/luxuryECommerce/redux/store";
-import { addItemToCart } from "@/app/luxuryECommerce/redux/slice/cartSlice";
+} from "@/redux/LuxuryECommerceRedux/slice/favoriteItemSlice";
+import { RootState } from "@/redux/LuxuryECommerceRedux/store";
+import { addItemToCart } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
 
 const _itemGap = 10;
 const _containerSize = _windowWidth / 2 - _horizontalPadding - _itemGap;

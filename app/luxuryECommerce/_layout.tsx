@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Provider } from "react-redux";
-import { persistor, store } from "./redux/store";
+import { persistor, store } from "../../redux/LuxuryECommerceRedux/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 const Layout = () => {
