@@ -7,7 +7,13 @@ import {
 } from "react-native";
 import React, { useMemo, useRef, useState } from "react";
 import { ProductType } from "@/constants/types";
-import { _windowWidth, FONTS, FontSizes, LuxuryColors } from "@/utils/constant";
+import {
+  _horizontalPadding,
+  _windowWidth,
+  FONTS,
+  FontSizes,
+  LuxuryColors,
+} from "@/utils/constant";
 import { Image } from "expo-image";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Fire } from "@/assets/svgs/luxuryECommSvgs/svgs";
@@ -25,9 +31,8 @@ import {
 import { RootState } from "@/app/luxuryECommerce/redux/store";
 import { addItemToCart } from "@/app/luxuryECommerce/redux/slice/cartSlice";
 
-const _padding = _windowWidth * 0.04;
 const _itemGap = 10;
-const _containerSize = _windowWidth / 2 - _padding - _itemGap;
+const _containerSize = _windowWidth / 2 - _horizontalPadding - _itemGap;
 const _imageSize = _containerSize;
 const ProductCard = ({
   item,

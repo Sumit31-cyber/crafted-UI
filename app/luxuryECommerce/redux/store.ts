@@ -6,36 +6,31 @@ import { persistReducer, persistStore } from "redux-persist";
 
 // Combine reducers
 const rootReducer = combineReducers({
-  favorite: favoriteItemReducer, // Add other reducers here
-  cart: cartReducer, // Add other reducers here
+  favorite: favoriteItemReducer, 
+  cart: cartReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-
-// Persist config
 const persistConfig = {
-  key: "root", // Key for the persisted state
-  storage: AsyncStorage, // Storage engine
-  whitelist: ["favorite", "cart"], // Reducers to persist (optional)
-  // blacklist: ['someReducer'], // Reducers to exclude from persistence (optional)
+  key: "root",
+  storage: AsyncStorage,
+  whitelist: ["favorite", "cart"],
 };
 
-// Create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Create the Redux store
 const store = configureStore({
-  reducer: persistedReducer, // Pass the persisted reducer directly here
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ["persist/PERSIST"], // Ignore redux-persist actions
+        ignoredActions: ["persist/PERSIST"],
       },
     }),
 });
 
-// Create the persistor
+
 const persistor = persistStore(store);
 
 export { store, persistor };

@@ -81,6 +81,8 @@ export const _animationLists : AnimationListItemType[] = [
 export const  _windowWidth = Dimensions.get('window').width;
 export  const _windowHeight = Dimensions.get('window').height
 
+
+export const _horizontalPadding = _windowWidth * 0.03
 // Define a base font size based on the screen width or height
 const baseFontSize = _windowWidth * 0.04; // 4% of the screen width
 

@@ -5,10 +5,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useRef, useState } from "react";
-import { useThemeColor } from "@/hooks/useThemeColor";
+import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
+  _horizontalPadding,
   _productList,
   _windowHeight,
   _windowWidth,
@@ -20,11 +20,7 @@ import { MenuIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import { Image } from "expo-image";
 import BlurBackdrop from "@/components/ui/BlurBackdrop";
 import Feather from "@expo/vector-icons/Feather";
-import { ProductType } from "@/constants/types";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import ProductCard from "@/components/ui/ProductCard";
-import AddToCardModal from "@/components/ui/AddToCardModal";
-import BottomSheet from "@gorhom/bottom-sheet";
 
 const _viewList = new Array(3).fill(0).map((_, index) => ({ id: index }));
 const _categories = [
@@ -41,11 +37,9 @@ const _viewListItemSpacing = _windowHeight * 0.015;
 const _padding = _windowWidth * 0.04;
 const _itemGap = 10;
 const Home = () => {
-  const { background, gray } = useThemeColor();
   const { top } = useSafeAreaInsets();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const addToCardModalRef = useRef<BottomSheet>(null);
   return (
     <View style={{ flex: 1, backgroundColor: "#f0f1f1" }}>
       <BlurBackdrop />
@@ -60,7 +54,7 @@ const Home = () => {
           style={{
             // height: _windowHeight / 4,
             width: _windowWidth,
-            paddingHorizontal: _windowWidth * 0.03,
+            paddingHorizontal: _horizontalPadding,
           }}
         >
           <LinearGradient
@@ -75,7 +69,7 @@ const Home = () => {
           <View
             style={{
               paddingTop: top + 10,
-              paddingHorizontal: _windowWidth * 0.03,
+              paddingHorizontal: _horizontalPadding,
               flexDirection: "row",
               justifyContent: "space-between",
             }}
@@ -109,7 +103,7 @@ const Home = () => {
           <OfferView />
         </View>
 
-        <View style={{ flex: 1, paddingHorizontal: _padding }}>
+        <View style={{ flex: 1, paddingHorizontal: _horizontalPadding }}>
           <Categories
             selectedCategory={selectedCategory}
             onPress={(type) => {

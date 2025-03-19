@@ -14,6 +14,7 @@ import Svg, {
   Circle,
   RadialGradient,
   Polygon,
+  Ellipse,
 } from "react-native-svg";
 
 export const HomeIcon = ({ size, tint = "#111" }) => {
@@ -239,6 +240,58 @@ export const Fire = ({ size = "100%", tint = "#111", strokeColor = tint }) => {
           fill={tint}
           stroke={strokeColor}
           strokeWidth={1.5}
+        />
+      </G>
+    </Svg>
+  );
+};
+export const FilterIcon = ({ size = 20, tint = "#111", strokeWidth = 1 }) => {
+  return (
+    <Svg
+      height={size}
+      width={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <G id="SVGRepo_bgCarrier" strokeWidth={0} />
+      <G
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <G id="SVGRepo_iconCarrier">
+        <Path
+          d="M10 8L20 8"
+          stroke={tint}
+          strokeLinecap="round"
+          strokeWidth={strokeWidth}
+        />
+        <Path
+          d="M4 16L14 16"
+          stroke={tint}
+          strokeLinecap="round"
+          strokeWidth={strokeWidth}
+        />
+        <Ellipse
+          cx={7}
+          cy={8}
+          rx={3}
+          ry={3}
+          transform="rotate(90 7 8)"
+          stroke={tint}
+          strokeLinecap="round"
+          strokeWidth={strokeWidth}
+        />
+        <Ellipse
+          cx={17}
+          cy={16}
+          rx={3}
+          ry={3}
+          transform="rotate(90 17 16)"
+          stroke={tint}
+          strokeLinecap="round"
+          strokeWidth={strokeWidth}
         />
       </G>
     </Svg>

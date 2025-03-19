@@ -5,7 +5,12 @@ import { BlurView } from "expo-blur";
 
 const BlurBackdrop = () => {
   return (
-    <View style={[StyleSheet.absoluteFill]}>
+    <View
+      style={[
+        StyleSheet.absoluteFill,
+        { backgroundColor: "rgba(256,256,256,0.3)" },
+      ]}
+    >
       <View
         style={[
           styles.containerStyle,
