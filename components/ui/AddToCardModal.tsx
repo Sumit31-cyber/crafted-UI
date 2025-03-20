@@ -19,12 +19,18 @@ import CustomBackdrop from "./CustomBackdrop";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated";
 import { Image } from "expo-image";
+import BlurBackdrop from "./BlurBackdrop";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
+import { RootState } from "@/redux/LuxuryECommerceRedux/store";
 export type Ref = BottomSheetModal;
 
 const _padding = 12;
 const sizeList = ["S", "M", "L", "XL"];
 const AddToCardModal = forwardRef<Ref>((props, ref) => {
   const { dismiss } = useBottomSheetModal();
+  const { selectedItem } = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
   const [itemsCount, setItemsCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
   const handleItemsCount = useCallback(
@@ -40,6 +46,16 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
     [itemsCount]
   );
 
+  const handleAddItemToCart = () => {
+    if (selectedItem) {
+      const finalItem = {
+        ...selectedItem,
+        cartItemCount: itemsCount,
+      };
+      dispatch(addItemToCart(finalItem));
+      dismiss();
+    }
+  };
   const renderBackdrop = useCallback(
     () => (
       <CustomBackdrop
@@ -62,6 +78,7 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
       ref={ref}
     >
       <BottomSheetView>
+        <BlurBackdrop />
         <View style={{ height: "auto", padding: _padding }}>
           <View
             style={{
@@ -78,9 +95,10 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
               style={{
                 flexDirection: "row",
                 height: 40,
-                backgroundColor: LuxuryColors.brandColor,
-                padding: 10,
+                backgroundColor: "white",
+                padding: 5,
                 borderRadius: 100,
+                alignItems: "center",
               }}
             >
               <TouchableOpacity
@@ -91,13 +109,15 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                 style={{
                   height: "100%",
                   aspectRatio: 1,
-                  backgroundColor: "white",
+                  // height: "100%",
+                  // aspectRatio: 1,
+                  backgroundColor: LuxuryColors.brandColor,
                   borderRadius: 100,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <AntDesign name="plus" size={13} color="black" />
+                <AntDesign name="plus" size={13} color="white" />
               </TouchableOpacity>
               <View
                 style={{
@@ -109,9 +129,8 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
               >
                 <Text
                   style={{
-                    fontSize: FontSizes.small,
-                    fontFamily: FONTS.poppinsBold,
-                    color: "white",
+                    fontSize: FontSizes.medium,
+                    fontFamily: FONTS.poppinsRegular,
                   }}
                 >
                   {itemsCount}
@@ -129,6 +148,8 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                   borderRadius: 100,
                   justifyContent: "center",
                   alignItems: "center",
+                  borderWidth: StyleSheet.hairlineWidth * 2,
+                  borderColor: LuxuryColors.brandColor,
                 }}
               >
                 <AntDesign name="minus" size={13} color="black" />
@@ -156,7 +177,7 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                       alignItems: "center",
                       justifyContent: "center",
                       borderWidth: StyleSheet.hairlineWidth * 2,
-                      borderColor: LuxuryColors.liteGray,
+                      borderColor: LuxuryColors.brandColor,
                       borderRadius: 100,
                       backgroundColor:
                         item === selectedSize
@@ -208,7 +229,7 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
             <View
               style={{
                 width: "100%",
-                height: StyleSheet.hairlineWidth * 2,
+                height: StyleSheet.hairlineWidth,
                 backgroundColor: LuxuryColors.liteGray,
               }}
             ></View>
@@ -227,7 +248,7 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                       height: 40,
                       aspectRatio: 1,
                       borderRadius: 100,
-                      borderWidth: StyleSheet.hairlineWidth * 2,
+                      borderWidth: StyleSheet.hairlineWidth * 4,
                       borderColor: LuxuryColors.liteGray,
                       marginLeft: index != 0 ? -8 : 0,
                       backgroundColor: "white",
@@ -246,7 +267,6 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                 style={{
                   marginLeft: 10,
                   fontFamily: FONTS.poppinsRegular,
-                  color: LuxuryColors.gray,
                 }}
               >
                 5k+ people pinned this
@@ -255,33 +275,36 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
             <View
               style={{
                 width: "100%",
-                height: StyleSheet.hairlineWidth * 2,
+                height: StyleSheet.hairlineWidth,
                 backgroundColor: LuxuryColors.liteGray,
               }}
             ></View>
             <View style={{ flexDirection: "row", gap: 20, marginVertical: 30 }}>
-              <View
+              <TouchableOpacity
+                onPress={() => {}}
+                activeOpacity={0.8}
                 style={{
                   flex: 1,
                   height: 50,
                   borderRadius: 100,
                   justifyContent: "center",
                   alignItems: "center",
-                  borderWidth: StyleSheet.hairlineWidth * 2,
-                  borderColor: LuxuryColors.brandColor,
+                  backgroundColor: LuxuryColors.buttonColor,
                 }}
               >
                 <Text
                   style={{
                     fontFamily: FONTS.poppinsRegular,
-                    fontSize: FontSizes.medium,
-                    color: LuxuryColors.brandColor,
+                    fontSize: FontSizes.small,
+                    color: "white",
                   }}
                 >
                   Buy now
                 </Text>
-              </View>
-              <View
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleAddItemToCart}
+                activeOpacity={0.8}
                 style={{
                   flex: 1,
                   height: 50,
@@ -289,19 +312,19 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                   alignItems: "center",
                   justifyContent: "center",
                   padding: 10,
-                  backgroundColor: LuxuryColors.brandColor,
+                  backgroundColor: LuxuryColors.buttonColor,
                 }}
               >
                 <Text
                   style={{
                     fontFamily: FONTS.poppinsRegular,
-                    fontSize: FontSizes.medium,
+                    fontSize: FontSizes.small,
                     color: "white",
                   }}
                 >
                   Add to cart
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

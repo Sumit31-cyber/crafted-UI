@@ -51,9 +51,9 @@ export default BlurBackdrop;
 const styles = StyleSheet.create({
   containerStyle: {
     aspectRatio: 1,
-    backgroundColor: LuxuryColors.pink,
+    backgroundColor: "#f6edee",
     borderRadius: 1000,
     position: "absolute",
-    opacity: 0.35,
+    // opacity: 0.35,
   },
 });

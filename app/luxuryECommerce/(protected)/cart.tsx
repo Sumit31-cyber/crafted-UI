@@ -72,7 +72,7 @@ const Cart = () => {
         style={{
           position: "absolute",
           width: _windowWidth,
-          backgroundColor: LuxuryColors.brandColor,
+          backgroundColor: "white",
           bottom: 0,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
@@ -81,15 +81,9 @@ const Cart = () => {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          shadowColor: LuxuryColors.brandColor,
-          shadowOffset: {
-            width: 0,
-            height: -2,
-          },
-          shadowOpacity: 0.17,
-          shadowRadius: 7.49,
-          elevation: 12,
           paddingBottom: bottom,
+          borderWidth: StyleSheet.hairlineWidth * 2,
+          borderColor: LuxuryColors.pink,
         }}
       >
         <View>
@@ -97,7 +91,7 @@ const Cart = () => {
             style={{
               fontSize: FontSizes.small,
               fontFamily: FONTS.poppinsRegular,
-              color: "white",
+              color: LuxuryColors.gray,
             }}
           >
             Amount to pay
@@ -106,7 +100,6 @@ const Cart = () => {
             style={{
               fontSize: FontSizes.large,
               fontFamily: FONTS.poppinsMedium,
-              color: "white",
             }}
           >
             ₹{totalItemPrice.toLocaleString()}
@@ -117,7 +110,7 @@ const Cart = () => {
           style={{
             paddingVertical: 10,
             paddingHorizontal: 20,
-            backgroundColor: "white",
+            backgroundColor: "black",
             borderRadius: 100,
           }}
         >
@@ -125,9 +118,10 @@ const Cart = () => {
             style={{
               fontSize: FontSizes.small,
               fontFamily: FONTS.poppinsRegular,
+              color: "white",
             }}
           >
-            Proceed to checkout
+            Proceed To Checkout
           </Text>
         </TouchableOpacity>
       </View>

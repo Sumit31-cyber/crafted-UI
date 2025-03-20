@@ -1,15 +1,19 @@
-import { CartState, ProductType } from "@/constants/types";
+import { CartState, CartType, ProductType } from "@/constants/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: CartState = {
   cartItems: [],
+  selectedItem : null,
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItemToCart: (state, action: PayloadAction<ProductType>) => {
+    setSelectedItem : (state, action) => {
+      state.selectedItem = action.payload
+    },
+    addItemToCart: (state, action: PayloadAction<CartType>) => {
 
         const product = action.payload;
       const existingItem = state.cartItems.find(
@@ -17,9 +21,9 @@ const cartSlice = createSlice({
       );
 
       if (existingItem) {
-        existingItem.cartItemCount += 1;
+        existingItem.cartItemCount += product.cartItemCount;
       } else {
-        state.cartItems.push({ ...product, cartItemCount: 1 });
+        state.cartItems.push({ ...product, cartItemCount: product.cartItemCount });
       }
     },
 
@@ -57,6 +61,7 @@ export const {
   removeItemFromCart,
   incrementCartItem,
   decrementCartItem,
+  setSelectedItem
 } = cartSlice.actions;
 
 // Export the reducer

@@ -26,14 +26,8 @@ const CartCard = ({
         flexDirection: "row",
         borderRadius: 20,
         padding: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.17,
-        shadowRadius: 7.49,
-        elevation: 12,
+        borderWidth: StyleSheet.hairlineWidth * 2,
+        borderColor: LuxuryColors.pink,
       }}
     >
       <View style={{ flex: 0.6, justifyContent: "center" }}>
@@ -141,14 +135,16 @@ const CartCard = ({
             style={{
               height: 38,
               aspectRatio: 1,
-              backgroundColor: LuxuryColors.brandColor,
+              borderWidth: StyleSheet.hairlineWidth * 2,
+              borderColor: LuxuryColors.brandColor,
               borderRadius: 100,
               left: -40,
               justifyContent: "center",
               alignItems: "center",
+              backgroundColor: "white",
             }}
           >
-            <AntDesign name="minus" size={24} color="white" />
+            <AntDesign name="minus" size={24} color="black" />
           </TouchableOpacity>
         </View>
       </View>

@@ -19,6 +19,7 @@ export type FavoriteState = {
 
 export type CartState = {
     cartItems: CartType[];
+    selectedItem : ProductType | null
   };
 
     // "name":,

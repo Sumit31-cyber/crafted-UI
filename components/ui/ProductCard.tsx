@@ -29,7 +29,10 @@ import {
   removeItemFromFavorite,
 } from "@/redux/LuxuryECommerceRedux/slice/favoriteItemSlice";
 import { RootState } from "@/redux/LuxuryECommerceRedux/store";
-import { addItemToCart } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
+import {
+  addItemToCart,
+  setSelectedItem,
+} from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
 
 const _itemGap = 10;
 const _containerSize = _windowWidth / 2 - _horizontalPadding - _itemGap;
@@ -64,9 +67,6 @@ const ProductCard = ({
 
   return (
     <Pressable
-      onPress={() => {
-        dispatch(addItemToCart(item));
-      }}
       style={{
         width: _containerSize,
         alignItems: "center",
@@ -181,8 +181,8 @@ const ProductCard = ({
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => {
-                console.log("Called");
                 bottomSheetRef.current?.present();
+                dispatch(setSelectedItem(item));
               }}
               style={{
                 height: _windowWidth * 0.07,
