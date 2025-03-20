@@ -156,7 +156,6 @@ const CartCard = ({
         contentFit="fill"
         style={{
           flex: 0.4,
-          backgroundColor: "yellow",
           borderRadius: 20,
           height: _windowWidth * 0.45,
         }}

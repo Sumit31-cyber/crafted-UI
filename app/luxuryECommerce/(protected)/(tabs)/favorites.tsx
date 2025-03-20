@@ -7,6 +7,7 @@ import { RootState } from "../../../../redux/LuxuryECommerceRedux/store";
 import { router } from "expo-router";
 import BlurBackdrop from "@/components/ui/BlurBackdrop";
 import {
+  _headerHeight,
   _horizontalPadding,
   _windowWidth,
   FONTS,
@@ -19,19 +20,107 @@ import { FilterIcon, Fire } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import ProductCard from "@/components/ui/ProductCard";
 import { BlurView } from "expo-blur";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader";
 
 const _itemGap = 10;
 const Favorite = () => {
   const { favoriteItems } = useSelector((state: RootState) => state.favorite);
-  console.log(favoriteItems);
-  const dispatch = useDispatch();
   const { top } = useSafeAreaInsets();
-  const [headerHeight, setHederHeight] = useState(0);
+  const { Header, headerHeight } = useCustomHeader();
+  console.log(headerHeight);
   return (
     <View style={{ flex: 1 }}>
       <BlurBackdrop />
-      <SafeAreaView style={{ flex: 1 }}>
-        <BlurView
+
+      <Header
+        title="Favorites"
+        icon={<SimpleLineIcons name="handbag" size={18} color="black" />}
+        onPress={() => {
+          router.navigate("/luxuryECommerce/(protected)/cart");
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginVertical: 10,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: FONTS.poppinsRegular,
+              fontSize: FontSizes.large,
+              color: "black",
+            }}
+          >
+            Products
+          </Text>
+          <View
+            style={{
+              height: _windowWidth * 0.09,
+              backgroundColor: LuxuryColors.brandColor,
+              borderRadius: 100,
+              flexDirection: "row",
+              alignItems: "center",
+              paddingHorizontal: 14,
+              gap: 6,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: FONTS.poppinsRegular,
+                fontSize: FontSizes.tiny,
+                letterSpacing: 0.6,
+                color: "white",
+              }}
+            >
+              Filter
+            </Text>
+            <FilterIcon size={20} strokeWidth={1.5} tint={"white"} />
+          </View>
+        </View>
+      </Header>
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            paddingTop: headerHeight + 15,
+            paddingHorizontal: _horizontalPadding,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              gap: _itemGap * 2,
+              marginBottom: 30,
+            }}
+          >
+            {favoriteItems.map((item, index) => {
+              return (
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  onPress={() => {}}
+                />
+              );
+            })}
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        ></View>
+      </ScrollView>
+
+      {/* <BlurView
           intensity={100}
           onLayout={(e) => {
             console.log();
@@ -95,51 +184,45 @@ const Favorite = () => {
               <FilterIcon size={20} strokeWidth={1.5} tint={"white"} />
             </View>
           </View>
-        </BlurView>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View
-            style={{
-              paddingTop: headerHeight - top,
-              paddingHorizontal: _horizontalPadding,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-                gap: _itemGap * 2,
-                marginBottom: 30,
-              }}
-            >
-              {favoriteItems.map((item, index) => {
-                return (
-                  <ProductCard
-                    key={item.id}
-                    item={item}
-                    index={index}
-                    onPress={() => {}}
-                  />
-                );
-              })}
-            </View>
-          </View>
+        </BlurView> */}
+      {/* <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            paddingTop: headerHeight - top,
+            paddingHorizontal: _horizontalPadding,
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
+              gap: _itemGap * 2,
+              marginBottom: 30,
             }}
           >
-            {/* {favoriteItems.map((item, index) => {
+            {favoriteItems.map((item, index) => {
               return (
-                <ProductCard item={item} index={index} onPress={() => {}} />
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  onPress={() => {}}
+                />
               );
-            })} */}
+            })}
           </View>
-        </ScrollView>
-      </SafeAreaView>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
+        </View>
+      </ScrollView> */}
     </View>
   );
 };
