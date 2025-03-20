@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import React from "react";
 import { _windowWidth, LuxuryColors } from "@/utils/constant";
 import { BlurView } from "expo-blur";
 
-const BlurBackdrop = () => {
+const BlurBackdrop = ({ style }: { style?: ViewStyle }) => {
   return (
     <View
       style={[
         StyleSheet.absoluteFill,
-        { backgroundColor: "rgba(256,256,256,0.3)" },
+        { backgroundColor: "rgba(256,256,256,0.3)", ...style },
       ]}
     >
       <View

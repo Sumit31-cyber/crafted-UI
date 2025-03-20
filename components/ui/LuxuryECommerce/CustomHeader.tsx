@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import {
+  _headerHeight,
   _horizontalPadding,
   _windowWidth,
   FONTS,
@@ -27,6 +28,7 @@ const CustomHeader = ({
         justifyContent: "space-between",
         alignItems: "center",
         paddingVertical: _horizontalPadding * 0.7,
+        height: _headerHeight,
       }}
     >
       {isBackButtonVisible && (

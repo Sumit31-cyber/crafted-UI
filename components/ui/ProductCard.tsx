@@ -143,7 +143,7 @@ const ProductCard = ({
               color: LuxuryColors.brandColor,
             }}
           >
-            ₹{item.price}
+            ₹{item.price.toLocaleString()}
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View

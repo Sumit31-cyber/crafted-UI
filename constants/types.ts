@@ -1,7 +1,7 @@
 export type ProductType =  {
     id : number
     name:string,
-    price : string,
+    price : number,
     original_price:string,
     discount:string,
     image:string,

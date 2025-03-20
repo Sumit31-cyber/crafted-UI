@@ -1,5 +1,14 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  FlatList,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/LuxuryECommerceRedux/store";
 import { Image } from "expo-image";
@@ -9,76 +18,121 @@ import {
   removeItemFromCart,
 } from "../../../redux/LuxuryECommerceRedux/slice/cartSlice";
 import CustomHeader from "@/components/ui/LuxuryECommerce/CustomHeader";
-import { _horizontalPadding, FONTS, FontSizes } from "@/utils/constant";
+import {
+  _horizontalPadding,
+  _windowWidth,
+  FONTS,
+  FontSizes,
+  LuxuryColors,
+} from "@/utils/constant";
 import { AntDesign, Entypo } from "@expo/vector-icons";
+import BlurBackdrop from "@/components/ui/BlurBackdrop";
+import CartCard from "@/components/ui/LuxuryECommerce/CartCard";
 
 const Cart = () => {
-  // const { cartItems } = useSelector((state: RootState) => state.cart);
-  // const dispatch = useDispatch();
+  const { cartItems } = useSelector((state: RootState) => state.cart);
+
+  const totalItemPrice = useMemo(() => {
+    const totalAmount = cartItems.reduce((sum, product) => {
+      const price = product.price * product.cartItemCount;
+      return sum + price;
+    }, 0);
+    return totalAmount;
+  }, [cartItems]);
   return (
-    <SafeAreaView style={{}}>
-      <View style={{ paddingHorizontal: 10 }}>
-        <CustomHeader
-          title="Cart"
-          isBackButtonVisible={true}
-          icon={<Entypo name="dots-three-vertical" size={16} color="black" />}
-          onPress={() => {}}
-        />
-        <View
-          style={{
-            height: 160,
-            width: "100%",
-            backgroundColor: "rgba(1,1,1,0.1)",
-            flexDirection: "row",
-            borderRadius: 20,
-            padding: 10,
-          }}
-        >
-          <View style={{ flex: 0.6, justifyContent: "center" }}>
-            <Text
-              style={{
-                fontFamily: FONTS.poppinsMedium,
-                fontSize: FontSizes.large,
-              }}
-            >
-              This is sample text
-            </Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View style={{ flex: 1 }}>
+      <BlurBackdrop style={{ backgroundColor: "white" }} />
+
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+          <View style={{ paddingHorizontal: _horizontalPadding }}>
+            <CustomHeader
+              title="Cart"
+              isBackButtonVisible={true}
+              icon={
+                <Entypo name="dots-three-vertical" size={16} color="black" />
+              }
+              onPress={() => {}}
+            />
+          </View>
+          <FlatList
+            data={cartItems}
+            ListFooterComponent={<View style={{ height: 150 }} />}
+            contentContainerStyle={{
+              gap: 20,
+              paddingHorizontal: 10,
+              marginTop: 10,
+            }}
+            renderItem={({ item, index }) => {
+              return <CartCard cartItem={item} index={index} />;
+            }}
+          />
+          <View
+            style={{
+              position: "absolute",
+              width: _windowWidth,
+              backgroundColor: LuxuryColors.brandColor,
+              bottom: 0,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              paddingVertical: 20,
+              paddingHorizontal: 20,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              shadowColor: LuxuryColors.brandColor,
+              shadowOffset: {
+                width: 0,
+                height: -2,
+              },
+              shadowOpacity: 0.17,
+              shadowRadius: 7.49,
+
+              elevation: 12,
+            }}
+          >
+            <View>
               <Text
                 style={{
-                  fontFamily: FONTS.poppinsRegular,
                   fontSize: FontSizes.small,
+                  fontFamily: FONTS.poppinsRegular,
+                  color: "white",
                 }}
               >
-                Review (4.9
+                Amount to pay
               </Text>
-              <View style={{ alignSelf: "center" }}>
-                <AntDesign name="star" size={FontSizes.tiny} color="black" />
-              </View>
               <Text
                 style={{
-                  fontFamily: FONTS.poppinsRegular,
-                  fontSize: FontSizes.small,
+                  fontSize: FontSizes.large,
+                  fontFamily: FONTS.poppinsMedium,
+                  color: "white",
                 }}
               >
-                )
+                ₹{totalItemPrice}
               </Text>
             </View>
-            <Text
+            <TouchableOpacity
+              activeOpacity={0.8}
               style={{
-                fontFamily: FONTS.poppinsMedium,
-                fontSize: FontSizes.large,
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                backgroundColor: "white",
+                borderRadius: 100,
               }}
             >
-              12,234
-            </Text>
+              <Text
+                style={{
+                  fontSize: FontSizes.small,
+                  fontFamily: FONTS.poppinsRegular,
+                }}
+              >
+                Proceed to checkout
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View
-            style={{ flex: 0.4, backgroundColor: "yellow", borderRadius: 20 }}
-          ></View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
     // <SafeAreaView>
     //   {cartItems.map((item, index) => {
     //     return (
