@@ -204,16 +204,14 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
               Product Details
             </Text>
             <Text
-              numberOfLines={3}
+              // numberOfLines={2}
               ellipsizeMode="clip"
               style={{
                 fontFamily: FONTS.poppinsRegular,
                 color: LuxuryColors.gray,
               }}
             >
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout It is a
-              long established{" "}
+              {selectedItem?.description}{" "}
               <Text
                 style={{
                   fontFamily: FONTS.poppinsMedium,

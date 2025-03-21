@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   _horizontalPadding,
@@ -22,8 +22,6 @@ import BlurBackdrop from "@/components/ui/BlurBackdrop";
 import Feather from "@expo/vector-icons/Feather";
 import ProductCard from "@/components/ui/ProductCard";
 import { useDispatch } from "react-redux";
-import { clearCart } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
-import { clearFavoriteItemList } from "@/redux/LuxuryECommerceRedux/slice/favoriteItemSlice";
 import { MasonryFlashList } from "@shopify/flash-list";
 
 const _viewList = new Array(3).fill(0).map((_, index) => ({ id: index }));
@@ -38,9 +36,7 @@ const _categories = [
   { type: "Shoes", image: require("@/assets/images/icons8-shoes-90.png") },
 ];
 const _viewListItemSpacing = _windowHeight * 0.015;
-const _padding = _windowWidth * 0.04;
-const _itemGap = 10;
-
+const _numOfColumns = 2;
 const Home = () => {
   const { top } = useSafeAreaInsets();
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -152,38 +148,17 @@ const Home = () => {
               </View>
             </View>
           </View>
-
-          {/* <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              gap: _itemGap * 2,
-              marginBottom: 30,
-            }}
-          >
-            {productList.map((item, index) => {
-              return (
-                <ProductCard
-                  key={item.id}
-                  item={item}
-                  index={index}
-                  onPress={() => {}}
-                />
-              );
-            })}
-          </View> */}
         </View>
         <MasonryFlashList
           scrollEnabled={false}
           data={productList}
-          numColumns={2}
+          numColumns={_numOfColumns}
           contentContainerStyle={{
-            paddingHorizontal: _horizontalPadding,
+            paddingHorizontal: _horizontalPadding / 2,
           }}
           renderItem={({ item, index }) => {
             return (
-              <View style={{ margin: _horizontalPadding / 2 }}>
+              <View style={{ margin: _horizontalPadding / _numOfColumns }}>
                 <ProductCard
                   key={item.id}
                   item={item}

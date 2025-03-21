@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 import React, { useState } from "react";
 import {
   _headerHeight,
@@ -21,16 +27,22 @@ const useCustomHeader = () => {
     icon,
     onPress,
     children,
+    blurIntensity = 100,
+    rightButtonStyle,
+    leftButtonStyle,
   }: {
     title: string;
     isBackButtonVisible?: boolean;
     icon: React.ReactNode;
     onPress: () => void;
     children?: React.ReactNode;
+    blurIntensity?: number;
+    rightButtonStyle?: ViewStyle;
+    leftButtonStyle?: ViewStyle;
   }) => {
     return (
       <BlurView
-        intensity={100}
+        intensity={blurIntensity}
         style={{
           position: "absolute",
           paddingTop: top,
@@ -64,6 +76,7 @@ const useCustomHeader = () => {
                 borderColor: "black",
                 alignItems: "center",
                 justifyContent: "center",
+                ...leftButtonStyle,
               }}
             >
               <AntDesign name="arrowleft" size={18} color="black" />
@@ -85,6 +98,7 @@ const useCustomHeader = () => {
               borderColor: "black",
               alignItems: "center",
               justifyContent: "center",
+              ...rightButtonStyle,
             }}
           >
             {icon}

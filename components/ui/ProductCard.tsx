@@ -34,6 +34,7 @@ import {
   addItemToCart,
   setSelectedItem,
 } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
+import { router } from "expo-router";
 
 // const _itemGap = 10;
 // const _containerSize = _windowWidth / 2 - _horizontalPadding - _itemGap;
@@ -99,6 +100,12 @@ const ProductCard = ({
   };
   return (
     <Pressable
+      onPress={() => {
+        router.navigate({
+          pathname: "/luxuryECommerce/(protected)/productDetailScreen",
+          params: { id: item.id },
+        });
+      }}
       style={{
         width: "100%",
         alignItems: "center",

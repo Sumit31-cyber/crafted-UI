@@ -1,8 +1,6 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Image } from "expo-image";
-import { removeItemFromFavorite } from "../../../../redux/LuxuryECommerceRedux/slice/favoriteItemSlice";
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/LuxuryECommerceRedux/store";
 import { router } from "expo-router";
 import BlurBackdrop from "@/components/ui/BlurBackdrop";
@@ -14,21 +12,17 @@ import {
   FontSizes,
   LuxuryColors,
 } from "@/utils/constant";
-import CustomHeader from "@/components/ui/LuxuryECommerce/CustomHeader";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { FilterIcon, Fire } from "@/assets/svgs/luxuryECommSvgs/svgs";
+import { FilterIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import ProductCard from "@/components/ui/ProductCard";
-import { BlurView } from "expo-blur";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader";
 import { MasonryFlashList } from "@shopify/flash-list";
 
-const _itemGap = 10;
+const _numOfColumns = 2;
 const Favorite = () => {
   const { favoriteItems } = useSelector((state: RootState) => state.favorite);
-  const { top } = useSafeAreaInsets();
   const { Header, headerHeight } = useCustomHeader();
-  console.log(headerHeight);
   return (
     <View style={{ flex: 1 }}>
       <BlurBackdrop />
@@ -85,14 +79,14 @@ const Favorite = () => {
 
       <MasonryFlashList
         data={favoriteItems}
-        numColumns={2}
+        numColumns={_numOfColumns}
         contentContainerStyle={{
           paddingTop: headerHeight + 15,
-          paddingHorizontal: _horizontalPadding,
+          paddingHorizontal: _horizontalPadding / _numOfColumns,
         }}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ margin: _horizontalPadding / 2 }}>
+            <View style={{ margin: _horizontalPadding / _numOfColumns }}>
               <ProductCard
                 key={item.id}
                 item={item}

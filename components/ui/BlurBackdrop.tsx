@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import React from "react";
-import { _windowWidth, LuxuryColors } from "@/utils/constant";
+import { _windowHeight, _windowWidth, LuxuryColors } from "@/utils/constant";
 import { BlurView } from "expo-blur";
 
 const BlurBackdrop = ({ style }: { style?: ViewStyle }) => {
@@ -15,8 +15,8 @@ const BlurBackdrop = ({ style }: { style?: ViewStyle }) => {
         style={[
           styles.containerStyle,
           {
-            height: _windowWidth * 0.6,
-            right: -100,
+            height: _windowHeight * 0.4,
+            width: _windowWidth,
           },
         ]}
       ></View>
@@ -26,7 +26,7 @@ const BlurBackdrop = ({ style }: { style?: ViewStyle }) => {
           {
             height: _windowWidth * 0.5,
             left: -100,
-            top: 300,
+            top: _windowHeight * 0.5,
           },
         ]}
       ></View>
