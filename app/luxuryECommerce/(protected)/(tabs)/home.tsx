@@ -5,15 +5,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   _horizontalPadding,
-  _productList,
   _windowHeight,
   _windowWidth,
   FONTS,
   FontSizes,
+  productList,
 } from "@/utils/constant";
 import { LinearGradient } from "expo-linear-gradient";
 import { MenuIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
@@ -21,6 +21,10 @@ import { Image } from "expo-image";
 import BlurBackdrop from "@/components/ui/BlurBackdrop";
 import Feather from "@expo/vector-icons/Feather";
 import ProductCard from "@/components/ui/ProductCard";
+import { useDispatch } from "react-redux";
+import { clearCart } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
+import { clearFavoriteItemList } from "@/redux/LuxuryECommerceRedux/slice/favoriteItemSlice";
+import { MasonryFlashList } from "@shopify/flash-list";
 
 const _viewList = new Array(3).fill(0).map((_, index) => ({ id: index }));
 const _categories = [
@@ -36,9 +40,11 @@ const _categories = [
 const _viewListItemSpacing = _windowHeight * 0.015;
 const _padding = _windowWidth * 0.04;
 const _itemGap = 10;
+
 const Home = () => {
   const { top } = useSafeAreaInsets();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const dispatch = useDispatch();
 
   return (
     <View style={{ flex: 1, backgroundColor: "#f0f1f1" }}>
@@ -147,7 +153,7 @@ const Home = () => {
             </View>
           </View>
 
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
@@ -156,7 +162,7 @@ const Home = () => {
               marginBottom: 30,
             }}
           >
-            {_productList.map((item, index) => {
+            {productList.map((item, index) => {
               return (
                 <ProductCard
                   key={item.id}
@@ -166,8 +172,29 @@ const Home = () => {
                 />
               );
             })}
-          </View>
+          </View> */}
         </View>
+        <MasonryFlashList
+          scrollEnabled={false}
+          data={productList}
+          numColumns={2}
+          contentContainerStyle={{
+            paddingHorizontal: _horizontalPadding,
+          }}
+          renderItem={({ item, index }) => {
+            return (
+              <View style={{ margin: _horizontalPadding / 2 }}>
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  onPress={() => {}}
+                />
+              </View>
+            );
+          }}
+          estimatedItemSize={200}
+        />
       </ScrollView>
     </View>
   );

@@ -4,8 +4,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image as RNImage,
 } from "react-native";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ProductType } from "@/constants/types";
 import {
   _horizontalPadding,
@@ -34,9 +35,9 @@ import {
   setSelectedItem,
 } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
 
-const _itemGap = 10;
-const _containerSize = _windowWidth / 2 - _horizontalPadding - _itemGap;
-const _imageSize = _containerSize;
+// const _itemGap = 10;
+// const _containerSize = _windowWidth / 2 - _horizontalPadding - _itemGap;
+// const _imageSize = _containerSize;
 const ProductCard = ({
   item,
   index,
@@ -60,22 +61,53 @@ const ProductCard = ({
     return likedResponse;
   }, [favoriteItems]);
 
+  const discountPercentage = useMemo(() => {
+    const { originalPrice, price } = item;
+    if (originalPrice === price) return 0;
+    const discount = Math.floor(
+      ((originalPrice - price) / originalPrice) * 100
+    );
+    return discount;
+  }, [item]);
+
   const toggleFavorite = () => {
     if (!isLiked) dispatch(addItemToFavorite(item));
     else dispatch(removeItemFromFavorite({ id: item.id }));
   };
 
+  const renderAddToCardButton = () => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => {
+          bottomSheetRef.current?.present();
+          dispatch(setSelectedItem(item));
+        }}
+        style={{
+          height: _windowWidth * 0.07,
+          aspectRatio: 1,
+          backgroundColor: "#fb9a65",
+          borderRadius: 5,
+          alignItems: "center",
+          justifyContent: "center",
+          marginLeft: "auto",
+        }}
+      >
+        <FontAwesome6 name="plus" size={18} color="white" />
+      </TouchableOpacity>
+    );
+  };
   return (
     <Pressable
       style={{
-        width: _containerSize,
+        width: "100%",
         alignItems: "center",
       }}
     >
       <AddToCardModal ref={bottomSheetRef} />
       <View
         style={{
-          width: _containerSize,
+          width: "100%",
           borderRadius: 10,
           overflow: "hidden",
           borderWidth: StyleSheet.hairlineWidth,
@@ -84,8 +116,8 @@ const ProductCard = ({
       >
         <View
           style={{
-            height: _imageSize + 20,
             width: "100%",
+            height: _windowWidth * 0.5,
             padding: 3,
           }}
         >
@@ -116,8 +148,8 @@ const ProductCard = ({
             )}
           </TouchableOpacity>
           <Image
-            contentFit="fill"
-            source={{ uri: item.image }}
+            contentFit="cover"
+            source={{ uri: item.images[0] }}
             style={{
               width: "100%",
               height: "100%",
@@ -136,67 +168,59 @@ const ProductCard = ({
           >
             {item.name}
           </Text>
-          <Text
-            style={{
-              fontFamily: FONTS.poppinsMedium,
-              fontSize: FontSizes.large,
-              color: LuxuryColors.brandColor,
-            }}
+
+          <View
+            style={{ justifyContent: "space-between", flexDirection: "row" }}
           >
-            ₹{item.price.toLocaleString()}
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <View
-              style={{
-                height: _windowWidth * 0.07,
-                backgroundColor: "rgba(251, 154, 101,0.2)",
-                borderRadius: 5,
-                justifyContent: "center",
-                alignItems: "center",
-                alignSelf: "flex-start",
-                paddingHorizontal: 10,
-                marginRight: 10,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: FontSizes.small,
-                  fontFamily: FONTS.poppinsBold,
-                  color: LuxuryColors.brandColor,
-                }}
-              >
-                {item.discount}
-              </Text>
-            </View>
             <Text
               style={{
-                fontSize: FontSizes.xTiny,
-                fontFamily: FONTS.poppinsRegular,
-                color: LuxuryColors.gray,
-                textDecorationLine: "line-through",
+                fontFamily: FONTS.poppinsMedium,
+                fontSize: FontSizes.large,
+                color: LuxuryColors.brandColor,
               }}
             >
-              ₹{item.original_price}
+              ₹{item.price.toLocaleString()}
             </Text>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => {
-                bottomSheetRef.current?.present();
-                dispatch(setSelectedItem(item));
-              }}
-              style={{
-                height: _windowWidth * 0.07,
-                aspectRatio: 1,
-                backgroundColor: "#fb9a65",
-                borderRadius: 5,
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: "auto",
-              }}
-            >
-              <FontAwesome6 name="plus" size={18} color="white" />
-            </TouchableOpacity>
+            {discountPercentage === 0 && <>{renderAddToCardButton()}</>}
           </View>
+
+          {discountPercentage !== 0 && (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  height: _windowWidth * 0.07,
+                  backgroundColor: "rgba(251, 154, 101,0.2)",
+                  borderRadius: 5,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  alignSelf: "flex-start",
+                  paddingHorizontal: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: FontSizes.small,
+                    fontFamily: FONTS.poppinsBold,
+                    color: LuxuryColors.brandColor,
+                  }}
+                >
+                  {discountPercentage}%
+                </Text>
+              </View>
+              <Text
+                style={{
+                  fontSize: FontSizes.xTiny,
+                  fontFamily: FONTS.poppinsRegular,
+                  color: LuxuryColors.gray,
+                  textDecorationLine: "line-through",
+                  marginLeft: 4,
+                }}
+              >
+                ₹{item.originalPrice}
+              </Text>
+              {renderAddToCardButton()}
+            </View>
+          )}
         </View>
       </View>
     </Pressable>

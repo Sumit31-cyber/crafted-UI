@@ -21,6 +21,7 @@ import ProductCard from "@/components/ui/ProductCard";
 import { BlurView } from "expo-blur";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader";
+import { MasonryFlashList } from "@shopify/flash-list";
 
 const _itemGap = 10;
 const Favorite = () => {
@@ -82,7 +83,28 @@ const Favorite = () => {
         </View>
       </Header>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <MasonryFlashList
+        data={favoriteItems}
+        numColumns={2}
+        contentContainerStyle={{
+          paddingTop: headerHeight + 15,
+          paddingHorizontal: _horizontalPadding,
+        }}
+        renderItem={({ item, index }) => {
+          return (
+            <View style={{ margin: _horizontalPadding / 2 }}>
+              <ProductCard
+                key={item.id}
+                item={item}
+                index={index}
+                onPress={() => {}}
+              />
+            </View>
+          );
+        }}
+        estimatedItemSize={200}
+      />
+      {/* <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             paddingTop: headerHeight + 15,
@@ -118,7 +140,7 @@ const Favorite = () => {
             justifyContent: "space-evenly",
           }}
         ></View>
-      </ScrollView>
+      </ScrollView> */}
 
       {/* <BlurView
           intensity={100}

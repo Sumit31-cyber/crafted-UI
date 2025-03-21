@@ -2,10 +2,9 @@ export type ProductType =  {
     id : number
     name:string,
     price : number,
-    original_price:string,
-    discount:string,
-    image:string,
-    is_hot:boolean,
+    originalPrice:number,
+    description:string,
+    images:string[],
 }
 
 export type CartType = ProductType & {

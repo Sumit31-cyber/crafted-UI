@@ -155,7 +155,7 @@ const CartCard = ({
           borderRadius: 20,
           height: _windowWidth * 0.45,
         }}
-        source={{ uri: cartItem.image }}
+        source={{ uri: cartItem.images[0] }}
       />
     </View>
   );
