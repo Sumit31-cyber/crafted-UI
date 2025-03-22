@@ -30,12 +30,13 @@ const CartCard = ({
         borderColor: LuxuryColors.pink,
       }}
     >
-      <View style={{ flex: 0.6, justifyContent: "center" }}>
+      <View style={{ flex: 0.6, marginTop: 10 }}>
         <Text
           numberOfLines={2}
           style={{
             fontFamily: FONTS.poppinsMedium,
-            fontSize: FontSizes.medium,
+            fontSize: FontSizes.small,
+            textTransform: "capitalize",
           }}
         >
           {cartItem.name}
@@ -77,9 +78,10 @@ const CartCard = ({
           style={{
             fontFamily: FONTS.poppinsMedium,
             fontSize: FontSizes.large,
+            color: LuxuryColors.brandColor,
           }}
         >
-          ₹{cartItem.price}
+          ₹{cartItem.price.toLocaleString()}
         </Text>
 
         <View
@@ -136,7 +138,7 @@ const CartCard = ({
               height: 38,
               aspectRatio: 1,
               borderWidth: StyleSheet.hairlineWidth * 2,
-              borderColor: LuxuryColors.brandColor,
+              borderColor: "#ffe6d5",
               borderRadius: 100,
               left: -40,
               justifyContent: "center",
