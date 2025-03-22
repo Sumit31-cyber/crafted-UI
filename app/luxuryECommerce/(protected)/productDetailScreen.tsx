@@ -32,10 +32,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "@/redux/LuxuryECommerceRedux/slice/cartSlice";
+import { BlurView } from "expo-blur";
 
 const _padding = 12;
 const sizeList = ["S", "M", "L", "XL"];
 const _imageHeight = _windowHeight * 0.58;
+const _imagePreviewContainerHeight = _windowWidth * 0.22;
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
@@ -47,6 +49,7 @@ const ProductDetailScreen = () => {
   const [selectedSize, setSelectedSize] = useState("M");
   const dispatch = useDispatch();
   const { Header } = useCustomHeader();
+  const [mainImageIndex, setMainImageIndex] = useState(0);
 
   const handleItemsCount = useCallback(
     (type: string) => {
@@ -119,16 +122,87 @@ const ProductDetailScreen = () => {
         style={{ flex: 1 }}
         // bounces={false}
       >
-        <Animated.Image
-          resizeMode={"cover"}
-          style={[rStyle, { height: _imageHeight, width: "100%" }]}
-          source={{ uri: productDetail?.images[0] }}
-        />
+        <Animated.View style={rStyle}>
+          <Image
+            contentFit={"cover"}
+            style={[{ height: _imageHeight, width: "100%" }]}
+            source={{ uri: productDetail?.images[mainImageIndex] }}
+          />
+        </Animated.View>
+        <View
+          style={{
+            height: _imagePreviewContainerHeight,
+            width: _windowWidth,
+            transform: [{ translateY: -_imagePreviewContainerHeight / 2 }],
+            marginBottom: 10,
+          }}
+        >
+          <View
+            style={{
+              height: _imagePreviewContainerHeight,
+              width: "90%",
+              alignSelf: "center",
+              borderRadius: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+            }}
+          >
+            <BlurView
+              intensity={100}
+              style={{
+                flex: 1,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 6,
+                },
+                shadowOpacity: 0.37,
+                shadowRadius: 7.49,
+
+                elevation: 12,
+              }}
+            >
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  {productDetail?.images.map((item, index) => {
+                    return (
+                      <TouchableOpacity
+                        key={item}
+                        activeOpacity={0.8}
+                        onPress={() => {
+                          setMainImageIndex(index);
+                        }}
+                        style={{
+                          width: _imagePreviewContainerHeight * 0.9,
+                          aspectRatio: 1,
+                          borderRadius: 10,
+                          overflow: "hidden",
+                        }}
+                      >
+                        <Image source={{ uri: item }} style={{ flex: 1 }} />
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </ScrollView>
+            </BlurView>
+          </View>
+        </View>
+
         <View
           style={{
             paddingHorizontal: _horizontalPadding,
             paddingTop: 10,
             backgroundColor: "white",
+            transform: [{ translateY: -_imagePreviewContainerHeight / 2 }],
           }}
         >
           {/* <BlurBackdrop style={{ backgroundColor: "white" }} /> */}

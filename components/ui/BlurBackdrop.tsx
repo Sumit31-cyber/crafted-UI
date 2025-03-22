@@ -8,7 +8,11 @@ const BlurBackdrop = ({ style }: { style?: ViewStyle }) => {
     <View
       style={[
         StyleSheet.absoluteFill,
-        { backgroundColor: "rgba(256,256,256,0.3)", ...style },
+        {
+          backgroundColor: "rgba(256,256,256,0.3)",
+          overflow: "hidden",
+          ...style,
+        },
       ]}
     >
       <View
@@ -54,6 +58,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#f6edee",
     borderRadius: 1000,
     position: "absolute",
-    // opacity: 0.35,
   },
 });
