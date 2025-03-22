@@ -1,5 +1,5 @@
 import { Href } from "expo-router";
-import { Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export const FONTS = {
     spaceMono:'SpaceMono',
@@ -32,7 +32,7 @@ export const LuxuryColors = {
     brandColor:"#fb9a65",
     gray:"#8d8b8c",
     pink:"#ffe0e5",
-    buttonColor:"#28231f"
+    liteBlack:"#28231f"
 }
 
 
@@ -88,6 +88,9 @@ export const _headerHeight = _windowWidth * 0.12
 // Define a base font size based on the screen width or height
 const baseFontSize = _windowWidth * 0.04; // 4% of the screen width
 
+export const _borderWidth = StyleSheet.hairlineWidth * 2
+export const _searchBarHeight =_windowWidth * 0.11;
+
 // Define a list of font sizes
 export const FontSizes = {
   xTiny: baseFontSize * 0.65,       // 75% of the base font size
@@ -115,6 +118,7 @@ export const _wallpapers : WallpaperType[] = [
 {id:5, image_url:'https://images.pexels.com/photos/17764202/pexels-photo-17764202/free-photo-of-deck-of-a-sailing-ferry.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'},  
 {id:6, image_url:'https://images.unsplash.com/photo-1736953072378-b9f25f2635d0?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMnx8fGVufDB8fHx8fA%3D%3D'},  
 ]
+
 
 
 

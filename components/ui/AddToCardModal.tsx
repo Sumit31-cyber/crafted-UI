@@ -287,7 +287,7 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                   borderRadius: 100,
                   justifyContent: "center",
                   alignItems: "center",
-                  backgroundColor: LuxuryColors.buttonColor,
+                  backgroundColor: LuxuryColors.liteBlack,
                 }}
               >
                 <Text
@@ -310,7 +310,7 @@ const AddToCardModal = forwardRef<Ref>((props, ref) => {
                   alignItems: "center",
                   justifyContent: "center",
                   padding: 10,
-                  backgroundColor: LuxuryColors.buttonColor,
+                  backgroundColor: LuxuryColors.liteBlack,
                 }}
               >
                 <Text

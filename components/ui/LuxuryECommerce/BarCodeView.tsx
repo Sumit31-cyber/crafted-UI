@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { _windowWidth, LuxuryColors } from "@/utils/constant";
+import { _searchBarHeight, _windowWidth, LuxuryColors } from "@/utils/constant";
 import { BarCodeIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 
 const BarCodeView = () => {
   return (
     <View
       style={{
-        width: _windowWidth * 0.09,
+        width: _searchBarHeight,
         aspectRatio: 1,
         borderRadius: 100,
         justifyContent: "center",

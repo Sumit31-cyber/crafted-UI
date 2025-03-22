@@ -439,7 +439,7 @@ const ProductDetailScreen = () => {
                     borderRadius: 100,
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: LuxuryColors.buttonColor,
+                    backgroundColor: LuxuryColors.liteBlack,
                   }}
                 >
                   <Text
@@ -462,7 +462,7 @@ const ProductDetailScreen = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     padding: 10,
-                    backgroundColor: LuxuryColors.buttonColor,
+                    backgroundColor: LuxuryColors.liteBlack,
                   }}
                 >
                   <Text

@@ -29,7 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           borderColor: LuxuryColors.pink,
           gap: 8,
           paddingHorizontal: 10,
-          height: _windowWidth * 0.09,
+          height: _windowWidth * 0.11,
           borderRadius: 100,
           alignItems: "center",
         },
