@@ -31,7 +31,6 @@ const OfferCarousal = ({ style }: PropsType) => {
 
   const onScroll = useAnimatedScrollHandler((e) => {
     const x = e.contentOffset.x;
-    console.log(x / (_carousalWidth + _gap));
     scrollX.value = x;
   });
   return (
