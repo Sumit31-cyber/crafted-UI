@@ -21,6 +21,7 @@ import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader
 import { CartIcon, MenuIconSquare } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import SearchBar from "@/components/ui/LuxuryECommerce/SearchBar";
 import BarCodeView from "@/components/ui/LuxuryECommerce/BarCodeView";
+import OfferCarousal from "@/components/ui/LuxuryECommerce/OfferCarousal";
 
 const _categoryList = ["Men", "Women", "Kids"];
 const Shop = () => {
@@ -65,6 +66,7 @@ const Shop = () => {
             selectedCategory={selectedCategory}
             style={{ marginVertical: 10 }}
           />
+          <OfferCarousal style={{ marginVertical: 20 }} />
         </View>
       </ScrollView>
     </View>
