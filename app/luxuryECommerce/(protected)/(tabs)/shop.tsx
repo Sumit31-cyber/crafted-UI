@@ -16,14 +16,19 @@ import {
   FONTS,
   FontSizes,
   LuxuryColors,
+  productList,
 } from "@/utils/constant";
 import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader";
 import { CartIcon, MenuIconSquare } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import SearchBar from "@/components/ui/LuxuryECommerce/SearchBar";
 import BarCodeView from "@/components/ui/LuxuryECommerce/BarCodeView";
 import OfferCarousal from "@/components/ui/LuxuryECommerce/OfferCarousal";
+import { Feather } from "@expo/vector-icons";
+import { MasonryFlashList } from "@shopify/flash-list";
+import ProductCard from "@/components/ui/ProductCard";
 
 const _categoryList = ["Men", "Women", "Kids"];
+const _numOfColumns = 2;
 const Shop = () => {
   const { Header, headerHeight } = useCustomHeader();
   const [selectedCategory, setSelectedCategory] = useState("Men");
@@ -67,7 +72,65 @@ const Shop = () => {
             style={{ marginVertical: 10 }}
           />
           <OfferCarousal style={{ marginVertical: 20 }} />
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONTS.TNRBold,
+                  fontSize: FontSizes.large,
+                  letterSpacing: 0.8,
+                }}
+              >
+                All Products
+              </Text>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderWidth: StyleSheet.hairlineWidth,
+                  paddingHorizontal: 20,
+                  borderRadius: 100,
+                  flexDirection: "row",
+                  borderColor: LuxuryColors.pink,
+                  height: _windowWidth * 0.09,
+                  gap: 4,
+                }}
+              >
+                <Text style={{ color: "#8d8b8c" }}>See All</Text>
+                <Feather name="arrow-up-right" size={15} color="#8d8b8c" />
+              </View>
+            </View>
+          </View>
         </View>
+        <MasonryFlashList
+          keyExtractor={(item, index) => item.id.toString()}
+          scrollEnabled={false}
+          data={productList}
+          numColumns={_numOfColumns}
+          contentContainerStyle={{
+            paddingHorizontal: _horizontalPadding / 2,
+          }}
+          renderItem={({ item, index }) => {
+            return (
+              <View style={{ margin: _horizontalPadding / _numOfColumns }}>
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  onPress={() => {}}
+                />
+              </View>
+            );
+          }}
+          estimatedItemSize={200}
+        />
       </ScrollView>
     </View>
   );

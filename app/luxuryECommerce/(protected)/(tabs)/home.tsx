@@ -13,6 +13,7 @@ import {
   _windowWidth,
   FONTS,
   FontSizes,
+  LuxuryColors,
   productList,
 } from "@/utils/constant";
 import { LinearGradient } from "expo-linear-gradient";
@@ -135,11 +136,11 @@ const Home = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   borderWidth: StyleSheet.hairlineWidth,
-                  paddingHorizontal: 10,
-                  paddingVertical: 4,
+                  paddingHorizontal: 20,
                   borderRadius: 100,
                   flexDirection: "row",
-                  borderColor: "#8d8b8c",
+                  borderColor: LuxuryColors.pink,
+                  height: _windowWidth * 0.09,
                   gap: 4,
                 }}
               >
