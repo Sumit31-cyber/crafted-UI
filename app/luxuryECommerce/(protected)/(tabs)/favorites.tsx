@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/LuxuryECommerceRedux/store";
 import { router } from "expo-router";
@@ -18,14 +18,18 @@ import ProductCard from "@/components/ui/ProductCard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader";
 import { MasonryFlashList } from "@shopify/flash-list";
+import FavoriteFilterModal from "@/components/ui/LuxuryECommerce/FavoriteFilterModal";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const _numOfColumns = 2;
 const Favorite = () => {
   const { favoriteItems } = useSelector((state: RootState) => state.favorite);
   const { Header, headerHeight } = useCustomHeader();
+  const modalRef = useRef<BottomSheetModal>(null);
   return (
     <View style={{ flex: 1 }}>
       <BlurBackdrop />
+      <FavoriteFilterModal ref={modalRef} />
 
       <Header
         title="Favorites"
@@ -51,10 +55,14 @@ const Favorite = () => {
           >
             Products
           </Text>
-          <View
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => {
+              modalRef.current?.present();
+            }}
             style={{
               height: _windowWidth * 0.09,
-              backgroundColor: LuxuryColors.brandColor,
+              backgroundColor: LuxuryColors.liteBlack,
               borderRadius: 100,
               flexDirection: "row",
               alignItems: "center",
@@ -73,7 +81,7 @@ const Favorite = () => {
               Filter
             </Text>
             <FilterIcon size={20} strokeWidth={1.5} tint={"white"} />
-          </View>
+          </TouchableOpacity>
         </View>
       </Header>
 

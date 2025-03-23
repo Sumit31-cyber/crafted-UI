@@ -55,7 +55,7 @@ const OfferCarousal = ({ style }: PropsType) => {
                 {
                   height: _containerHeight,
                   width: _carousalWidth,
-                  backgroundColor: "#efeae7",
+                  backgroundColor: LuxuryColors.coffee,
                   borderRadius: 20,
                 },
               ]}

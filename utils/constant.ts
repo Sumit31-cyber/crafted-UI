@@ -32,7 +32,9 @@ export const LuxuryColors = {
     brandColor:"#fb9a65",
     gray:"#8d8b8c",
     pink:"#ffe0e5",
-    liteBlack:"#28231f"
+    liteBlack:"#28231f",
+    coffee:"#efeae7",
+    skin:"#f9efea"
 }
 
 
