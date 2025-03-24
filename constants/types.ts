@@ -14,6 +14,8 @@ export type CartType = ProductType & {
 
 export type FavoriteState = {
     favoriteItems: ProductType[];
+    filterType : string
+
   };
 
 export type CartState = {

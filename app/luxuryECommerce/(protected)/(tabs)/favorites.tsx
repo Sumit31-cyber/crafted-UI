@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/LuxuryECommerceRedux/store";
 import { router } from "expo-router";
@@ -26,10 +26,35 @@ const Favorite = () => {
   const { favoriteItems } = useSelector((state: RootState) => state.favorite);
   const { Header, headerHeight } = useCustomHeader();
   const modalRef = useRef<BottomSheetModal>(null);
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+  const filteredItems = useMemo(() => {
+    if (!selectedFilter) return favoriteItems;
+    if (selectedFilter === "ALL") return favoriteItems;
+    else if (selectedFilter === "DISCOUNTED")
+      return favoriteItems.filter((item) => item.originalPrice > item.price);
+    else if (selectedFilter === "NON_DISCOUNTED")
+      return favoriteItems.filter((item) => item.originalPrice == item.price);
+  }, [favoriteItems, selectedFilter]);
+
   return (
     <View style={{ flex: 1 }}>
       <BlurBackdrop />
-      <FavoriteFilterModal ref={modalRef} />
+      <FavoriteFilterModal
+        ref={modalRef}
+        selectedFilter={selectedFilter}
+        onPress={(newFilter) => {
+          console.log(newFilter);
+          console.log(selectedFilter === newFilter);
+          if (selectedFilter === newFilter) {
+            setSelectedFilter(null);
+            modalRef.current?.dismiss();
+            return;
+          }
+          setSelectedFilter(newFilter);
+          modalRef.current?.dismiss();
+        }}
+      />
 
       <Header
         title="Favorites"
@@ -86,7 +111,7 @@ const Favorite = () => {
       </Header>
 
       <MasonryFlashList
-        data={favoriteItems}
+        data={filteredItems}
         numColumns={_numOfColumns}
         contentContainerStyle={{
           paddingTop: headerHeight + 15,
@@ -106,147 +131,6 @@ const Favorite = () => {
         }}
         estimatedItemSize={200}
       />
-      {/* <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            paddingTop: headerHeight + 15,
-            paddingHorizontal: _horizontalPadding,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              gap: _itemGap * 2,
-              marginBottom: 30,
-            }}
-          >
-            {favoriteItems.map((item, index) => {
-              return (
-                <ProductCard
-                  key={item.id}
-                  item={item}
-                  index={index}
-                  onPress={() => {}}
-                />
-              );
-            })}
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-          }}
-        ></View>
-      </ScrollView> */}
-
-      {/* <BlurView
-          intensity={100}
-          onLayout={(e) => {
-            console.log();
-            setHederHeight(e.nativeEvent.layout.height);
-          }}
-          style={{
-            position: "absolute",
-            padding: _horizontalPadding,
-            paddingTop: top,
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 1,
-          }}
-        >
-          <CustomHeader
-            title="Favorites"
-            icon={<SimpleLineIcons name="handbag" size={18} color="black" />}
-            onPress={() => {
-              router.navigate("/luxuryECommerce/(protected)/cart");
-            }}
-          />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginVertical: 10,
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: FONTS.poppinsRegular,
-                fontSize: FontSizes.large,
-                color: "black",
-              }}
-            >
-              Products
-            </Text>
-            <View
-              style={{
-                height: _windowWidth * 0.09,
-                backgroundColor: LuxuryColors.brandColor,
-                borderRadius: 100,
-                flexDirection: "row",
-                alignItems: "center",
-                paddingHorizontal: 14,
-                gap: 6,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: FONTS.poppinsRegular,
-                  fontSize: FontSizes.tiny,
-                  letterSpacing: 0.6,
-                  color: "white",
-                }}
-              >
-                Filter
-              </Text>
-              <FilterIcon size={20} strokeWidth={1.5} tint={"white"} />
-            </View>
-          </View>
-        </BlurView> */}
-      {/* <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            paddingTop: headerHeight - top,
-            paddingHorizontal: _horizontalPadding,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              gap: _itemGap * 2,
-              marginBottom: 30,
-            }}
-          >
-            {favoriteItems.map((item, index) => {
-              return (
-                <ProductCard
-                  key={item.id}
-                  item={item}
-                  index={index}
-                  onPress={() => {}}
-                />
-              );
-            })}
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-          }}
-        >
-        </View>
-      </ScrollView> */}
     </View>
   );
 };

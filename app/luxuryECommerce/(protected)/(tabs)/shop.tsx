@@ -26,6 +26,7 @@ import OfferCarousal from "@/components/ui/LuxuryECommerce/OfferCarousal";
 import { Feather } from "@expo/vector-icons";
 import { MasonryFlashList } from "@shopify/flash-list";
 import ProductCard from "@/components/ui/ProductCard";
+import { router } from "expo-router";
 
 const _categoryList = ["Men", "Women", "Kids"];
 const _numOfColumns = 2;
@@ -38,7 +39,9 @@ const Shop = () => {
 
       <Header
         icon={<CartIcon size={"60%"} />}
-        onPress={() => {}}
+        onPress={() => {
+          router.navigate("/luxuryECommerce/(protected)/cart");
+        }}
         title="Shop"
       />
       <ScrollView style={{ flex: 1 }}>

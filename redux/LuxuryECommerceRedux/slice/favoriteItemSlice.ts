@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: FavoriteState = {
   favoriteItems: [],
+  filterType : 'ALL'
 };
 
 const favoriteItemSlice = createSlice({
@@ -17,11 +18,16 @@ const favoriteItemSlice = createSlice({
         (item) => item.id !== action.payload.id
       );
     },
+    filterFavoriteItems : (state,action) => {
+      const {filterType} = action.payload
+      state.filterType = filterType
+     
+    },
     clearFavoriteItemList : (state, action) => {
       state.favoriteItems = []
     }
   },
 });
 
-export const { addItemToFavorite, removeItemFromFavorite,clearFavoriteItemList } = favoriteItemSlice.actions;
+export const { addItemToFavorite, removeItemFromFavorite,clearFavoriteItemList,filterFavoriteItems } = favoriteItemSlice.actions;
 export default favoriteItemSlice.reducer;
