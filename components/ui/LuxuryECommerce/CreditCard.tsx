@@ -77,7 +77,9 @@ const CreditCard = () => {
           >
             Credit Card
           </Text>
-          <Logo size={_windowWidth * 0.1} tint="#41393b" />
+          <View style={{ marginRight: 5 }}>
+            <Logo size={_windowWidth * 0.1} tint="#41393b" />
+          </View>
         </View>
 
         <View
@@ -85,6 +87,7 @@ const CreditCard = () => {
             position: "absolute",
             top: _cardHeight / 2 - _chipHeight / 2,
             left: 20,
+            right: 10,
           }}
         >
           <Image
@@ -104,24 +107,42 @@ const CreditCard = () => {
           </Text>
           <Text
             style={{
-              fontSize: FontSizes.small,
+              fontSize: FontSizes.tiny,
               fontFamily: FONTS.poppinsRegular,
               color: "white",
               opacity: 0.5,
+              marginVertical: 2,
             }}
           >
             VALID THRU
           </Text>
-          <Text
+          <View
             style={{
-              fontSize: FontSizes.small,
-              fontFamily: FONTS.poppinsRegular,
-              color: "white",
-              letterSpacing: 0.8,
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            12/25
-          </Text>
+            <Text
+              style={{
+                fontSize: FontSizes.small,
+                fontFamily: FONTS.poppinsRegular,
+                color: "white",
+                letterSpacing: 0.8,
+              }}
+            >
+              12/25
+            </Text>
+            <Text
+              style={{
+                fontSize: FontSizes.small,
+                fontFamily: FONTS.poppinsRegular,
+                color: "white",
+                letterSpacing: 0.8,
+              }}
+            >
+              SUMIT KUMAR
+            </Text>
+          </View>
         </View>
       </View>
     </View>
