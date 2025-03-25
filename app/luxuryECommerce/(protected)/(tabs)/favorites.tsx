@@ -13,7 +13,7 @@ import {
   LuxuryColors,
 } from "@/utils/constant";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { FilterIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
+import { CartIcon, FilterIcon } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import ProductCard from "@/components/ui/ProductCard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader";
@@ -58,7 +58,7 @@ const Favorite = () => {
 
       <Header
         title="Favorites"
-        icon={<SimpleLineIcons name="handbag" size={18} color="black" />}
+        icon={<CartIcon size={"60%"} />}
         onPress={() => {
           router.navigate("/luxuryECommerce/(protected)/cart");
         }}
