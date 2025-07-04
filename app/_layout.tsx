@@ -86,6 +86,12 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="themeToggleSwitch/index"
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="luxuryECommerce" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
