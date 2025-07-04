@@ -24,6 +24,7 @@ export type AnimationListItemType = {
   thumbnail_url: string;
   topics: String[];
   path: Href;
+  githubLink: string;
 };
 
 export const LuxuryColors = {
@@ -42,6 +43,8 @@ export const _animationLists: AnimationListItemType[] = [
     title: "Luxury E-Commerce App",
     thumbnail_url: require("@/assets/images/eCommerce.png"),
     path: "/luxuryECommerce/(auth)/landingScreen",
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/luxuryECommerce",
     topics: [
       "reanimated",
       "interpolate",
@@ -54,6 +57,8 @@ export const _animationLists: AnimationListItemType[] = [
     id: 2,
     title: "Tilted Animated Image Carousel With React Native Reanimated",
     thumbnail_url: require("@/assets/images/animatedTiltedCarousel.png"),
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/animatedTiltedCarousel",
     path: "/animatedTiltedCarousel",
     topics: [
       "reanimated",
@@ -67,6 +72,8 @@ export const _animationLists: AnimationListItemType[] = [
     id: 3,
     title: "Tilted Scaled Image Carousel With React Native Reanimated",
     thumbnail_url: require("@/assets/images/animatedScaledCarousel.png"),
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/animatedScaledCarousel",
     path: "/animatedScaledCarousel",
     topics: [
       "reanimated",
@@ -78,6 +85,8 @@ export const _animationLists: AnimationListItemType[] = [
   {
     id: 4,
     title: "Theme Toggle Switch With React Native Reanimated",
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
     thumbnail_url: require("@/assets/images/themeToggleSwitch.png"),
     path: "/themeToggleSwitch",
     topics: [

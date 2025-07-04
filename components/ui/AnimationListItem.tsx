@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  Linking,
   Pressable,
   StyleSheet,
   Text,
@@ -8,18 +9,12 @@ import {
 } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
-import { FONTS } from "@/utils/constant";
+import { AnimationListItemType, FONTS } from "@/utils/constant";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Href } from "expo-router";
 
 interface listItemProps {
-  item: {
-    id: number;
-    title: string;
-    thumbnail_url: string;
-    topics: String[];
-    path: Href;
-  };
+  item: AnimationListItemType;
   index: number;
   onPress: () => void;
 }
@@ -66,7 +61,7 @@ const AnimationListItem = ({ item, index, onPress }: listItemProps) => {
 
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => {}}
+          onPress={() => Linking.openURL(item.githubLink)}
           style={styles.buttonStyle}
         >
           <Text
