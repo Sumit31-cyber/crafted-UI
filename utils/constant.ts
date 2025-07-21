@@ -1,5 +1,5 @@
 import { Href } from "expo-router";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, ImageProps, StyleSheet } from "react-native";
 
 export const FONTS = {
   spaceMono: "SpaceMono",
@@ -21,7 +21,7 @@ export const FONTS = {
 export type AnimationListItemType = {
   id: number;
   title: string;
-  thumbnail_url: string;
+  thumbnail_url: ImageProps["source"];
   topics: String[];
   path: Href;
   githubLink: string;
@@ -38,6 +38,15 @@ export const LuxuryColors = {
 };
 
 export const _animationLists: AnimationListItemType[] = [
+  {
+    id: 5,
+    title: "Circular Carousel",
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
+    thumbnail_url: require("@/assets/images/spotifyAnimation.png"),
+    path: "/(circularCarousel)",
+    topics: ["react-native-skia", "skia-canvas", "reanimated", "interpolate"],
+  },
   {
     id: 1,
     title: "Luxury E-Commerce App",
@@ -89,12 +98,7 @@ export const _animationLists: AnimationListItemType[] = [
       "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
     thumbnail_url: require("@/assets/images/themeToggleSwitch.png"),
     path: "/themeToggleSwitch",
-    topics: [
-      "reanimated",
-      "interpolate",
-      "useAnimatedScrollHandler",
-      "react native carousel",
-    ],
+    topics: ["react-native-skia", "skia-canvas", "reanimated", "interpolate"],
   },
 ];
 

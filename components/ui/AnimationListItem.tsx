@@ -32,7 +32,7 @@ const AnimationListItem = ({ item, index, onPress }: listItemProps) => {
       <Image
         style={styles.thumbnail}
         source={item.thumbnail_url}
-        contentFit="cover"
+        contentFit="fill"
         transition={300}
       />
       <View style={styles.infoContainer}>

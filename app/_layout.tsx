@@ -11,15 +11,15 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { Colors } from "@/constants/Colors";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+// Prevent splash screen from auto-hiding before fonts are loaded
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const COLOR = useThemeColor();
+
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     FiraCodeBold: require("../assets/fonts/FiraCode-Bold.ttf"),
@@ -43,28 +43,25 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  if (!loaded) return null;
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
+        {/* Home screen with custom header */}
         <Stack.Screen
           name="index"
           options={{
             title: "Crafts",
             headerSearchBarOptions: {
               placeholder: "Search",
-              onChangeText: (change) => {
-                const { nativeEvent } = change;
-                const { text } = nativeEvent;
-                console.log(text);
+              onChangeText: ({ nativeEvent }) => {
+                console.log(nativeEvent.text);
               },
             },
             headerLargeTitle: true,
-            headerBlurEffect: "regular",
             headerTransparent: true,
+            headerBlurEffect: "regular",
             headerTitleStyle: {
               fontFamily: "FiraCodeBold",
             },
@@ -73,26 +70,28 @@ export default function RootLayout() {
             },
           }}
         />
-        <Stack.Screen name="homeScreen/index" />
+
+        <Stack.Screen name="homeScreen" />
         <Stack.Screen
           name="animatedTiltedCarousel/index"
-          options={{
-            headerShown: false,
-          }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="animatedScaledCarousel/index"
-          options={{
-            headerShown: false,
-          }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="themeToggleSwitch/index"
-          options={{
-            headerShown: false,
-          }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="luxuryECommerce" options={{ headerShown: false }} />
+        <Stack.Screen name="stickyActionBar" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(circularCarousel)/index"
+          options={{ headerShown: false }}
+        />
+
+        {/* Not found screen */}
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

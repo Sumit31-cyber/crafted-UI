@@ -10,7 +10,12 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.sumit-bravo.craftedUI"
+      "bundleIdentifier": "com.sumit-bravo.craftedUI",
+      "icon": {
+        "dark": "./assets/images/ios-light.png",
+        "light": "./assets/images/ios-light.png",
+        "tinted": "./assets/images/ios-light.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,10 +34,13 @@
       [
         "expo-splash-screen",
         {
+          "backgroundColor": "#ffffff",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "dark": {
+            "image": "./assets/images/splash-icon.png",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 200
         }
       ]
     ],
