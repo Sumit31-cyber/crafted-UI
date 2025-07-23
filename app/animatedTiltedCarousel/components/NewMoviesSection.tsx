@@ -1,16 +1,7 @@
-import {
-  Dimensions,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { BlurView } from "expo-blur";
-import Animated, { SharedValue } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
-import { router } from "expo-router";
 import { Image } from "expo-image";
 import { _movieInfo } from "@/utils/constant";
 
@@ -25,7 +16,7 @@ interface cardItemProps {
 }
 
 const _imageBorderRadius = 14;
-const { height, width } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const _gap = 15;
 const _imageWidth = width / 2.25;
 const _imageHeight = _imageWidth * 1.5;
@@ -67,8 +58,6 @@ const NewMoviesSection = () => {
 };
 
 export default NewMoviesSection;
-
-const styles = StyleSheet.create({});
 
 const Card = ({ item, index }: cardItemProps) => {
   return (
