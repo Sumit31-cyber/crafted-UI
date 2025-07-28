@@ -40,12 +40,19 @@ export const LuxuryColors = {
 export const _animationLists: AnimationListItemType[] = [
   {
     id: 6,
-    title: "Test Screen",
+    title: "Onboarding Spotlight",
     githubLink:
       "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
-    thumbnail_url: require("@/assets/images/spotifyAnimation.png"),
-    path: "/testScreen",
-    topics: [],
+    thumbnail_url: require("@/assets/images/onboarding-spotlight.png"),
+    path: "/(onboardingSpotlight)",
+    topics: [
+      "perspective",
+      "transformation",
+      "reanimated",
+      "interpolate",
+      "useAnimatedScrollHandler",
+      "react native carousel",
+    ],
   },
   {
     id: 5,
@@ -118,6 +125,9 @@ export const _animationLists: AnimationListItemType[] = [
 
 export const _windowWidth = Dimensions.get("window").width;
 export const _windowHeight = Dimensions.get("window").height;
+
+export const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } =
+  Dimensions.get("screen");
 
 export const _horizontalPadding = _windowWidth * 0.03;
 export const _headerHeight = _windowWidth * 0.12;

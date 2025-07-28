@@ -90,7 +90,10 @@ export default function RootLayout() {
           name="(circularCarousel)/index"
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="testScreen" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(onboardingSpotlight)/index"
+          options={{ headerShown: false }}
+        />
 
         {/* Not found screen */}
         <Stack.Screen name="+not-found" />

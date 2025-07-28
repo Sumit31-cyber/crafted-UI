@@ -5,6 +5,8 @@ import {
   _windowHeight,
   _windowWidth,
   FONTS,
+  WINDOW_HEIGHT,
+  WINDOW_WIDTH,
 } from "@/utils/constant";
 import Animated, {
   useAnimatedStyle,
@@ -45,7 +47,6 @@ interface ScrollViewDataItem {
 }
 
 interface OnboardingProps {
-  onComplete?: () => void;
   cardData?: {
     membershipNumber: string;
     memberName: string;
@@ -53,8 +54,6 @@ interface OnboardingProps {
   };
 }
 
-// Get actual window dimensions for better responsiveness
-const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get("window");
 const CARD_HEIGHT = WINDOW_HEIGHT * 0.6;
 const CARD_WIDTH = WINDOW_WIDTH * 0.88;
 const PRIMARY_COLOR = "#FA5622";
@@ -156,7 +155,6 @@ const defaultScrollViewData: ScrollViewDataItem[] = [
 ];
 
 const OnboardingComponent: React.FC<OnboardingProps> = ({
-  onComplete,
   cardData = {
     membershipNumber: "472284927",
     memberName: "Alex Wilson",
@@ -236,17 +234,9 @@ const OnboardingComponent: React.FC<OnboardingProps> = ({
   }, [currentIndex, springConfig, spotlightTimingConfig]);
 
   // Handle scroll index change
-  const handleIndexChange = useCallback(
-    (newIndex: number) => {
-      setCurrentIndex(newIndex);
-
-      // Call onComplete when reaching the last slide
-      if (newIndex === defaultScrollViewData.length - 1 && onComplete) {
-        onComplete();
-      }
-    },
-    [onComplete]
-  );
+  const handleIndexChange = useCallback((newIndex: number) => {
+    setCurrentIndex(newIndex);
+  }, []);
 
   // Scroll handler
   const scrollHandler = useAnimatedScrollHandler(
@@ -354,7 +344,7 @@ const OnboardingComponent: React.FC<OnboardingProps> = ({
                     >
                       <Image
                         style={styles.fullSize}
-                        source={require("@/assets/images/spotlight2.png")}
+                        source={require("@/assets/images/spotlight.png")}
                         contentFit="contain"
                       />
                     </Animated.View>
