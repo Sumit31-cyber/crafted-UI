@@ -39,13 +39,27 @@ export const LuxuryColors = {
 
 export const _animationLists: AnimationListItemType[] = [
   {
+    id: 6,
+    title: "Test Screen",
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
+    thumbnail_url: require("@/assets/images/spotifyAnimation.png"),
+    path: "/testScreen",
+    topics: [],
+  },
+  {
     id: 5,
     title: "Circular Carousel",
     githubLink:
       "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
     thumbnail_url: require("@/assets/images/spotifyAnimation.png"),
     path: "/(circularCarousel)",
-    topics: ["react-native-skia", "skia-canvas", "reanimated", "interpolate"],
+    topics: [
+      "reanimated",
+      "interpolate",
+      "useAnimatedScrollHandler",
+      "react native carousel",
+    ],
   },
   {
     id: 1,
