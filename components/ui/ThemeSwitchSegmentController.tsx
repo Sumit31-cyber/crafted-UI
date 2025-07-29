@@ -11,7 +11,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { COLOR, Theme } from "@/app/themeToggleSwitch";
+import { COLOR, Theme } from "@/app/(themeToggleSwitch)";
 
 const ThemeSwitchSegmentController = ({
   selected,

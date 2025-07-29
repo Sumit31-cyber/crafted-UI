@@ -73,18 +73,21 @@ export default function RootLayout() {
 
         <Stack.Screen name="homeScreen" />
         <Stack.Screen
-          name="animatedTiltedCarousel/index"
+          name="(animatedTiltedCarousel)/index"
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="animatedScaledCarousel/index"
+          name="(animatedScaledCarousel)/index"
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="themeToggleSwitch/index"
+          name="(themeToggleSwitch)/index"
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="luxuryECommerce" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(luxuryECommerce)"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="stickyActionBar" options={{ headerShown: false }} />
         <Stack.Screen
           name="(circularCarousel)/index"
@@ -94,7 +97,6 @@ export default function RootLayout() {
           name="(onboardingSpotlight)/index"
           options={{ headerShown: false }}
         />
-
         {/* Not found screen */}
         <Stack.Screen name="+not-found" />
       </Stack>

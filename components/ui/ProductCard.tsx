@@ -102,7 +102,7 @@ const ProductCard = ({
     <Pressable
       onPress={() => {
         router.navigate({
-          pathname: "/luxuryECommerce/(protected)/productDetailScreen",
+          pathname: "/(luxuryECommerce)/(protected)/productDetailScreen",
           params: { id: item.id },
         });
       }}

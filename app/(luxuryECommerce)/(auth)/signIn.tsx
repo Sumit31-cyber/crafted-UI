@@ -114,7 +114,7 @@ const signIn = () => {
           <BigButton
             title="Log in"
             onPress={() => {
-              router.replace("/luxuryECommerce/(protected)/(tabs)/home");
+              router.replace("/(luxuryECommerce)/(protected)/(tabs)/home");
             }}
             style={{ marginTop: 30 }}
           />
@@ -171,7 +171,7 @@ const signIn = () => {
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => {
-              router.navigate("/luxuryECommerce/(auth)/signUp");
+              router.navigate("/(luxuryECommerce)/(auth)/signUp");
             }}
           >
             <Text style={{ color: "#fa9a67", fontFamily: FONTS.poppinsBold }}>

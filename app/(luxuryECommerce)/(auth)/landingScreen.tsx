@@ -144,7 +144,7 @@ const LandingScreen = () => {
           <BigButton
             title="Get Started"
             onPress={() => {
-              router.navigate("/luxuryECommerce/(auth)/signIn");
+              router.navigate("/(luxuryECommerce)/(auth)/signIn");
             }}
           />
         </SafeAreaView>

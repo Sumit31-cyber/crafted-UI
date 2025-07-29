@@ -22,7 +22,6 @@ import useCustomHeader from "@/customHooks/LuxuryECommernceHooks/useCustomHeader
 import { CartIcon, MenuIconSquare } from "@/assets/svgs/luxuryECommSvgs/svgs";
 import SearchBar from "@/components/ui/LuxuryECommerce/SearchBar";
 import BarCodeView from "@/components/ui/LuxuryECommerce/BarCodeView";
-import OfferCarousal from "@/components/ui/LuxuryECommerce/OfferCarousal";
 import { Feather } from "@expo/vector-icons";
 import { MasonryFlashList } from "@shopify/flash-list";
 import ProductCard from "@/components/ui/ProductCard";

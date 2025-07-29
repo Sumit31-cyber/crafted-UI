@@ -40,7 +40,7 @@ const Shop = () => {
       <Header
         icon={<CartIcon size={"60%"} />}
         onPress={() => {
-          router.navigate("/luxuryECommerce/(protected)/cart");
+          router.navigate("/(luxuryECommerce)/(protected)/cart");
         }}
         title="Shop"
       />

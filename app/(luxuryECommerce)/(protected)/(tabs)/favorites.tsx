@@ -60,7 +60,7 @@ const Favorite = () => {
         title="Favorites"
         icon={<CartIcon size={"60%"} />}
         onPress={() => {
-          router.navigate("/luxuryECommerce/(protected)/cart");
+          router.navigate("/(luxuryECommerce)/(protected)/cart");
         }}
       >
         <View

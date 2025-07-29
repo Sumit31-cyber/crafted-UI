@@ -5,8 +5,8 @@ export default function Layout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="/cart" />
-      <Stack.Screen name="/productDetailScreen" />
+      <Stack.Screen name="cart" />
+      <Stack.Screen name="productDetailScreen" />
     </Stack>
   );
 }

@@ -69,10 +69,25 @@ export const _animationLists: AnimationListItemType[] = [
     ],
   },
   {
+    id: 2,
+    title: "Tilted Animated Image Carousel With React Native Reanimated",
+    thumbnail_url: require("@/assets/images/animatedTiltedCarousel.png"),
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/animatedTiltedCarousel",
+    path: "/(animatedTiltedCarousel)",
+    topics: [
+      "reanimated",
+      "interpolate",
+      "useAnimatedScrollHandler",
+      "linear gradient",
+      "react native carousel",
+    ],
+  },
+  {
     id: 1,
     title: "Luxury E-Commerce App",
     thumbnail_url: require("@/assets/images/eCommerce.png"),
-    path: "/luxuryECommerce/(auth)/landingScreen",
+    path: "/(luxuryECommerce)/(auth)/landingScreen",
     githubLink:
       "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/luxuryECommerce",
     topics: [
@@ -83,28 +98,14 @@ export const _animationLists: AnimationListItemType[] = [
       "react native carousel",
     ],
   },
-  {
-    id: 2,
-    title: "Tilted Animated Image Carousel With React Native Reanimated",
-    thumbnail_url: require("@/assets/images/animatedTiltedCarousel.png"),
-    githubLink:
-      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/animatedTiltedCarousel",
-    path: "/animatedTiltedCarousel",
-    topics: [
-      "reanimated",
-      "interpolate",
-      "useAnimatedScrollHandler",
-      "linear gradient",
-      "react native carousel",
-    ],
-  },
+
   {
     id: 3,
     title: "Tilted Scaled Image Carousel With React Native Reanimated",
     thumbnail_url: require("@/assets/images/animatedScaledCarousel.png"),
     githubLink:
       "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/animatedScaledCarousel",
-    path: "/animatedScaledCarousel",
+    path: "/(animatedScaledCarousel)",
     topics: [
       "reanimated",
       "interpolate",
@@ -118,13 +119,13 @@ export const _animationLists: AnimationListItemType[] = [
     githubLink:
       "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
     thumbnail_url: require("@/assets/images/themeToggleSwitch.png"),
-    path: "/themeToggleSwitch",
+    path: "/(themeToggleSwitch)",
     topics: ["react-native-skia", "skia-canvas", "reanimated", "interpolate"],
   },
 ];
 
-export const _windowWidth = Dimensions.get("window").width;
-export const _windowHeight = Dimensions.get("window").height;
+export const _windowWidth = Dimensions.get("screen").width;
+export const _windowHeight = Dimensions.get("screen").height;
 
 export const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } =
   Dimensions.get("screen");
