@@ -1,6 +1,16 @@
 import { Href } from "expo-router";
 import { Dimensions, ImageProps, StyleSheet } from "react-native";
 
+// export enum FONTS {
+//   Regular = "gilroyRegular",
+//   Bold = "gilroyBold",
+//   Light = "gilroyLight",
+//   Semibold = "gilroySemiBold",
+//   Thin = "gilroyThin",
+//   ExtraBold = "gilroyExtraBold",
+//   Medium = "gilroyMedium",
+// }
+
 export const FONTS = {
   spaceMono: "SpaceMono",
   firaCodeBold: "FiraCodeBold",
@@ -38,6 +48,22 @@ export const LuxuryColors = {
 };
 
 export const _animationLists: AnimationListItemType[] = [
+  {
+    id: 7,
+    title: "Delete Animation",
+    githubLink:
+      "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
+    thumbnail_url: require("@/assets/images/onboarding-spotlight.png"),
+    path: "/(deleteAnimation)",
+    topics: [
+      "perspective",
+      "transformation",
+      "reanimated",
+      "interpolate",
+      "useAnimatedScrollHandler",
+      "react native carousel",
+    ],
+  },
   {
     id: 6,
     title: "Onboarding Spotlight",
@@ -128,6 +154,8 @@ export const _windowWidth = Dimensions.get("screen").width;
 export const _windowHeight = Dimensions.get("screen").height;
 
 export const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } =
+  Dimensions.get("window");
+export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
   Dimensions.get("screen");
 
 export const _horizontalPadding = _windowWidth * 0.03;

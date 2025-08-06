@@ -12,6 +12,8 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SharedStateProvider } from "@/context/SharedContext";
 
 // Prevent splash screen from auto-hiding before fonts are loaded
 SplashScreen.preventAutoHideAsync();
@@ -46,61 +48,74 @@ export default function RootLayout() {
   if (!loaded) return null;
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        {/* Home screen with custom header */}
-        <Stack.Screen
-          name="index"
-          options={{
-            title: "Crafts",
-            headerSearchBarOptions: {
-              placeholder: "Search",
-              onChangeText: ({ nativeEvent }) => {
-                console.log(nativeEvent.text);
-              },
-            },
-            headerLargeTitle: true,
-            headerTransparent: true,
-            headerBlurEffect: "regular",
-            headerTitleStyle: {
-              fontFamily: "FiraCodeBold",
-            },
-            headerLargeTitleStyle: {
-              fontFamily: "FiraCodeBold",
-            },
-          }}
-        />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <SharedStateProvider>
+          <Stack>
+            {/* Home screen with custom header */}
+            <Stack.Screen
+              name="index"
+              options={{
+                title: "Crafts",
+                headerSearchBarOptions: {
+                  placeholder: "Search",
+                  onChangeText: ({ nativeEvent }) => {
+                    console.log(nativeEvent.text);
+                  },
+                },
+                headerLargeTitle: true,
+                headerTransparent: true,
+                headerBlurEffect: "regular",
+                headerTitleStyle: {
+                  fontFamily: "FiraCodeBold",
+                },
+                headerLargeTitleStyle: {
+                  fontFamily: "FiraCodeBold",
+                },
+              }}
+            />
 
-        <Stack.Screen name="homeScreen" />
-        <Stack.Screen
-          name="(animatedTiltedCarousel)/index"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="(animatedScaledCarousel)/index"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="(themeToggleSwitch)/index"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="(luxuryECommerce)"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="stickyActionBar" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(circularCarousel)/index"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="(onboardingSpotlight)/index"
-          options={{ headerShown: false }}
-        />
-        {/* Not found screen */}
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+            <Stack.Screen name="homeScreen" />
+            <Stack.Screen
+              name="(animatedTiltedCarousel)/index"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="(animatedScaledCarousel)/index"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="(themeToggleSwitch)/index"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="(luxuryECommerce)"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="stickyActionBar"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="(circularCarousel)/index"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="(deleteAnimation)/index"
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="(onboardingSpotlight)/index"
+              options={{ headerShown: false }}
+            />
+
+            {/* Not found screen */}
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </SharedStateProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
