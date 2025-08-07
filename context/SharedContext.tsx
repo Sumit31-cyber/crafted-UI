@@ -6,6 +6,8 @@ interface SharedContextType {
   setSelectedMemoirItem: (item: MemoirItem) => void;
   isSelectionEnabled: boolean;
   setIsSelectionEnabled: (item: boolean) => void;
+  deleteMemoir: boolean;
+  setDeleteMemoir: (item: boolean) => void;
 }
 
 const SharedStateContext = createContext<SharedContextType | undefined>(
@@ -19,6 +21,7 @@ export const SharedStateProvider: FC<{ children: React.ReactNode }> = ({
     useState<MemoirItem | null>(null);
 
   const [isSelectionEnabled, setIsSelectionEnabled] = useState(false);
+  const [deleteMemoir, setDeleteMemoir] = useState(false);
 
   return (
     <SharedStateContext.Provider
@@ -27,6 +30,8 @@ export const SharedStateProvider: FC<{ children: React.ReactNode }> = ({
         setSelectedMemoirItem,
         isSelectionEnabled,
         setIsSelectionEnabled,
+        deleteMemoir,
+        setDeleteMemoir,
       }}
     >
       {children}

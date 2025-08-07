@@ -15,7 +15,6 @@ import PinnedMemoirs from "./Components/PinnedMemoirs";
 import AllMemoirs from "./Components/AllMemoirs";
 import Animated, {
   SlideInRight,
-  SlideOutLeft,
   SlideOutRight,
   useAnimatedStyle,
   useSharedValue,

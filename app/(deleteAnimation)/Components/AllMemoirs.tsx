@@ -1,17 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  GestureResponderEvent,
-} from "react-native";
+import { StyleSheet, View, GestureResponderEvent } from "react-native";
 import React from "react";
 import SectionHeader from "./SectionHeader";
-import { Ellipsis, ListFilter } from "lucide-react-native";
+import { ListFilter } from "lucide-react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { ScrollView } from "react-native-gesture-handler";
-import { _horizontalPadding, SCREEN_WIDTH } from "@/utils/constant";
-import CustomText from "@/components/CustomText";
+import { _horizontalPadding } from "@/utils/constant";
 import MemoirCard from "./MemoirCard";
 
 export const GAP = RFValue(10);
