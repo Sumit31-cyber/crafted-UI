@@ -19,13 +19,13 @@ const PinnedMemoirCard = ({
   item: { id: number };
   index: number;
 }) => {
-  const { deleteMemoirs, setDeleteMemoirs } = useSharedState();
+  const { isSelectionEnabled, setIsSelectionEnabled } = useSharedState();
   const rotate = useSharedValue(0);
   const selectorSize = useSharedValue(0);
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    if (deleteMemoirs) {
+    if (isSelectionEnabled) {
       const rotationMultiplier = index % 2 === 0 ? 1 : -1;
       rotate.value = withRepeat(
         withSequence(
@@ -41,7 +41,7 @@ const PinnedMemoirCard = ({
       rotate.value = withTiming(0, { duration: 300 });
       selectorSize.value = withTiming(0, { duration: 300 });
     }
-  }, [deleteMemoirs, index]);
+  }, [isSelectionEnabled, index]);
 
   const rStyle = useAnimatedStyle(() => {
     return {

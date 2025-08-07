@@ -28,6 +28,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import CustomText from "@/components/CustomText";
 import { getCardHeight, getCardWidth } from "@/utils/functions";
+import DeleteOverlay from "./Components/DeleteOverlay";
 
 interface LayoutType {
   x: number;
@@ -36,7 +37,8 @@ interface LayoutType {
 
 const DeleteAnimation = () => {
   const [layout, setLayout] = useState<LayoutType | null>(null);
-  const { selectedMemoirItem, setSelectedMemoirItem } = useSharedState();
+  const { selectedMemoirItem, setSelectedMemoirItem, isSelectionEnabled } =
+    useSharedState();
 
   const showOverlay = layout && selectedMemoirItem;
   return (
@@ -63,6 +65,7 @@ const DeleteAnimation = () => {
         {showOverlay && (
           <Modal layout={layout} onPress={() => setLayout(null)} />
         )}
+        <DeleteOverlay />
       </SafeAreaView>
     </View>
   );
@@ -101,7 +104,7 @@ const Modal = ({
   const borderRadius = useSharedValue(12);
   const backgroundOpacity = useSharedValue(0);
   const rotate = useSharedValue(0);
-  const { selectedMemoirItem, setDeleteMemoirs } = useSharedState();
+  const { selectedMemoirItem, setIsSelectionEnabled } = useSharedState();
   const CARD_HEIGHT = getCardHeight();
   const CARD_WIDTH = getCardWidth();
   const [showAction, setShowAction] = useState(true);
@@ -171,7 +174,7 @@ const Modal = ({
                 onPress={() => {
                   console.log(item.title);
                   if (item.title === "🗑️ Delete") {
-                    setDeleteMemoirs(true);
+                    setIsSelectionEnabled(true);
                   }
                 }}
               >

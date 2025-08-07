@@ -21,6 +21,7 @@ import Animated, {
   ZoomInUp,
   ZoomOutDown,
   ZoomInEasyDown,
+  withDelay,
 } from "react-native-reanimated";
 import { getCardHeight, getCardWidth } from "@/utils/functions";
 import SelectorView from "./SelectorView";
@@ -36,13 +37,12 @@ const MemoirCard = ({
 }) => {
   const CARD_WIDTH = getCardWidth();
   const CARD_HEIGHT = getCardHeight();
-  const { deleteMemoirs, setDeleteMemoirs } = useSharedState();
+  const { isSelectionEnabled } = useSharedState();
   const rotate = useSharedValue(0);
-  const selectorSize = useSharedValue(0);
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    if (deleteMemoirs) {
+    if (isSelectionEnabled) {
       const rotationMultiplier = index % 2 === 0 ? 1 : -1;
       rotate.value = withRepeat(
         withSequence(
@@ -53,12 +53,10 @@ const MemoirCard = ({
         -1,
         true
       );
-      selectorSize.value = withTiming(20, { duration: 300 });
     } else {
       rotate.value = withTiming(0, { duration: 300 });
-      selectorSize.value = withTiming(0, { duration: 300 });
     }
-  }, [deleteMemoirs, index]);
+  }, [isSelectionEnabled, index]);
 
   const rStyle = useAnimatedStyle(() => {
     return {
@@ -73,7 +71,7 @@ const MemoirCard = ({
   return (
     <TouchableOpacity
       onLongPress={(e) => onLongPress(e, item)}
-      disabled={deleteMemoirs}
+      disabled={isSelectionEnabled}
       key={item.id}
     >
       <Animated.View

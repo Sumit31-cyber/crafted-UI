@@ -16,14 +16,14 @@ const SelectorView = ({
   selected: boolean;
   setSelected: (prev: boolean) => void;
 }) => {
-  const { deleteMemoirs } = useSharedState();
+  const { isSelectionEnabled } = useSharedState();
 
   const rSelectorStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(deleteMemoirs ? 20 : 0, { duration: 400 }),
-      width: withTiming(deleteMemoirs ? 20 : 0, { duration: 400 }),
-      opacity: withTiming(deleteMemoirs ? 1 : 0, { duration: 400 }),
-      marginTop: withTiming(deleteMemoirs ? GAP : 0, { duration: 400 }),
+      height: withTiming(isSelectionEnabled ? 20 : 0, { duration: 400 }),
+      width: withTiming(isSelectionEnabled ? 20 : 0, { duration: 400 }),
+      opacity: withTiming(isSelectionEnabled ? 1 : 0, { duration: 400 }),
+      marginTop: withTiming(isSelectionEnabled ? GAP : 0, { duration: 400 }),
     };
   });
 
