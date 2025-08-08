@@ -1,16 +1,17 @@
 import {
-  Dimensions,
+  findNodeHandle,
   GestureResponderEvent,
   StyleSheet,
   TouchableOpacity,
+  UIManager,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CustomText from "@/components/CustomText";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Ellipsis, ZoomIn, ZoomOut } from "lucide-react-native";
-import { BORDER_RADIUS, GAP, MemoirItem } from "./AllMemoirs";
-import { _horizontalPadding, SCREEN_WIDTH } from "@/utils/constant";
+import { Ellipsis } from "lucide-react-native";
+import { BORDER_RADIUS, GAP } from "./AllMemoirs";
+import { _horizontalPadding } from "@/utils/constant";
 import { useSharedState } from "@/context/SharedContext";
 import Animated, {
   useAnimatedStyle,
@@ -18,13 +19,10 @@ import Animated, {
   withTiming,
   withRepeat,
   withSequence,
-  ZoomInUp,
-  ZoomOutDown,
-  ZoomInEasyDown,
-  withDelay,
 } from "react-native-reanimated";
 import { getCardHeight, getCardWidth } from "@/utils/functions";
 import SelectorView from "./SelectorView";
+import { MemoirItem, MemoirViewOffset } from "@/constants/types";
 
 const MemoirCard = ({
   item,
@@ -37,9 +35,11 @@ const MemoirCard = ({
 }) => {
   const CARD_WIDTH = getCardWidth();
   const CARD_HEIGHT = getCardHeight();
-  const { isSelectionEnabled } = useSharedState();
+  const { isSelectionEnabled, toggleMemoirSelection } = useSharedState();
   const rotate = useSharedValue(0);
-  const [selected, setSelected] = useState(false);
+
+  // Create a ref to attach to the view
+  const viewRef = useRef<View>(null);
 
   useEffect(() => {
     if (isSelectionEnabled) {
@@ -68,6 +68,24 @@ const MemoirCard = ({
     };
   });
 
+  const handleOnSelect = () => {
+    // setSelected(!selected);
+
+    const node = findNodeHandle(viewRef.current);
+    if (node) {
+      UIManager.measure(node, (x, y, width, height, pageX, pageY) => {
+        console.log({ x, y, width, height, pageX, pageY });
+        toggleMemoirSelection({
+          pageX,
+          pageY,
+          height,
+          width,
+          ...item,
+        });
+      });
+    }
+  };
+
   return (
     <TouchableOpacity
       onLongPress={(e) => onLongPress(e, item)}
@@ -75,6 +93,7 @@ const MemoirCard = ({
       key={item.id}
     >
       <Animated.View
+        ref={viewRef}
         style={[
           styles.memoirContainer,
           rStyle,
@@ -106,17 +125,17 @@ const MemoirCard = ({
         >
           <View>
             <CustomText variant="h6" fontFamily="poppinsMedium">
-              Holiday spots
+              {item.title}
             </CustomText>
             <CustomText variant="h7" style={{ opacity: 0.4 }}>
-              34 Images
+              {item.imageCount} Images
             </CustomText>
           </View>
           <Ellipsis color={"black"} size={RFValue(14)} />
         </View>
       </Animated.View>
 
-      <SelectorView selected={selected} setSelected={setSelected} />
+      <SelectorView id={item.id} onSelect={handleOnSelect} />
     </TouchableOpacity>
   );
 };

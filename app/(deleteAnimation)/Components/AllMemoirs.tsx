@@ -5,21 +5,47 @@ import { ListFilter } from "lucide-react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { _horizontalPadding } from "@/utils/constant";
 import MemoirCard from "./MemoirCard";
+import { MemoirItem } from "@/constants/types";
 
 export const GAP = RFValue(10);
 export const BORDER_RADIUS = RFValue(14);
-
-export interface MemoirItem {
-  id: number;
-}
 
 export interface AllMemoirsProps {
   onLongPress: (event: GestureResponderEvent, item: MemoirItem) => void;
 }
 
-const MOCK_DATA: MemoirItem[] = new Array(6)
-  .fill(0)
-  .map((_, index) => ({ id: index }));
+const MOCK_DATA: MemoirItem[] = [
+  {
+    id: 0,
+    title: "Holiday Spots",
+    imageCount: 34,
+  },
+  {
+    id: 1,
+    title: "Moodboard",
+    imageCount: 123,
+  },
+  {
+    id: 2,
+    title: "Assets",
+    imageCount: 54,
+  },
+  {
+    id: 3,
+    title: "Work Docs",
+    imageCount: 22,
+  },
+  {
+    id: 4,
+    title: "Chimney",
+    imageCount: 43,
+  },
+  {
+    id: 5,
+    title: "Movies",
+    imageCount: 29,
+  },
+];
 
 const AllMemoirs: React.FC<AllMemoirsProps> = ({ onLongPress }) => {
   return (

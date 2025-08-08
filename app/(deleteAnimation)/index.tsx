@@ -28,6 +28,7 @@ import { BlurView } from "expo-blur";
 import CustomText from "@/components/CustomText";
 import { getCardHeight, getCardWidth } from "@/utils/functions";
 import DeleteOverlay from "./Components/DeleteOverlay";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface LayoutType {
   x: number;
@@ -38,11 +39,12 @@ const DeleteAnimation = () => {
   const [layout, setLayout] = useState<LayoutType | null>(null);
   const { selectedMemoirItem, setSelectedMemoirItem, isSelectionEnabled } =
     useSharedState();
+  const { top, bottom } = useSafeAreaInsets();
 
   const showOverlay = layout && selectedMemoirItem;
   return (
     <View style={styles.mainContainer}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingTop: top, paddingBottom: bottom }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.innerContainer}>
             <Header />
@@ -65,7 +67,7 @@ const DeleteAnimation = () => {
           <Modal layout={layout} onPress={() => setLayout(null)} />
         )}
         <DeleteOverlay />
-      </SafeAreaView>
+      </View>
     </View>
   );
 };

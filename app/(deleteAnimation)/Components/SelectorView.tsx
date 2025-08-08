@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import Animated, {
   useAnimatedStyle,
   withTiming,
@@ -10,13 +10,16 @@ import { Check } from "lucide-react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 const SelectorView = ({
-  selected,
-  setSelected,
+  id,
+  onSelect,
 }: {
-  selected: boolean;
-  setSelected: (prev: boolean) => void;
+  id: number;
+  onSelect?: () => void;
 }) => {
-  const { isSelectionEnabled } = useSharedState();
+  const { isSelectionEnabled, selectedMemoir } = useSharedState();
+  const selected = useMemo(() => {
+    return selectedMemoir?.find((item) => item.id === id);
+  }, [selectedMemoir]);
 
   const rSelectorStyle = useAnimatedStyle(() => {
     return {
@@ -28,7 +31,7 @@ const SelectorView = ({
   });
 
   return (
-    <TouchableOpacity onPress={() => setSelected(!selected)}>
+    <TouchableOpacity onPress={onSelect}>
       <Animated.View
         style={[
           rSelectorStyle,

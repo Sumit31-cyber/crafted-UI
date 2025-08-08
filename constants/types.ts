@@ -20,3 +20,19 @@ export type CartState = {
   cartItems: CartType[];
   selectedItem: ProductType | null;
 };
+
+//Delete Animation
+export interface MemoirItem {
+  id: number;
+  title: string;
+  imageCount: number;
+}
+
+export interface MemoirViewOffset {
+  pageX: number;
+  pageY: number;
+  height: number;
+  width: number;
+}
+
+export interface MemoirWithOffset extends MemoirItem, MemoirViewOffset {}

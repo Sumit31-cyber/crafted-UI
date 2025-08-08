@@ -69,7 +69,7 @@ const PinnedMemoirCard = ({
           },
         ]}
       ></Animated.View>
-      <SelectorView selected={selected} setSelected={setSelected} />
+      <SelectorView selected={selected} onSelect={() => setSelected(true)} />
     </View>
   );
 };
