@@ -1,31 +1,60 @@
+import React, { useEffect, useMemo } from "react";
 import { StyleSheet, TouchableOpacity, Dimensions, View } from "react-native";
-import React, { useEffect, useRef } from "react";
 import { Trash2, X } from "lucide-react-native";
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+  FadeIn,
+  FadeOut,
+  useSharedValue,
+  Easing,
+  withDelay,
+  withSpring,
+} from "react-native-reanimated";
+import { RFValue } from "react-native-responsive-fontsize";
+
 import CustomText from "@/components/CustomText";
+import MemoirCard from "./MemoirCard";
+import { useSharedState } from "@/context/SharedContext";
+import { getCardHeight, getCardWidth } from "@/utils/functions";
 import {
   _horizontalPadding,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
 } from "@/utils/constant";
-import Animated, {
-  useAnimatedStyle,
-  withTiming,
-  FadeIn,
-  useSharedValue,
-  Easing,
-  withDelay,
-  FadeOut,
-} from "react-native-reanimated";
-import { useSharedState } from "@/context/SharedContext";
-import { RFValue } from "react-native-responsive-fontsize";
-import MemoirCard from "./MemoirCard";
-import { getCardHeight, getCardWidth } from "@/utils/functions";
-import { BORDER_RADIUS, GAP } from "./AllMemoirs";
+import { GAP } from "./AllMemoirs";
 import { MemoirViewOffset } from "@/constants/types";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const ANIMATION_CONFIG = {
+  PILL_TRANSFORM_DURATION: 450,
+  FADE_IN_DURATION: 300,
+  FADE_OUT_DURATION: 0,
+  CARD_TRANSITION_DURATION: 500,
+  SPRING_CONFIG: { damping: 15, stiffness: 150 },
+} as const;
 
-const DeleteOverlay = () => {
+const LAYOUT_CONFIG = {
+  PILL_HEIGHT: 60,
+  PILL_WIDTH_COLLAPSED: SCREEN_WIDTH * 0.42,
+  MODAL_HEIGHT: SCREEN_HEIGHT * 0.5,
+  MODAL_WIDTH: SCREEN_WIDTH * 0.95,
+  PILL_BORDER_RADIUS: 30,
+  MODAL_BORDER_RADIUS: 25,
+  BUTTON_GAP: 12,
+  BUTTON_PADDING: 8,
+} as const;
+
+const CARD_STACK_CONFIG = {
+  OFFSET_X: 20,
+  OFFSET_Y: 12,
+  MAX_ROTATION: 4,
+  SCALE_FACTOR: 0.6,
+  POSITION_Y_OFFSET: SCREEN_HEIGHT * 0.53,
+} as const;
+
+interface DeleteOverlayProps {}
+
+const DeleteOverlay: React.FC<DeleteOverlayProps> = () => {
   const {
     isSelectionEnabled,
     setIsSelectionEnabled,
@@ -35,388 +64,344 @@ const DeleteOverlay = () => {
     setSelectedMemoir,
   } = useSharedState();
 
-  // Animation for the container - fade out entire overlay when closing
-  const containerStyle = useAnimatedStyle(() => {
-    const isVisible = isSelectionEnabled || deleteMemoir;
+  const isVisible = isSelectionEnabled || deleteMemoir;
 
-    return {
-      opacity: withTiming(isVisible ? 1 : 0, {
-        duration: isVisible ? 300 : 200, // Faster fade out
-      }),
-      // Add a slight scale animation to make the exit smoother
-      transform: [
-        {
-          scale: withTiming(isVisible ? 1 : 0.95, {
-            duration: isVisible ? 300 : 200,
-          }),
-        },
-      ],
-      backgroundColor: withTiming(
-        deleteMemoir ? "rgba(0,0,0,0.5)" : "transparent"
-      ),
+  // Animated values with proper initialization
+  const containerOpacity = useSharedValue(0);
+  const containerScale = useSharedValue(0.95);
+  const backgroundOpacity = useSharedValue(0);
+
+  // Update animation values when visibility changes
+  useEffect(() => {
+    const springConfig = {
+      damping: 18,
+      stiffness: 200,
+      mass: 0.8,
     };
-  }, [isSelectionEnabled, deleteMemoir]);
 
-  // Animation for the pill/modal transformation
-  const pillStyle = useAnimatedStyle(() => {
-    const isClosing = !isSelectionEnabled && !deleteMemoir;
+    containerOpacity.value = withSpring(isVisible ? 1 : 0, springConfig);
+    containerScale.value = withSpring(isVisible ? 1 : 0.95, springConfig);
+    backgroundOpacity.value = withTiming(deleteMemoir ? 0.5 : 0, {
+      duration: ANIMATION_CONFIG.FADE_IN_DURATION,
+    });
+  }, [isVisible, deleteMemoir]);
 
-    return {
-      height: withTiming(deleteMemoir ? screenHeight * 0.5 : 60, {
-        duration: isClosing ? 0 : 400, // No animation when closing
-        easing: Easing.out(Easing.cubic),
-      }),
-      width: withTiming(
-        deleteMemoir ? screenWidth * 0.95 : screenWidth * 0.42,
-        {
-          duration: isClosing ? 0 : 400, // No animation when closing
-          easing: Easing.out(Easing.cubic),
-        }
-      ),
-      borderRadius: withTiming(deleteMemoir ? 25 : 30, {
-        duration: isClosing ? 0 : 400, // No animation when closing
-        easing: Easing.out(Easing.cubic),
-      }),
-    };
-  }, [deleteMemoir, isSelectionEnabled]);
+  // Memoized animated styles
+  const containerAnimatedStyle = useAnimatedStyle(
+    () => ({
+      opacity: containerOpacity.value,
+      transform: [{ scale: containerScale.value }],
+      backgroundColor: `rgba(0,0,0,${backgroundOpacity.value})`,
+    }),
+    []
+  );
 
-  const contentOpacity = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(deleteMemoir ? 1 : 0, {
-        duration: deleteMemoir ? 600 : 200,
-      }),
-    };
+  const pillAnimatedStyle = useAnimatedStyle(() => {
+    const height = withTiming(
+      deleteMemoir ? LAYOUT_CONFIG.MODAL_HEIGHT : LAYOUT_CONFIG.PILL_HEIGHT,
+      {
+        duration: ANIMATION_CONFIG.PILL_TRANSFORM_DURATION,
+        easing: Easing.bezier(0.4, 0, 0.2, 1),
+      }
+    );
+
+    const width = withTiming(
+      deleteMemoir
+        ? LAYOUT_CONFIG.MODAL_WIDTH
+        : LAYOUT_CONFIG.PILL_WIDTH_COLLAPSED,
+      {
+        duration: ANIMATION_CONFIG.PILL_TRANSFORM_DURATION,
+        easing: Easing.bezier(0.4, 0, 0.2, 1),
+      }
+    );
+
+    const borderRadius = withTiming(
+      deleteMemoir
+        ? LAYOUT_CONFIG.MODAL_BORDER_RADIUS
+        : LAYOUT_CONFIG.PILL_BORDER_RADIUS,
+      {
+        duration: ANIMATION_CONFIG.PILL_TRANSFORM_DURATION,
+        easing: Easing.bezier(0.4, 0, 0.2, 1),
+      }
+    );
+
+    return { height, width, borderRadius };
   }, [deleteMemoir]);
 
-  const deleteButtonStyle = useAnimatedStyle(() => {
-    return {
-      width: withTiming(deleteMemoir ? 150 : 100, {
-        duration: 300,
-        easing: Easing.out(Easing.cubic),
-      }),
-    };
-  }, [deleteMemoir]);
+  const handleDeletePress = () => {
+    setDeleteMemoir(true);
+    setIsSelectionEnabled(false);
+  };
 
-  const cancelButtonStyle = useAnimatedStyle(() => {
-    return {
-      width: withTiming(deleteMemoir ? 150 : 40, {
-        duration: 300,
-        easing: Easing.out(Easing.cubic),
-      }),
-    };
-  }, [deleteMemoir]);
+  const handleCancelPress = () => {
+    if (deleteMemoir) {
+      setIsSelectionEnabled(true);
+      setDeleteMemoir(false);
+    } else {
+      setDeleteMemoir(false);
+      setIsSelectionEnabled(false);
+      setSelectedMemoir(null);
+    }
+  };
 
-  const cancelTextStyle = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(deleteMemoir ? 1 : 0, {
-        duration: deleteMemoir ? 300 : 150,
-      }),
-      position: "absolute",
-      alignSelf: "center",
-    };
-  }, [deleteMemoir]);
+  const renderTransitionCards = useMemo(() => {
+    if (!selectedMemoir) return null;
+
+    return selectedMemoir.map((item, index) => (
+      <TransitionMemoirCard
+        key={`memoir-${index}-${item.pageX}-${item.pageY}`}
+        item={item}
+        index={index}
+        totalCards={selectedMemoir.length}
+      />
+    ));
+  }, [selectedMemoir]);
+
+  if (!isVisible) return null;
 
   return (
     <Animated.View
       pointerEvents={deleteMemoir ? "auto" : "box-none"}
-      style={[containerStyle, styles.container]}
+      style={[styles.container, containerAnimatedStyle]}
     >
-      {selectedMemoir && (
-        <>
-          {selectedMemoir.map((item, index) => {
-            return (
-              <TransitionMemoirCard
-                key={index}
-                item={item}
-                index={index}
-                totalCards={selectedMemoir.length}
-              />
-            );
-          })}
-        </>
-      )}
-      <Animated.View style={[pillStyle, styles.pillContainer]}>
-        {/* Default Pill Content */}
-        <Animated.View style={[styles.pillContent]}>
-          <Animated.View style={deleteButtonStyle}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => {
-                setDeleteMemoir(true);
-                setIsSelectionEnabled(false);
-              }}
-              style={styles.deleteButton}
-            >
-              <Trash2 color="white" size={16} />
-              <CustomText variant="h7" fontFamily="poppinsMedium" color="white">
-                Delete
-              </CustomText>
-            </TouchableOpacity>
-          </Animated.View>
+      {renderTransitionCards}
 
-          <Animated.View style={[cancelButtonStyle, styles.closeButton]}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={{
-                height: "100%",
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              onPress={() => {
-                if (deleteMemoir) {
-                  setIsSelectionEnabled(true);
-                  setDeleteMemoir(false);
-                } else {
-                  setDeleteMemoir(false);
-                  setIsSelectionEnabled(false);
-                  setSelectedMemoir(null);
-                }
-              }}
-            >
-              <Animated.View style={cancelTextStyle}>
-                <CustomText
-                  variant="h7"
-                  fontFamily="poppinsMedium"
-                  color="white"
-                >
-                  Cancel
-                </CustomText>
-              </Animated.View>
+      <Animated.View style={[styles.pillContainer, pillAnimatedStyle]}>
+        <PillContent
+          deleteMemoir={deleteMemoir}
+          onDeletePress={handleDeletePress}
+          onCancelPress={handleCancelPress}
+        />
 
-              {!deleteMemoir && (
-                <Animated.View entering={FadeIn}>
-                  <X color="white" size={16} />
-                </Animated.View>
-              )}
-            </TouchableOpacity>
-          </Animated.View>
-        </Animated.View>
-
-        {/* Expanded Modal Content */}
-        {deleteMemoir && (
-          <Animated.View
-            entering={FadeIn.delay(100)}
-            exiting={FadeOut}
-            style={[contentOpacity, styles.modalContent]}
-          >
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                marginVertical: _horizontalPadding,
-                gap: _horizontalPadding,
-              }}
-            >
-              <View
-                style={{
-                  height: RFValue(6),
-                  width: RFValue(60),
-                  backgroundColor: "#f4f4f4",
-                  borderRadius: 100,
-                }}
-              ></View>
-              <CustomText variant="h5" fontFamily="FiraCodeMedium">
-                Delete Memoir?
-              </CustomText>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                // backgroundColor: "red",
-                height: "100%",
-                width: "100%",
-              }}
-            ></View>
-            {deleteMemoir && (
-              <Animated.View entering={FadeIn.delay(200)}>
-                <CustomText
-                  variant="h5"
-                  fontFamily="FiraCodeMedium"
-                  style={{ textAlign: "center", marginBottom: RFValue(10) }}
-                >
-                  Are you sure you want to{" "}
-                  <CustomText
-                    variant="h5"
-                    fontFamily="FiraCodeBold"
-                    style={{ textAlign: "center", marginBottom: RFValue(10) }}
-                  >
-                    delete {selectedMemoir?.length} Memoirs
-                  </CustomText>{" "}
-                  from the list
-                </CustomText>
-              </Animated.View>
-            )}
-          </Animated.View>
-        )}
+        {deleteMemoir && <ModalContent selectedMemoir={selectedMemoir} />}
       </Animated.View>
     </Animated.View>
   );
 };
 
-export default DeleteOverlay;
+interface PillContentProps {
+  deleteMemoir: boolean;
+  onDeletePress: () => void;
+  onCancelPress: () => void;
+}
 
-const TransitionMemoirCard = ({
-  item,
-  index,
-  totalCards,
-}: {
+const PillContent: React.FC<PillContentProps> = ({
+  deleteMemoir,
+  onDeletePress,
+  onCancelPress,
+}) => {
+  const deleteButtonWidth = useSharedValue(100);
+  const cancelButtonWidth = useSharedValue(40);
+  const cancelTextOpacity = useSharedValue(0);
+
+  useEffect(() => {
+    const duration = ANIMATION_CONFIG.PILL_TRANSFORM_DURATION;
+    const easing = Easing.bezier(0.4, 0, 0.2, 1);
+
+    deleteButtonWidth.value = withTiming(deleteMemoir ? 150 : 100, {
+      duration,
+      easing,
+    });
+
+    cancelButtonWidth.value = withTiming(deleteMemoir ? 150 : 40, {
+      duration,
+      easing,
+    });
+
+    cancelTextOpacity.value = withTiming(deleteMemoir ? 1 : 0, {
+      duration: deleteMemoir
+        ? ANIMATION_CONFIG.FADE_IN_DURATION
+        : ANIMATION_CONFIG.FADE_OUT_DURATION,
+      easing,
+    });
+  }, [deleteMemoir]);
+
+  const deleteButtonStyle = useAnimatedStyle(
+    () => ({
+      width: deleteButtonWidth.value,
+    }),
+    []
+  );
+
+  const cancelButtonStyle = useAnimatedStyle(
+    () => ({
+      width: cancelButtonWidth.value,
+    }),
+    []
+  );
+
+  const cancelTextStyle = useAnimatedStyle(
+    () => ({
+      opacity: cancelTextOpacity.value,
+      position: "absolute" as const,
+      alignSelf: "center" as const,
+    }),
+    []
+  );
+
+  return (
+    <Animated.View style={styles.pillContent}>
+      <Animated.View style={deleteButtonStyle}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={onDeletePress}
+          style={styles.deleteButton}
+        >
+          <Trash2 color="white" size={16} />
+          <CustomText variant="h7" fontFamily="poppinsMedium" color="white">
+            Delete
+          </CustomText>
+        </TouchableOpacity>
+      </Animated.View>
+
+      <Animated.View style={[cancelButtonStyle, styles.closeButton]}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.fullTouchable}
+          onPress={onCancelPress}
+        >
+          <Animated.View style={cancelTextStyle}>
+            <CustomText variant="h7" fontFamily="poppinsMedium" color="white">
+              Cancel
+            </CustomText>
+          </Animated.View>
+
+          {!deleteMemoir && (
+            <Animated.View entering={FadeIn.duration(200)}>
+              <X color="white" size={16} />
+            </Animated.View>
+          )}
+        </TouchableOpacity>
+      </Animated.View>
+    </Animated.View>
+  );
+};
+
+interface ModalContentProps {
+  selectedMemoir: MemoirViewOffset[] | null;
+}
+
+const ModalContent: React.FC<ModalContentProps> = ({ selectedMemoir }) => (
+  <Animated.View
+    entering={FadeIn.delay(150).duration(ANIMATION_CONFIG.FADE_IN_DURATION)}
+    exiting={FadeOut.duration(ANIMATION_CONFIG.FADE_OUT_DURATION)}
+    style={styles.modalContent}
+  >
+    <View style={styles.modalHeader}>
+      <View style={styles.modalHandle} />
+      <CustomText variant="h5" fontFamily="FiraCodeMedium">
+        Delete Memoir?
+      </CustomText>
+    </View>
+
+    <View style={styles.modalBody} />
+
+    <Animated.View entering={FadeIn.delay(250)}>
+      <CustomText
+        variant="h6"
+        fontFamily="FiraCodeMedium"
+        style={styles.confirmationText}
+      >
+        Are you sure you want to{" "}
+        <CustomText variant="h5" fontFamily="FiraCodeBold">
+          delete {selectedMemoir?.length} Memoirs
+        </CustomText>{" "}
+        from the list?
+      </CustomText>
+    </Animated.View>
+  </Animated.View>
+);
+
+interface TransitionMemoirCardProps {
   item: MemoirViewOffset;
   index: number;
   totalCards: number;
-}) => {
-  const CARD_HEIGHT = getCardHeight();
-  const CARD_WIDTH = getCardWidth();
-  const INITIAL_POS_X = item.pageX + _horizontalPadding - GAP / 2;
-  const INITIAL_POS_Y = item.pageY + _horizontalPadding + GAP * 2 - 20;
+}
 
+const TransitionMemoirCard: React.FC<TransitionMemoirCardProps> = ({
+  item,
+  index,
+  totalCards,
+}) => {
   const { deleteMemoir } = useSharedState();
 
-  // Calculate initial position from the item's original location
-  const sharedX = useSharedValue(INITIAL_POS_X);
-  const sharedY = useSharedValue(INITIAL_POS_Y);
+  const CARD_HEIGHT = getCardHeight();
+  const CARD_WIDTH = getCardWidth();
+
+  const initialPosX = item.pageX + _horizontalPadding * 2 - 20;
+  const initialPosY = item.pageY - _horizontalPadding * 2 + 20 + GAP / 2;
+
+  // Shared values
+  const translateX = useSharedValue(initialPosX);
+  const translateY = useSharedValue(initialPosY);
   const rotate = useSharedValue(0);
   const opacity = useSharedValue(0);
   const scale = useSharedValue(1);
 
-  // Calculate stacked card offsets
-  const STACK_OFFSET_X = 20; // Horizontal offset between cards
-  const STACK_OFFSET_Y = 12; // Vertical offset between cards
-  const ROTATION_VARIATION = 3; // Max rotation difference between cards
-
   // Calculate final positions for stacked effect
+  const stackIndex = totalCards - index - 1;
   const centerX = SCREEN_WIDTH / 2 - CARD_WIDTH / 2;
-  const centerY = SCREEN_HEIGHT / 2 - CARD_HEIGHT / 2;
+  const finalX = centerX + stackIndex * CARD_STACK_CONFIG.OFFSET_X;
+  const finalY = CARD_STACK_CONFIG.POSITION_Y_OFFSET;
+  const finalScale = CARD_STACK_CONFIG.SCALE_FACTOR;
 
-  // Create stacking effect - cards further back have more offset
-  const stackIndex = totalCards - index - 1; // Reverse index so first card is on top
-  const finalX = centerX + stackIndex * STACK_OFFSET_X;
-  const finalY = SCREEN_HEIGHT * 0.53;
-  const finalScale = 0.6;
+  const rotationAmount = useMemo(() => {
+    const rotationSign = index % 2 === 0 ? 1 : -1;
+    return (
+      (Math.random() * 3 + 1) * rotationSign * CARD_STACK_CONFIG.MAX_ROTATION
+    );
+  }, [index]);
 
-  // Start animation with slight delay based on index
-  const delay = 0;
+  const animationConfig = useMemo(
+    () => ({
+      duration: ANIMATION_CONFIG.CARD_TRANSITION_DURATION,
+      easing: Easing.bezier(0.4, 0, 0.2, 1),
+    }),
+    []
+  );
 
   useEffect(() => {
-    // Animate to stacked position
-    sharedX.value = withDelay(
-      delay,
-      withTiming(finalX, {
-        duration: 500,
-        easing: Easing.out(Easing.cubic),
-      })
-    );
-
-    sharedY.value = withDelay(
-      delay,
-      withTiming(finalY, {
-        duration: 500,
-        easing: Easing.out(Easing.cubic),
-      })
-    );
-
-    // Scale down cards that are further back in the stack
-    // Each card slightly smaller
-    scale.value = withDelay(
-      delay,
-      withTiming(finalScale, {
-        duration: 500,
-        easing: Easing.out(Easing.cubic),
-      })
-    );
-
-    // Rotate cards with variation
-    const rotationValue = 4;
-    const rotationSign = index % 2 === 0 ? rotationValue : -rotationValue;
-    const rotationAmount =
-      (Math.random() * ROTATION_VARIATION + 1) * rotationSign;
-    rotate.value = withDelay(
-      delay,
-      withTiming(rotationAmount, {
-        duration: 600,
-        easing: Easing.out(Easing.cubic),
-      })
-    );
-
-    // Fade in
-    opacity.value = withDelay(
-      delay,
-      withTiming(deleteMemoir ? 1 : 0, {
-        duration: deleteMemoir ? 0 : 300,
-      })
-    );
-  }, [index, totalCards, deleteMemoir]);
-
-  useEffect(() => {
-    if (deleteMemoir === false) {
-      sharedX.value = withDelay(
-        delay,
-        withTiming(INITIAL_POS_X, {
-          duration: 500,
-          easing: Easing.out(Easing.cubic),
-        })
-      );
-      sharedY.value = withDelay(
-        delay,
-        withTiming(INITIAL_POS_Y, {
-          duration: 500,
-          easing: Easing.out(Easing.cubic),
-        })
-      );
-      scale.value = withDelay(
-        delay,
-        withTiming(1, { duration: 500, easing: Easing.out(Easing.cubic) })
-      );
-      rotate.value = withDelay(
-        delay,
-        withTiming(0, { duration: 600, easing: Easing.out(Easing.cubic) })
-      );
+    if (deleteMemoir) {
+      // Animate to stacked position
+      translateX.value = withTiming(finalX, animationConfig);
+      translateY.value = withTiming(finalY, animationConfig);
+      scale.value = withTiming(finalScale, animationConfig);
+      rotate.value = withTiming(rotationAmount, {
+        ...animationConfig,
+        duration: animationConfig.duration + 100,
+      });
+      opacity.value = withTiming(1, {
+        duration: ANIMATION_CONFIG.FADE_IN_DURATION,
+      });
+    } else {
+      // Animate back to original position
+      translateX.value = withTiming(initialPosX, animationConfig);
+      translateY.value = withTiming(initialPosY, animationConfig);
+      scale.value = withTiming(1, animationConfig);
+      rotate.value = withTiming(0, animationConfig);
+      opacity.value = withDelay(300, withTiming(0, { duration: 200 }));
     }
   }, [deleteMemoir]);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      position: "absolute",
-      top: sharedY.value,
-      left: sharedX.value,
+  const cardAnimatedStyle = useAnimatedStyle(
+    () => ({
+      position: "absolute" as const,
+      top: translateY.value,
+      left: translateX.value,
       opacity: opacity.value,
       transform: [{ scale: scale.value }, { rotate: `${rotate.value}deg` }],
-    };
-  }, [deleteMemoir]);
-
-  // Calculate z-index so top card has highest z-index
-  const zIndexValue = 10000 + (totalCards - index);
+      zIndex: 10000 + (totalCards - index),
+    }),
+    []
+  );
 
   return (
-    <Animated.View
-      style={[
-        animatedStyle,
-        {
-          position: "absolute",
-          zIndex: zIndexValue,
-          shadowColor: "rgba(99, 99, 99, 0.8)",
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-          //   borderWidth: 2,
-          //   borderRadius: BORDER_RADIUS,
-
-          //   boxShadow: " rgba(99, 99, 99, 0.8) 0px 2px 8px 0px",
-        },
-      ]}
-    >
+    <Animated.View style={[cardAnimatedStyle, styles.transitionCard]}>
       <MemoirCard
         index={index}
-        // @ts-ignore
-        item={item}
-        onLongPress={() => {
-          console.log("Card pressed:", index);
-        }}
+        item={item as any}
+        onLongPress={() => console.log("Card pressed:", index)}
+        showSelector={false}
       />
     </Animated.View>
   );
@@ -425,25 +410,20 @@ const TransitionMemoirCard = ({
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    // bottom: 30,
+    bottom: 0,
     paddingBottom: 30,
     zIndex: 1000,
-    flex: 1,
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
     alignItems: "center",
     justifyContent: "flex-end",
   },
   pillContainer: {
-    // backgroundColor: "rgba(0,0,0,0.1)",
     backgroundColor: "#fefefe",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
     elevation: 8,
     overflow: "hidden",
   },
@@ -451,9 +431,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    height: 60,
-    paddingHorizontal: 8,
-    gap: 12,
+    height: LAYOUT_CONFIG.PILL_HEIGHT,
+    paddingHorizontal: LAYOUT_CONFIG.BUTTON_PADDING,
+    gap: LAYOUT_CONFIG.BUTTON_GAP,
     marginTop: "auto",
   },
   deleteButton: {
@@ -470,10 +450,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#6c757d",
-    width: 40,
     height: 40,
     borderRadius: 20,
     overflow: "hidden",
+  },
+  fullTouchable: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   modalContent: {
     position: "absolute",
@@ -485,55 +470,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: RFValue(20),
   },
-  header: {
+  modalHeader: {
     alignItems: "center",
-    marginTop: 20,
+    justifyContent: "center",
+    marginVertical: _horizontalPadding,
+    gap: _horizontalPadding,
   },
-  previewSection: {
-    alignItems: "center",
+  modalHandle: {
+    height: RFValue(6),
+    width: RFValue(60),
+    backgroundColor: "#f4f4f4",
+    borderRadius: 100,
+  },
+  modalBody: {
     flex: 1,
-    justifyContent: "center",
-  },
-  previewGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: 8,
-    marginBottom: 16,
-  },
-  previewItem: {
-    width: 60,
-    height: 60,
-  },
-  previewImage: {
-    width: "100%",
     height: "100%",
-    backgroundColor: "#e0e0e0",
-    borderRadius: 12,
-  },
-  memoirInfo: {
-    alignItems: "center",
-  },
-  confirmationSection: {
-    marginBottom: 20,
+    width: "100%",
   },
   confirmationText: {
     textAlign: "center",
-    lineHeight: 24,
+    marginBottom: RFValue(10),
   },
-  actionButtons: {
-    gap: 12,
-  },
-  deleteActionButton: {
-    backgroundColor: "#ff4757",
-    paddingVertical: 16,
-    borderRadius: 25,
-    alignItems: "center",
-  },
-  cancelButton: {
-    backgroundColor: "transparent",
-    paddingVertical: 16,
-    borderRadius: 25,
-    alignItems: "center",
+  transitionCard: {
+    shadowColor: "rgba(99, 99, 99, 0.8)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
+
+export default DeleteOverlay;

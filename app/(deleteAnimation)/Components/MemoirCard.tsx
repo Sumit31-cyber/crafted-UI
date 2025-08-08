@@ -28,10 +28,12 @@ const MemoirCard = ({
   item,
   index,
   onLongPress,
+  showSelector = true,
 }: {
   item: MemoirItem;
   index: number;
   onLongPress: (event: GestureResponderEvent, item: MemoirItem) => void;
+  showSelector?: boolean;
 }) => {
   const CARD_WIDTH = getCardWidth();
   const CARD_HEIGHT = getCardHeight();
@@ -135,7 +137,7 @@ const MemoirCard = ({
         </View>
       </Animated.View>
 
-      <SelectorView id={item.id} onSelect={handleOnSelect} />
+      {showSelector && <SelectorView id={item.id} onSelect={handleOnSelect} />}
     </TouchableOpacity>
   );
 };
