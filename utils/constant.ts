@@ -1,3 +1,4 @@
+import { MemoirItem } from "@/constants/types";
 import { Href } from "expo-router";
 import { Dimensions, ImageProps, StyleSheet } from "react-native";
 
@@ -53,15 +54,13 @@ export const _animationLists: AnimationListItemType[] = [
     title: "Delete Animation",
     githubLink:
       "https://github.com/Sumit31-cyber/crafted-UI/tree/main/app/themeToggleSwitch",
-    thumbnail_url: require("@/assets/images/onboarding-spotlight.png"),
+    thumbnail_url: require("@/assets/images/memoir.png"),
     path: "/(deleteAnimation)",
     topics: [
-      "perspective",
-      "transformation",
       "reanimated",
-      "interpolate",
-      "useAnimatedScrollHandler",
-      "react native carousel",
+      "shared-transition",
+      "transformation",
+      "shake-animation",
     ],
   },
   {
@@ -580,4 +579,82 @@ export const _fakeUsers = [
   "https://images.unsplash.com/profile-1495427732560-fe5248ad6638?w=40&dpr=2&crop=faces&bg=%23fff&h=40&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
   "https://plus.unsplash.com/premium_photo-1741902728626-e00aec0bf055?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8dG93SlpGc2twR2d8fGVufDB8fHx8fA%3D%3D",
   "https://images.unsplash.com/photo-1740979142180-c7aba7a038f4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI2fHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D",
+];
+
+export const MOCK_DATA: MemoirItem[] = [
+  {
+    id: 0,
+    title: "Holiday Spots",
+    imageCount: 34,
+    thumbnail: require("@/assets/images/collage.png"),
+  },
+  {
+    id: 1,
+    title: "Moodboard",
+    imageCount: 123,
+    thumbnail: require("@/assets/images/collage2.png"),
+  },
+  {
+    id: 2,
+    title: "Assets",
+    imageCount: 54,
+    thumbnail: require("@/assets/images/collage4.png"),
+  },
+  {
+    id: 3,
+    title: "Work Docs",
+    imageCount: 22,
+    thumbnail: require("@/assets/images/collage3.png"),
+  },
+  {
+    id: 4,
+    title: "Chimney",
+    imageCount: 43,
+    thumbnail: require("@/assets/images/collage.png"),
+  },
+  {
+    id: 5,
+    title: "Movies",
+    imageCount: 29,
+    thumbnail: require("@/assets/images/collage.png"),
+  },
+];
+
+export const PINNED_MOCK_DATA: MemoirItem[] = [
+  {
+    id: 12,
+    title: "Holiday Spots",
+    imageCount: 34,
+    thumbnail: require("@/assets/images/collage.png"),
+  },
+  {
+    id: 13,
+    title: "Moodboard",
+    imageCount: 123,
+    thumbnail: require("@/assets/images/collage2.png"),
+  },
+  {
+    id: 14,
+    title: "Assets",
+    imageCount: 54,
+    thumbnail: require("@/assets/images/collage4.png"),
+  },
+  {
+    id: 15,
+    title: "Work Docs",
+    imageCount: 22,
+    thumbnail: require("@/assets/images/collage3.png"),
+  },
+  {
+    id: 16,
+    title: "Chimney",
+    imageCount: 43,
+    thumbnail: require("@/assets/images/collage.png"),
+  },
+  {
+    id: 17,
+    title: "Movies",
+    imageCount: 29,
+    thumbnail: require("@/assets/images/collage.png"),
+  },
 ];

@@ -5,11 +5,11 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { ChevronRight } from "lucide-react-native";
 import SectionHeader from "./SectionHeader";
 import PinnedMemoirCard from "./PinnedMemoirCard";
-
-const MOCK_DATA = new Array(5).fill(0).map((_, index) => ({ id: index }));
+import { MemoirItem } from "@/constants/types";
+import { PINNED_MOCK_DATA } from "@/utils/constant";
 
 const PinnedMemoirs = () => {
-  const renderItem = (item: { id: number }, index: number) => {
+  const renderItem = (item: MemoirItem, index: number) => {
     return <PinnedMemoirCard key={item.id} index={index} item={item} />;
   };
   return (
@@ -25,7 +25,7 @@ const PinnedMemoirs = () => {
         <View
           style={{ flexDirection: "row", gap: RFValue(14), marginVertical: 20 }}
         >
-          {MOCK_DATA.map(renderItem)}
+          {PINNED_MOCK_DATA.map(renderItem)}
         </View>
       </ScrollView>
     </View>

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { StyleSheet, TouchableOpacity, Dimensions, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Trash2, X } from "lucide-react-native";
 import Animated, {
   useAnimatedStyle,
@@ -8,24 +8,22 @@ import Animated, {
   FadeOut,
   useSharedValue,
   Easing,
-  withDelay,
   withSpring,
 } from "react-native-reanimated";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import CustomText from "@/components/CustomText";
-import MemoirCard from "./MemoirCard";
 import { useSharedState } from "@/context/SharedContext";
-import { getCardHeight, getCardWidth } from "@/utils/functions";
 import {
   _horizontalPadding,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
 } from "@/utils/constant";
-import { GAP } from "./AllMemoirs";
-import { MemoirViewOffset } from "@/constants/types";
 
-const ANIMATION_CONFIG = {
+import { MemoirViewOffset } from "@/constants/types";
+import TransitionMemoirCard from "./TransitionMemoirCard";
+
+export const ANIMATION_CONFIG = {
   PILL_TRANSFORM_DURATION: 450,
   FADE_IN_DURATION: 300,
   FADE_OUT_DURATION: 0,
@@ -33,7 +31,7 @@ const ANIMATION_CONFIG = {
   SPRING_CONFIG: { damping: 15, stiffness: 150 },
 } as const;
 
-const LAYOUT_CONFIG = {
+export const LAYOUT_CONFIG = {
   PILL_HEIGHT: 60,
   PILL_WIDTH_COLLAPSED: SCREEN_WIDTH * 0.42,
   MODAL_HEIGHT: SCREEN_HEIGHT * 0.5,
@@ -42,14 +40,6 @@ const LAYOUT_CONFIG = {
   MODAL_BORDER_RADIUS: 25,
   BUTTON_GAP: 12,
   BUTTON_PADDING: 8,
-} as const;
-
-const CARD_STACK_CONFIG = {
-  OFFSET_X: 20,
-  OFFSET_Y: 12,
-  MAX_ROTATION: 4,
-  SCALE_FACTOR: 0.6,
-  POSITION_Y_OFFSET: SCREEN_HEIGHT * 0.53,
 } as const;
 
 interface DeleteOverlayProps {}
@@ -66,12 +56,10 @@ const DeleteOverlay: React.FC<DeleteOverlayProps> = () => {
 
   const isVisible = isSelectionEnabled || deleteMemoir;
 
-  // Animated values with proper initialization
   const containerOpacity = useSharedValue(0);
   const containerScale = useSharedValue(0.95);
   const backgroundOpacity = useSharedValue(0);
 
-  // Update animation values when visibility changes
   useEffect(() => {
     const springConfig = {
       damping: 18,
@@ -312,101 +300,6 @@ const ModalContent: React.FC<ModalContentProps> = ({ selectedMemoir }) => (
   </Animated.View>
 );
 
-interface TransitionMemoirCardProps {
-  item: MemoirViewOffset;
-  index: number;
-  totalCards: number;
-}
-
-const TransitionMemoirCard: React.FC<TransitionMemoirCardProps> = ({
-  item,
-  index,
-  totalCards,
-}) => {
-  const { deleteMemoir } = useSharedState();
-
-  const CARD_HEIGHT = getCardHeight();
-  const CARD_WIDTH = getCardWidth();
-
-  const initialPosX = item.pageX + _horizontalPadding * 2 - 20;
-  const initialPosY = item.pageY - _horizontalPadding * 2 + 20 + GAP / 2;
-
-  // Shared values
-  const translateX = useSharedValue(initialPosX);
-  const translateY = useSharedValue(initialPosY);
-  const rotate = useSharedValue(0);
-  const opacity = useSharedValue(0);
-  const scale = useSharedValue(1);
-
-  // Calculate final positions for stacked effect
-  const stackIndex = totalCards - index - 1;
-  const centerX = SCREEN_WIDTH / 2 - CARD_WIDTH / 2;
-  const finalX = centerX + stackIndex * CARD_STACK_CONFIG.OFFSET_X;
-  const finalY = CARD_STACK_CONFIG.POSITION_Y_OFFSET;
-  const finalScale = CARD_STACK_CONFIG.SCALE_FACTOR;
-
-  const rotationAmount = useMemo(() => {
-    const rotationSign = index % 2 === 0 ? 1 : -1;
-    return (
-      (Math.random() * 3 + 1) * rotationSign * CARD_STACK_CONFIG.MAX_ROTATION
-    );
-  }, [index]);
-
-  const animationConfig = useMemo(
-    () => ({
-      duration: ANIMATION_CONFIG.CARD_TRANSITION_DURATION,
-      easing: Easing.bezier(0.4, 0, 0.2, 1),
-    }),
-    []
-  );
-
-  useEffect(() => {
-    if (deleteMemoir) {
-      // Animate to stacked position
-      translateX.value = withTiming(finalX, animationConfig);
-      translateY.value = withTiming(finalY, animationConfig);
-      scale.value = withTiming(finalScale, animationConfig);
-      rotate.value = withTiming(rotationAmount, {
-        ...animationConfig,
-        duration: animationConfig.duration + 100,
-      });
-      opacity.value = withTiming(1, {
-        duration: ANIMATION_CONFIG.FADE_IN_DURATION,
-      });
-    } else {
-      // Animate back to original position
-      translateX.value = withTiming(initialPosX, animationConfig);
-      translateY.value = withTiming(initialPosY, animationConfig);
-      scale.value = withTiming(1, animationConfig);
-      rotate.value = withTiming(0, animationConfig);
-      opacity.value = withDelay(300, withTiming(0, { duration: 200 }));
-    }
-  }, [deleteMemoir]);
-
-  const cardAnimatedStyle = useAnimatedStyle(
-    () => ({
-      position: "absolute" as const,
-      top: translateY.value,
-      left: translateX.value,
-      opacity: opacity.value,
-      transform: [{ scale: scale.value }, { rotate: `${rotate.value}deg` }],
-      zIndex: 10000 + (totalCards - index),
-    }),
-    []
-  );
-
-  return (
-    <Animated.View style={[cardAnimatedStyle, styles.transitionCard]}>
-      <MemoirCard
-        index={index}
-        item={item as any}
-        onLongPress={() => console.log("Card pressed:", index)}
-        showSelector={false}
-      />
-    </Animated.View>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
@@ -490,13 +383,6 @@ const styles = StyleSheet.create({
   confirmationText: {
     textAlign: "center",
     marginBottom: RFValue(10),
-  },
-  transitionCard: {
-    shadowColor: "rgba(99, 99, 99, 0.8)",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
 });
 

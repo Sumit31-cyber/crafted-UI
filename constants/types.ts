@@ -1,3 +1,5 @@
+import { ImageResolvedAssetSource } from "react-native";
+
 export type ProductType = {
   id: number;
   name: string;
@@ -26,6 +28,7 @@ export interface MemoirItem {
   id: number;
   title: string;
   imageCount: number;
+  thumbnail: ImageResolvedAssetSource;
 }
 
 export interface MemoirViewOffset {
@@ -33,6 +36,16 @@ export interface MemoirViewOffset {
   pageY: number;
   height: number;
   width: number;
+}
+
+export interface TransitionMemoirCardProps {
+  item: MemoirViewOffset;
+  index: number;
+  totalCards: number;
+}
+export interface LayoutType {
+  x: number;
+  y: number;
 }
 
 export interface MemoirWithOffset extends MemoirItem, MemoirViewOffset {}

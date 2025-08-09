@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -11,22 +11,13 @@ const IMAGE_SIZE = RFValue(40);
 
 const Header = () => {
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
+    <View style={styles.container}>
       <CustomText variant="h1" fontFamily="FiraCodeBold">
         Memoir
       </CustomText>
       <Image
-        style={{
-          height: IMAGE_SIZE,
-          aspectRatio: 1,
-          borderRadius: IMAGE_SIZE / 2,
-        }}
+        transition={300}
+        style={styles.imageStyle}
         source={{ uri: IMAGE_URL }}
       />
     </View>
@@ -35,4 +26,15 @@ const Header = () => {
 
 export default Header;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  imageStyle: {
+    height: IMAGE_SIZE,
+    aspectRatio: 1,
+    borderRadius: IMAGE_SIZE / 2,
+  },
+});
